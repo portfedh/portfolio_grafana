@@ -1,9 +1,11 @@
+# Functions to create the daily balance per account
+
 import pandas as pd
 import datetime as dt
 import analysis_dates
 
 def create_balance_df(file_name: str) -> 'pd':
-    """Create a dataframe from imported CSV file.
+    """Create a dataframe from imported CSV file with monthly account balances.
     'Date' column  is the index, in datetime format,
     values are displayed as floats."""
     balance_df = pd.read_csv(file_name)
@@ -42,6 +44,26 @@ def create_daily_balance_df(balance_df:'pd', column_name:str) -> 'pd':
     # Add 'Date' label to the index column
     daily_balance_df = daily_balance_df.rename_axis('Date', axis=1)
     return daily_balance_df
+
+### ToDo: Unlimited number of accounts ###
+def sum_total_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
+    """Create a dataframe from imported CSV file with total account balances.
+    requires a CSV file with data from 'create_daily_balance_df' function' as input.
+    'Date' column  is the index, in datetime format,
+    values are displayed as integers."""
+    # Get balances from CSVs
+    df_account1 = pd.read_csv(file_name1)
+    df_account2 = pd.read_csv(file_name2)
+    # Merge dataframes
+    df_total = df_account1.copy()
+    column_name = df_account2.columns[1]
+    df_total[column_name] = df_account2[[column_name]].copy()
+    # Add Total Values
+    df_total['Tot_Ctas_Portafolio_MXN'] = df_total[df_total.columns[1]]+ df_total[df_total.columns[2]]
+    # Drop other columns
+    df_total.drop(columns=[df_total.columns[1], df_total.columns[2]], inplace=True)
+    return df_total
+
 
 if __name__ == "__main__":
     pass
