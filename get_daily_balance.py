@@ -1,4 +1,4 @@
-import daily_balance
+from scripts import daily_balance
 
 # GBM Account
 #############
