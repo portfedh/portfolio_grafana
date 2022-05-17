@@ -1,8 +1,8 @@
-# Functions to create the daily balance per account
+# Functions to create the daily balance for all bank accounts
 
 import pandas as pd
 import datetime as dt
-import analysis_dates
+import set_analysis_dates
 
 def create_balance_df(file_name: str) -> 'pd':
     """Create a dataframe from imported CSV file with monthly account balances.
@@ -10,7 +10,7 @@ def create_balance_df(file_name: str) -> 'pd':
     values are displayed as floats."""
     balance_df = pd.read_csv(file_name)
     # Create list from 'Date' column 
-    datetime_index_trades = pd.to_datetime(balance_df['Date'])
+    datetime_index_trades = pd.to_datetime(balance_df['Date'], dayfirst=True)
     # Make 'Date' column an index object
     datetime_index_trades = pd.DatetimeIndex(datetime_index_trades.values)
     # Append new 'Date' column to dataframe, as index
@@ -28,7 +28,7 @@ def create_daily_balance_df(balance_df:'pd', column_name:str) -> 'pd':
     values are displayed as integers."""
     # Create output dataframe
     daily_balance_df = pd.DataFrame(columns = [column_name])
-    for date in analysis_dates.date_range:
+    for date in set_analysis_dates.date_range:
         # Filter dataframe up to date
         filtered_blance_df = balance_df.loc[:date]
         # Get the last balance value
@@ -45,7 +45,7 @@ def create_daily_balance_df(balance_df:'pd', column_name:str) -> 'pd':
     daily_balance_df = daily_balance_df.rename_axis('Date', axis=1)
     return daily_balance_df
 
-### ToDo: Unlimited number of accounts ###
+### ToDo: Enable function to use more than two accounts ###
 def sum_total_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
     """Create a dataframe from imported CSV file with total account balances.
     requires a CSV file with data from 'create_daily_balance_df' function' as input.
@@ -59,7 +59,7 @@ def sum_total_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
     column_name = df_account2.columns[1]
     df_total[column_name] = df_account2[[column_name]].copy()
     # Add Total Values
-    df_total['Tot_Ctas_Portafolio_MXN'] = df_total[df_total.columns[1]]+ df_total[df_total.columns[2]]
+    df_total['Tot_Acct_Portafolio_MXN'] = df_total[df_total.columns[1]]+ df_total[df_total.columns[2]]
     # Drop other columns
     df_total.drop(columns=[df_total.columns[1], df_total.columns[2]], inplace=True)
     return df_total
