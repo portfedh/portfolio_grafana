@@ -4,7 +4,7 @@ import pandas as pd
 import datetime as dt
 import set_analysis_dates
 
-def contribution_balance_df(file_name: str) -> 'pd':
+def create_contribution_df(file_name: str) -> 'pd':
     """Create a dataframe from imported CSV file with contribution amounts.
     'Date' column  is the index, in datetime format,
     values are displayed as integers."""
@@ -21,7 +21,7 @@ def contribution_balance_df(file_name: str) -> 'pd':
     contribution_df.drop('Date',axis=1,inplace=True)
     return contribution_df
 
-def daily_contribution_balance_df(contribution_df:'pd', column_name:str) -> 'pd':
+def create_daily_contribution_df(contribution_df:'pd', column_name:str) -> 'pd':
     """Create dataframe with dailiy net contribution balances, 
     requires the return dataframe from 'create_balance_df function' as input.
     'Date' column  is the index, in datetime format,
@@ -46,15 +46,12 @@ def daily_contribution_balance_df(contribution_df:'pd', column_name:str) -> 'pd'
     return daily_contribution_balance_df
 
 
-
-#### CODE BELOW DOES NOT WORK
-"""
 ### ToDo: Unlimited number of accounts ###
-def sum_total_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
-    ""Create a dataframe from imported CSV file with total account balances.
-    requires a CSV file with data from 'create_daily_balance_df' function' as input.
+def sum_daily_contribution_df(file_name1: str, file_name2: str) -> 'pd':
+    """Create a dataframe from imported CSV file with daily contribution balances.
+    Requires a CSV file with data from 'create_daily_contribution_df' function' as input.
     'Date' column  is the index, in datetime format,
-    values are displayed as integers.""
+    values are displayed as integers."""
     # Get balances from CSVs
     df_account1 = pd.read_csv(file_name1)
     df_account2 = pd.read_csv(file_name2)
@@ -63,11 +60,10 @@ def sum_total_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
     column_name = df_account2.columns[1]
     df_total[column_name] = df_account2[[column_name]].copy()
     # Add Total Values
-    df_total['Tot_Ctas_Portafolio_MXN'] = df_total[df_total.columns[1]]+ df_total[df_total.columns[2]]
+    df_total['Tot_Contribuciones_MXN'] = df_total[df_total.columns[1]]+ df_total[df_total.columns[2]]
     # Drop other columns
     df_total.drop(columns=[df_total.columns[1], df_total.columns[2]], inplace=True)
     return df_total
-"""
 
 if __name__ == "__main__":
     pass
