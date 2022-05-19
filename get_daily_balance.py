@@ -24,6 +24,6 @@ daily_balance_df.to_csv("outputs/daily_acct_balance_CLG_GBM.csv", index=True, in
 cetes_acct = 'outputs/daily_acct_balance_CLG_CETES.csv'
 gbm_acct = 'outputs/daily_acct_balance_CLG_GBM.csv'
 # Get total daily balance
-total_balance_df = dab.sum_total_daily_balance_df(cetes_acct, gbm_acct)
+total_balance_df = dab.sum_daily_balance_df(cetes_acct, gbm_acct)
 # Output to CSV
 total_balance_df.to_csv("outputs/daily_acct_balance_CLG_AllAccounts.csv", index=False)

@@ -46,7 +46,7 @@ def create_daily_balance_df(balance_df:'pd', column_name:str) -> 'pd':
     return daily_balance_df
 
 ### ToDo: Enable function to use more than two accounts ###
-def sum_total_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
+def sum_daily_balance_df(file_name1: str, file_name2: str) -> 'pd':
     """Create a dataframe from imported CSV file with total account balances.
     requires a CSV file with data from 'create_daily_balance_df' function' as input.
     'Date' column  is the index, in datetime format,
