@@ -33,7 +33,7 @@ def create_daily_contribution_df(contribution_df: 'pd', column_name: str) -> 'pd
     for date in set_analysis_dates.date_range:
         # Filter dataframe up to date
         filtered_blance_df = contribution_df.loc[:date]
-        # Get the last balance value
+        # Get the sum of values to date
         current_balance = filtered_blance_df[column_name].sum()
         # Create dictionary with value
         new_row_dic = {column_name: current_balance}
