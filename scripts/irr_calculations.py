@@ -1,4 +1,5 @@
 import pandas as pd
+from pyxirr import xirr
 
 
 def irr_contributions_df(contributions_file1, contributions_file2):
@@ -46,5 +47,15 @@ def irr_monthly_balance_df(balance_df, balance_df2):
     return balance_df
 
 
-def get_irr(file1, file2):
-    pass
+def calculate_xirr(balance_df, balance_df2):
+    # Get last value
+    last = balance_df.copy(deep=True)
+    last = last.iloc[-1:]
+    # Rename column to match other DF
+    last.rename(columns={'Tot_Acct_Portafolio_MXN': 'Tot_Contribuciones_MXN'}, inplace=True)
+    # Concatenate dataframes
+    irr_df = pd.concat([balance_df2, last])
+    pdToList = irr_df.index.tolist()
+    pdToList2 = list(irr_df['Tot_Contribuciones_MXN'])
+    result = xirr(pdToList, pdToList2)
+    return result
