@@ -1,4 +1,10 @@
+from sqlalchemy import create_engine
 from scripts import daily_balance as dab
+
+# MySQL Connection Settings
+###########################
+engine = create_engine(
+    'mysql+pymysql://root:password1@localhost:3306/test_database')
 
 # CETES Account
 ###############
@@ -14,6 +20,13 @@ daily_balance_df2 = dab.daily_balance(
 # Output to CSV
 daily_balance_df2.to_csv(
     "outputs/daily_acct_balance_CLG_CETES.csv",
+    index=True, index_label='Date')
+
+# Output to MySQL
+daily_balance_df2.to_sql(
+    name='daily_acct_balance_CLG_CETES',  # Table name
+    con=engine,
+    if_exists='replace',
     index=True, index_label='Date')
 
 
@@ -33,6 +46,14 @@ daily_balance_df.to_csv(
     "outputs/daily_acct_balance_CLG_GBM.csv",
     index=True, index_label='Date')
 
+# Output to MySQL
+daily_balance_df.to_sql(
+    name='daily_acct_balance_CLG_GBM',  # Table name
+    con=engine,
+    if_exists='replace',
+    index=True, index_label='Date')
+
+
 # Sum both Accounts
 ###################
 # Get total daily balance
@@ -45,3 +66,13 @@ total_balance_df = dab.consolidate(
 total_balance_df.to_csv(
     "outputs/daily_acct_balance_CLG_AllAccounts.csv",
     index=False)
+
+# Output to MySQL
+total_balance_df2 = dab.create_df(
+    'outputs/daily_acct_balance_CLG_AllAccounts.csv')
+
+total_balance_df2.to_sql(
+    name='daily_acct_balance_CLG_AllAccounts',  # Table name
+    con=engine,
+    if_exists='replace',
+    index=True, index_label='Date')
