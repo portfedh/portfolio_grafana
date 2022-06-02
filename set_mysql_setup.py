@@ -3,14 +3,13 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="password1"
-)
+  password="password1")
 
 mycursor = mydb.cursor()
 
 # Create Database
-mycursor.execute("DROP DATABASE IF EXISTS test_database")
-mycursor.execute("CREATE DATABASE test_database")
+mycursor.execute("DROP DATABASE IF EXISTS CLG_database")
+mycursor.execute("CREATE DATABASE CLG_database")
 
 # Show Databases
 # mycursor.execute("SHOW DATABASES")
@@ -18,9 +17,9 @@ mycursor.execute("CREATE DATABASE test_database")
 #    print(x)
 
 # Use Database
-mycursor.execute("USE test_database")
+mycursor.execute("USE CLG_database")
 
-# Setup Tables
+# Create Tables: Daily Account Balance
 mycursor.execute(
     "DROP TABLE IF EXISTS \
     daily_acct_balance_CLG_AllAccounts")
@@ -42,6 +41,34 @@ mycursor.execute(
     "CREATE TABLE \
     daily_acct_balance_CLG_GBM \
     (Date TIMESTAMP, Tot_Acct_GBM_MXN INT)")
+
+# Create Tables: Daily Contributions
+mycursor.execute(
+    "CREATE TABLE \
+    daily_contributions_CLG_AllAccounts \
+    (Date TIMESTAMP, Tot_Contribuciones_MXN INT)")
+mycursor.execute(
+    "CREATE TABLE \
+    daily_contributions_CLG_CETES \
+    (Date TIMESTAMP, Contribuciones_Cetes_MXN INT)")
+mycursor.execute(
+    "CREATE TABLE \
+    daily_contributions_CLG_GBM \
+    (Date TIMESTAMP, Contribuciones_GBM_MXN INT)")
+
+# Create Tables: IRR
+mycursor.execute(
+    "CREATE TABLE \
+    irr_xirr \
+    (Date TIMESTAMP, XIRR INT)")
+mycursor.execute(
+    "CREATE TABLE \
+    irr_contributions_CLG_AllAccounts \
+    (Date TIMESTAMP, Tot_Contribuciones_MXN INT)")
+mycursor.execute(
+    "CREATE TABLE \
+    irr_monthly_account_balance_CLG_AllAccounts \
+    (Date TIMESTAMP, Tot_Acct_Portafolio_MXN INT)")
 
 # Show tables
 # mycursor.execute("SHOW TABLES")
