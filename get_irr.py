@@ -33,4 +33,4 @@ today = (f'{date.today():%Y-%m-%d}')
 data = [today, irr_value]
 df = pd.DataFrame([data], columns=['Date', 'XIRR'])
 print(df)
-df.to_csv("outputs/irr_amount.csv", index=False)
+df.to_csv("outputs/irr_xirr.csv", index=False)
