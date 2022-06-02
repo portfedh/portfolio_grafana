@@ -4,7 +4,7 @@ from scripts import daily_balance as dab
 # MySQL Connection Settings
 ###########################
 engine = create_engine(
-    'mysql+pymysql://root:password1@localhost:3306/test_database')
+    'mysql+pymysql://root:password1@localhost:3306/CLG_database')
 
 # CETES Account
 ###############
