@@ -1,4 +1,11 @@
+from sqlalchemy import create_engine
+from scripts import daily_balance as dab
 from scripts import daily_balance as dcb
+
+# MySQL Connection Settings
+###########################
+engine = create_engine(
+    'mysql+pymysql://root:password1@localhost:3306/CLG_database')
 
 # CETES Account
 ###############
@@ -15,6 +22,13 @@ daily_contribution_balance_df = dcb.daily_balance(
 # Output to CSV
 daily_contribution_balance_df.to_csv(
     "outputs/daily_contributions_CLG_CETES.csv",
+    index=True, index_label='Date')
+
+# Output to MySQL
+daily_contribution_balance_df.to_sql(
+    name='daily_contributions_CLG_CETES',  # Table name
+    con=engine,
+    if_exists='replace',
     index=True, index_label='Date')
 
 
@@ -35,6 +49,14 @@ daily_contribution_balance_df2.to_csv(
     "outputs/daily_contributions_CLG_GBM.csv",
     index=True, index_label='Date')
 
+# Output to MySQL
+daily_contribution_balance_df2.to_sql(
+    name='daily_contributions_CLG_GBM',  # Table name
+    con=engine,
+    if_exists='replace',
+    index=True, index_label='Date')
+
+
 # Sum both Accounts
 ###################
 # Get total daily balance
@@ -46,3 +68,13 @@ total_contributions_df = dcb.consolidate(
 # Output to CSV
 total_contributions_df.to_csv(
     "outputs/daily_contributions_CLG_AllAccounts.csv", index=False)
+
+# Output to MySQL
+total_contributions_df2 = dab.create_df(
+    'outputs/daily_contributions_CLG_AllAccounts.csv')
+
+total_contributions_df2.to_sql(
+    name='daily_contributions_CLG_AllAccounts',  # Table name
+    con=engine,
+    if_exists='replace',
+    index=True, index_label='Date')
