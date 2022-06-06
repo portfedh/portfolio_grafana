@@ -40,9 +40,11 @@ def irr_monthly_balance_df(balance_df, balance_df2):
     balance_df['Tot_Acct_Portafolio_MXN'] = (
         balance_df[balance_df.columns[0]] + balance_df[balance_df.columns[1]])
     # Save as Integer
-    balance_df['Tot_Acct_Portafolio_MXN'] = balance_df['Tot_Acct_Portafolio_MXN'].astype('int')
+    balance_df['Tot_Acct_Portafolio_MXN'] = (
+        balance_df['Tot_Acct_Portafolio_MXN'].astype('int'))
     # Drop individual columns
-    balance_df.drop(['Tot_Acct_Cetes_MXN', 'Tot_Acct_GBM_MXN'], axis=1, inplace=True)
+    balance_df.drop(
+        ['Tot_Acct_Cetes_MXN', 'Tot_Acct_GBM_MXN'], axis=1, inplace=True)
     # Return dataframe
     return balance_df
 
@@ -52,7 +54,9 @@ def calculate_xirr(balance_df, balance_df2):
     last = balance_df.copy(deep=True)
     last = last.iloc[-1:]
     # Rename column to match other DF
-    last.rename(columns={'Tot_Acct_Portafolio_MXN': 'Tot_Contribuciones_MXN'}, inplace=True)
+    last.rename(
+        columns={'Tot_Acct_Portafolio_MXN': 'Tot_Contribuciones_MXN'},
+        inplace=True)
     # Concatenate dataframes
     irr_df = pd.concat([balance_df2, last])
     pdToList = irr_df.index.tolist()
