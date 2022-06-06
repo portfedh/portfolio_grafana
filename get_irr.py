@@ -40,12 +40,12 @@ irr_value = irr.calculate_xirr(balance_df, balance_df2)
 today = (f'{date.today():%Y-%m-%d}')
 data = [today, irr_value]
 df = pd.DataFrame([data], columns=['Date', 'XIRR'])
-df.to_csv("outputs/irr_xirr.csv", index=False)
+df.to_csv("outputs/irr_xirr_CLG.csv", index=False)
 
 # Save value to MySQL
 xirr = db.create_df('outputs/irr_xirr.csv')
 xirr.to_sql(
-    name='irr_xirr',  # Table name
+    name='irr_xirr_CLG',  # Table name
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
