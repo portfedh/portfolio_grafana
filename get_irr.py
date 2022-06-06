@@ -13,28 +13,35 @@ engine = create_engine(
 # Create Consolidated Contributions File
 ########################################
 cont_file = irr.irr_contributions_df(
-    'inputs/contributions_CLG_CETES.csv',
-    'inputs/contributions_CLG_GBM.csv')
+    file1='inputs/contributions_CLG_CETES.csv',
+    file2='inputs/contributions_CLG_GBM.csv',
+    col_name1='Contribuciones_Cetes_MXN',
+    col_name2='Contribuciones_GBM_MXN',
+    col_name3='Tot_Contribuciones_MXN')
 cont_file.to_csv("outputs/irr_contributions_CLG_AllAccounts.csv",
                  index=True, index_label='Date')
 
 # Create Consolidated Monthly Account Balance
 #############################################
-balance_df = db.create_df('inputs/monthly_account_balance_CLG_CETES.csv')
-balance_df2 = db.create_df('inputs/monthly_account_balance_CLG_GBM.csv')
-consolidated_df = irr.irr_monthly_balance_df(balance_df, balance_df2)
+consolidated_df = irr.irr_monthly_balance_df(
+    file1=db.create_df('inputs/monthly_account_balance_CLG_CETES.csv'),
+    file2=db.create_df('inputs/monthly_account_balance_CLG_GBM.csv'),
+    col_name1='Tot_Acct_Cetes_MXN',
+    col_name2='Tot_Acct_GBM_MXN',
+    col_name3='Tot_Acct_Portafolio_MXN')
+# Save value to CSV
 consolidated_df.to_csv(
     "outputs/irr_monthly_account_balance_CLG_AllAccounts.csv",
     index=True, index_label='Date')
 
 # Caculate IRR
 ##############
-
-# Cambiar nombres para que no sean iguales a los de arriba
-balance_df = db.create_df(
-    'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv')
-balance_df2 = db.create_df('outputs/irr_contributions_CLG_AllAccounts.csv')
-irr_value = irr.calculate_xirr(balance_df, balance_df2)
+irr_value = irr.calculate_xirr(
+    file1=db.create_df(
+        'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'),
+    file2=db.create_df('outputs/irr_contributions_CLG_AllAccounts.csv'),
+    col_name1='Tot_Acct_Portafolio_MXN',
+    col_name2='Tot_Contribuciones_MXN')
 
 # Save value to CSV
 today = (f'{date.today():%Y-%m-%d}')

@@ -2,24 +2,22 @@ import pandas as pd
 from pyxirr import xirr
 
 
-def irr_contributions_df(contributions_file1, contributions_file2):
+def irr_contributions_df(file1, file2, col_name1, col_name2, col_name3):
     # Import data
-    cont_cetes = pd.read_csv(contributions_file1)
-    cont_GBM = pd.read_csv(contributions_file2)
+    df_1 = pd.read_csv(file1)
+    df_2 = pd.read_csv(file2)
     # Join dataframes
-    result = pd.concat([cont_cetes, cont_GBM])
+    result = pd.concat([df_1, df_2])
     # Substitute NA values with zeros
     result = result.fillna(0)
     # Add contributions of both accounts
-    result['Tot_Contribuciones_MXN'] = (
-        result['Contribuciones_Cetes_MXN'] + result['Contribuciones_GBM_MXN'])
+    result[col_name3] = (
+        result[col_name1] + result[col_name2])
     # Drop columns
-    result.drop(
-        ['Contribuciones_Cetes_MXN', 'Contribuciones_GBM_MXN'],
-        axis=1, inplace=True)
+    result.drop([col_name1, col_name2], axis=1, inplace=True)
     # Invert values from (+) to (-)
-    result['Tot_Contribuciones_MXN'] = result['Tot_Contribuciones_MXN']*-1
-    result['Tot_Contribuciones_MXN'] = result['Tot_Contribuciones_MXN'].astype('int')
+    result[col_name3] = result[col_name3]*-1
+    result[col_name3] = result[col_name3].astype('int')
     # Set 'Date' column as DateTime and set to index
     datetime_date = pd.to_datetime(result['Date'], dayfirst=True)
     datetime_index_trades = pd.DatetimeIndex(datetime_date.values)
@@ -32,34 +30,30 @@ def irr_contributions_df(contributions_file1, contributions_file2):
     return result
 
 
-def irr_monthly_balance_df(balance_df, balance_df2):
+def irr_monthly_balance_df(file1, file2, col_name1, col_name2, col_name3):
     # Merge two files
-    balance_df = balance_df.merge(
-        balance_df2, left_index=True, right_index=True)
-    # Sum columns
-    balance_df['Tot_Acct_Portafolio_MXN'] = (
-        balance_df[balance_df.columns[0]] + balance_df[balance_df.columns[1]])
+    file1 = file1.merge(file2, left_index=True, right_index=True)
+    # Add Column with the sum of both columns
+    file1[col_name3] = (file1[col_name1] + file1[col_name2])
     # Save as Integer
-    balance_df['Tot_Acct_Portafolio_MXN'] = (
-        balance_df['Tot_Acct_Portafolio_MXN'].astype('int'))
+    file1[col_name3] = (file1[col_name3].astype('int'))
     # Drop individual columns
-    balance_df.drop(
-        ['Tot_Acct_Cetes_MXN', 'Tot_Acct_GBM_MXN'], axis=1, inplace=True)
+    file1.drop([col_name1, col_name2], axis=1, inplace=True)
     # Return dataframe
-    return balance_df
+    return file1
 
 
-def calculate_xirr(balance_df, balance_df2):
+def calculate_xirr(file1, file2, col_name1, col_name2):
     # Get last value
-    last = balance_df.copy(deep=True)
+    last = file1.copy(deep=True)
     last = last.iloc[-1:]
     # Rename column to match other DF
     last.rename(
-        columns={'Tot_Acct_Portafolio_MXN': 'Tot_Contribuciones_MXN'},
+        columns={col_name1: col_name2},
         inplace=True)
     # Concatenate dataframes
-    irr_df = pd.concat([balance_df2, last])
+    irr_df = pd.concat([file2, last])
     pdToList = irr_df.index.tolist()
-    pdToList2 = list(irr_df['Tot_Contribuciones_MXN'])
+    pdToList2 = list(irr_df[col_name2])
     result = xirr(pdToList, pdToList2)
     return result
