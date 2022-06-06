@@ -24,33 +24,47 @@ mycursor.execute(
     "DROP TABLE IF EXISTS \
     daily_acct_balance_CLG_AllAccounts")
 mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_acct_balance_CLG_CETES")
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_acct_balance_CLG_GBM")
-mycursor.execute(
     "CREATE TABLE \
     daily_acct_balance_CLG_AllAccounts \
     (Date TIMESTAMP, Tot_Acct_Portafolio_MXN INT)")
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    daily_acct_balance_CLG_CETES")
 mycursor.execute(
     "CREATE TABLE \
     daily_acct_balance_CLG_CETES \
     (Date TIMESTAMP, Tot_Acct_Cetes_MXN INT)")
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    daily_acct_balance_CLG_GBM")
 mycursor.execute(
     "CREATE TABLE \
     daily_acct_balance_CLG_GBM \
     (Date TIMESTAMP, Tot_Acct_GBM_MXN INT)")
 
 # Create Tables: Daily Contributions
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    daily_contributions_CLG_AllAccounts")
 mycursor.execute(
     "CREATE TABLE \
     daily_contributions_CLG_AllAccounts \
     (Date TIMESTAMP, Tot_Contribuciones_MXN INT)")
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    daily_contributions_CLG_CETES")
 mycursor.execute(
     "CREATE TABLE \
     daily_contributions_CLG_CETES \
     (Date TIMESTAMP, Contribuciones_Cetes_MXN INT)")
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    daily_contributions_CLG_GBM")
 mycursor.execute(
     "CREATE TABLE \
     daily_contributions_CLG_GBM \
@@ -58,13 +72,24 @@ mycursor.execute(
 
 # Create Tables: IRR
 mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    irr_xirr_CLG")
+mycursor.execute(
     "CREATE TABLE \
-    irr_xirr \
+    irr_xirr_CLG \
     (Date TIMESTAMP, XIRR INT)")
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    irr_contributions_CLG_AllAccounts")
 mycursor.execute(
     "CREATE TABLE \
     irr_contributions_CLG_AllAccounts \
     (Date TIMESTAMP, Tot_Contribuciones_MXN INT)")
+
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    irr_monthly_account_balance_CLG_AllAccounts")
 mycursor.execute(
     "CREATE TABLE \
     irr_monthly_account_balance_CLG_AllAccounts \
