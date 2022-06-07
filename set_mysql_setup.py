@@ -45,7 +45,6 @@ mycursor.execute(
     (Date TIMESTAMP, Tot_Acct_GBM_MXN INT)")
 
 # Create Tables: Daily Contributions
-
 mycursor.execute(
     "DROP TABLE IF EXISTS \
     daily_contributions_CLG_AllAccounts")
@@ -94,6 +93,16 @@ mycursor.execute(
     "CREATE TABLE \
     irr_monthly_account_balance_CLG_AllAccounts \
     (Date TIMESTAMP, Tot_Acct_Portafolio_MXN INT)")
+
+# Create Tables: Returns
+mycursor.execute(
+    "DROP TABLE IF EXISTS \
+    returns_portfolio_CLG_AllAccounts")
+mycursor.execute(
+    "CREATE TABLE \
+    returns_portfolio_CLG_AllAccounts \
+    (Date TIMESTAMP, \
+    Tot_Portfolio_Return_MXN INT, Tot_Portfolio_Return_Percent FLOAT)")
 
 # Show tables
 # mycursor.execute("SHOW TABLES")
