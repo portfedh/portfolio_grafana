@@ -2,7 +2,13 @@ import pandas as pd
 from pyxirr import xirr
 
 
-def irr_contributions_df(file1, file2, col_name1, col_name2, col_name3):
+def irr_contributions_df(
+        file1: str,
+        file2: str,
+        col_name1: str,
+        col_name2: str,
+        col_name3: str
+        ) -> 'pd':
     # Import data
     df_1 = pd.read_csv(file1)
     df_2 = pd.read_csv(file2)
@@ -30,7 +36,13 @@ def irr_contributions_df(file1, file2, col_name1, col_name2, col_name3):
     return result
 
 
-def irr_monthly_balance_df(file1, file2, col_name1, col_name2, col_name3):
+def irr_monthly_balance_df(
+        file1: 'pd',
+        file2: 'pd',
+        col_name1: str,
+        col_name2: str,
+        col_name3: str
+        ) -> 'pd':
     # Merge two files
     file1 = file1.merge(file2, left_index=True, right_index=True)
     # Add Column with the sum of both columns
@@ -43,7 +55,12 @@ def irr_monthly_balance_df(file1, file2, col_name1, col_name2, col_name3):
     return file1
 
 
-def calculate_xirr(file1, file2, col_name1, col_name2):
+def calculate_xirr(
+        file1: 'pd',
+        file2: 'pd',
+        col_name1: str,
+        col_name2: str
+        ) -> float:
     # Get last value
     last = file1.copy(deep=True)
     last = last.iloc[-1:]

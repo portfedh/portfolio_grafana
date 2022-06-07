@@ -1,6 +1,14 @@
+import pandas as pd
 
 
-def returns(file1, file2, col_name1, col_name2, col_name3, col_name4):
+def returns(
+        file1: 'pd',
+        file2: 'pd',
+        col_name1: str,
+        col_name2: str,
+        col_name3: str,
+        col_name4: str
+        ) -> 'pd':
     """Will divide Col2 by Col1."""
     # Merge two files
     file1 = file1.merge(file2, left_index=True, right_index=True)
