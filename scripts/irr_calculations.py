@@ -129,7 +129,8 @@ def calculate_xirr(
                 Must be multiplied by 100 to get as percentage.
     """
     # Get last value from account balances
-    last_balance_value = acct_balance_df.iloc[-1:]
+    last_balance_value = acct_balance_df.copy(deep=True)
+    last_balance_value = last_balance_value.iloc[-1:]
     # Rename column to match contributions df
     last_balance_value.rename(
         columns={balance_col_name: contrib_col_name},

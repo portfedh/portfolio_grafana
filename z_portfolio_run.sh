@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Executing Portfolio Scripts."
+echo "Executing Portfolio Scripts:"
 
 echo "Executing set_mysql_setup."
 ./venv/bin/python3 set_mysql_setup.py
