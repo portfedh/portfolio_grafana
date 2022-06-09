@@ -2,23 +2,26 @@ import pandas as pd
 
 
 def returns(
-        file1: 'pd',
-        file2: 'pd',
-        col_name1: str,
-        col_name2: str,
-        col_name3: str,
-        col_name4: str
+        contributions: 'pd',
+        balance: 'pd',
+        col_contributions: str,
+        col_balance: str,
+        col_subtraction: str,
+        col_ratio: str
         ) -> 'pd':
     """
+    Calculates a simple return for the portfolio.
+
+    Calculates Return$ = (Balance - Contributions).
+    Calculates Return% = (Balance / Contributions) -1.
     Takes two df and returns a df with two columns.
 
-    The column will be the subtraction and
         Parameters:
         -----------
             file1: pd.
-                Dataframe 1.
+                Consolidated Daily Contributions.
             file2: pd.
-                Dataframe 2.
+                Consolidated Daily Account Balance.
             col_name1: str.
                 Column name from file 1.
             col_name2: str.
@@ -39,14 +42,23 @@ def returns(
                     col_name4: float. Column with ratio (column2 / column1)-1.
     """
     # Merge two files
-    file1 = file1.merge(file2, left_index=True, right_index=True)
+    contributions = contributions.merge(
+        balance,
+        left_index=True,
+        right_index=True)
     # Add Column with the subtraction of column2 from column1
-    file1[col_name3] = (file1[col_name2] - file1[col_name1])
+    contributions[col_subtraction] = (
+        contributions[col_balance] - contributions[col_contributions])
     # Save as Integer
-    file1[col_name3] = (file1[col_name3].astype('int'))
+    contributions[col_subtraction] = (
+        contributions[col_subtraction].astype('int'))
     # Add Column with the ratio of column2 from column1
-    file1[col_name4] = ((file1[col_name2] / file1[col_name1])-1)
+    contributions[col_ratio] = (
+        (contributions[col_balance] / contributions[col_contributions])-1)
     # Drop individual columns
-    file1.drop([col_name1, col_name2], axis=1, inplace=True)
+    contributions.drop(
+        [col_contributions, col_balance],
+        axis=1,
+        inplace=True)
     # Return dataframe
-    return file1
+    return contributions

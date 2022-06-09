@@ -60,7 +60,7 @@ daily_balance_df.to_sql(
 total_balance_df = db.consolidate(
     file_name_1='outputs/daily_acct_balance_CLG_CETES.csv',
     file_name_2='outputs/daily_acct_balance_CLG_GBM.csv',
-    col_name='Tot_Acct_Portafolio_MXN')
+    sum_col_name='Tot_Acct_Portafolio_MXN')
 
 # Output to CSV
 total_balance_df.to_csv(

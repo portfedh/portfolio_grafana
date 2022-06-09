@@ -11,12 +11,15 @@ engine = create_engine(
 # Create Portfolio Returns
 ##########################
 returns_df = rc.returns(
-    file1=db.create_df('outputs/daily_contributions_CLG_AllAccounts.csv'),
-    file2=db.create_df('outputs/daily_acct_balance_CLG_AllAccounts.csv'),
-    col_name1='Tot_Contribuciones_MXN',
-    col_name2='Tot_Acct_Portafolio_MXN',
-    col_name3='Tot_Portfolio_Return_MXN',
-    col_name4='Tot_Portfolio_Return_Percent')
+    contributions=db.create_df(
+        'outputs/daily_contributions_CLG_AllAccounts.csv'),
+    balance=db.create_df(
+        'outputs/daily_acct_balance_CLG_AllAccounts.csv'),
+    col_contributions='Tot_Contribuciones_MXN',
+    col_balance='Tot_Acct_Portafolio_MXN',
+    col_subtraction='Tot_Portfolio_Return_MXN',
+    col_ratio='Tot_Portfolio_Return_Percent'
+)
 # Save value to CSV
 returns_df.to_csv(
     "outputs/returns_portfolio_CLG_AllAccounts.csv",

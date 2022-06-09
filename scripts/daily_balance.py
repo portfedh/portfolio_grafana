@@ -3,9 +3,20 @@ import set_analysis_dates
 
 
 def create_df(file_name: str) -> 'pd':
-    """Create a dataframe from CSV.
-    'Date' is the index in datetime format,
-    values are integers or floats."""
+    """
+    Takes a CSV file and returns a df with an index in datetime format.
+
+    Input CSV File must have two columns: Date column and value column.
+        Parameters:
+        -----------
+            filename: str. Input.
+                String with CSV <path/filename.csv>.
+        Returns:
+        --------
+            df: pd. Dataframe with two columns:
+                'Date' column as the index, in datetime format.
+                 Column Values, int or float.
+    """
     df = pd.read_csv(file_name)
     # Create list from 'Date' column
     datetime_list = pd.to_datetime(
@@ -22,13 +33,30 @@ def create_df(file_name: str) -> 'pd':
 
 
 def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
-    """Create dataframe with dailiy balances.
-    Requires dataframe from 'create_df function' as input.
-    'column_name' must equal the name of the column in input file.
-    'sum'=True will add values up to that date.
-    'sum'=False it append the latest value
-    'Date' is the index in datetime format,
-    values are displayed as integers."""
+    """
+    Will take the monthly account balance and produce a daily balance.
+
+    Takes a df with dates and values and returns a df with daily values.
+    Uses the return df from 'create_df function' as input.
+
+        Parameters:
+        -----------
+            df: pd.
+                Input Dataframe.
+                Must have a date column in datetime format.
+                Must have a value column.
+            column_name: str.
+                Must be equal to the name of the column in df.
+            sum: bool.
+                True: Will add values up to each date.
+                False: Will append the latest value.
+
+        Returns:
+        --------
+            daily_df: pd.
+                'Date' column as index in datetime format.
+                column_name: int. Values
+    """
     # Create output dataframe
     daily_df = pd.DataFrame(columns=[column_name])
     for date in set_analysis_dates.date_range:
@@ -56,12 +84,26 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
     return daily_df
 
 
-def consolidate(file_name_1: str, file_name_2: str, col_name: str) -> 'pd':
-    """Create dataframe from multiple CSV files.
-    Requires CSV files from 'daily_balance' function as input.
-    'col_name' is the name of the column adding the values.
-    'Date' column  is the index, in datetime format,
-    values are displayed as integers."""
+def consolidate(file_name_1: str, file_name_2: str, sum_col_name: str) -> 'pd':
+    """
+    Will consolidate the daily balance of two accounts and show total values.
+
+    Takes two df and returns a new df with the added column values.
+
+        Parameters:
+        -----------
+            file_name_1: str
+                String with CSV <path/filename.csv>.
+            file_name_2: str
+                String with CSV <path/filename.csv>.
+            sum_col_name: str
+                Name of the column that adds the values from file1 & file2
+        Returns:
+        --------
+            df_total: df
+                'Date' column as index in datetime format.
+                sum_col_name: int. Added values
+    """
     # Get balances from CSVs
     df_1 = pd.read_csv(file_name_1)
     df_2 = pd.read_csv(file_name_2)
@@ -70,7 +112,7 @@ def consolidate(file_name_1: str, file_name_2: str, col_name: str) -> 'pd':
     column_name = df_2.columns[1]
     df_total[column_name] = df_2[[column_name]].copy()
     # Add Total Values
-    df_total[col_name] = (
+    df_total[sum_col_name] = (
         df_total[df_total.columns[1]] + df_total[df_total.columns[2]])
     # Drop other columns
     df_total.drop(

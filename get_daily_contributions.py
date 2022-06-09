@@ -62,7 +62,7 @@ daily_contribution_balance_df2.to_sql(
 total_contributions_df = db.consolidate(
     file_name_1='outputs/daily_contributions_CLG_CETES.csv',
     file_name_2='outputs/daily_contributions_CLG_GBM.csv',
-    col_name='Tot_Contribuciones_MXN')
+    sum_col_name='Tot_Contribuciones_MXN')
 
 # Output to CSV
 total_contributions_df.to_csv(
