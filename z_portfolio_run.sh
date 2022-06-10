@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Setting Up Docker files:"
+docker-compose up -d
+sleep 5
+
 echo "Executing Portfolio Scripts:"
 
 echo "Executing set_mysql_setup."
