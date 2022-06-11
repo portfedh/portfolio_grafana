@@ -53,7 +53,7 @@ df = pd.DataFrame([data], columns=['Date', 'XIRR'])
 df.to_csv("outputs/irr_xirr_CLG.csv", index=False)
 
 # Save value to MySQL
-xirr = db.create_df('outputs/irr_xirr.csv')
+xirr = db.create_df('outputs/irr_xirr_CLG.csv')
 xirr.to_sql(
     name='irr_xirr_CLG',  # Table name
     con=engine,
