@@ -2,7 +2,8 @@
 
 echo "Setting Up Docker files:"
 docker-compose up -d
-sleep 5
+sleep 6
+echo
 
 echo "Executing Portfolio Scripts:"
 
