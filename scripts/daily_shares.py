@@ -22,11 +22,11 @@ def create_share_quantity_df(tickers: list) -> 'pd':
 
 
 def create_daily_share_quantity(
-                                date_range: datetime,
-                                df: 'pd',  # df con trade history
-                                ticker_list: list,  # lista de tickers
-                                shares: 'pd'  # List to append
-                                ) -> 'pd':
+        date_range: datetime,
+        df: 'pd',  # df con trade history
+        ticker_list: list,  # lista de tickers
+        shares: 'pd'  # List to append
+        ) -> 'pd':
 
     dates = date_range
     # For loop: Go through every date:

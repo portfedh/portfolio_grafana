@@ -2,7 +2,7 @@
 
 echo "Setting Up Docker files:"
 docker-compose up -d
-sleep 6
+sleep 5
 echo
 
 echo "Executing Portfolio Scripts:"
@@ -27,5 +27,8 @@ echo "Executing get_returns."
 
 echo "Executing get_daily_shares."
 ./venv/bin/python3 get_daily_shares.py
+
+echo "Executing get_daily_prices."
+./venv/bin/python3 get_daily_prices.py
 
 echo "All scripts executed successfully."

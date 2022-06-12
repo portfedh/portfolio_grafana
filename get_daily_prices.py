@@ -1,7 +1,8 @@
+import yfinance as yf
 import set_analysis_dates as sad
 from sqlalchemy import create_engine
 from scripts import daily_balance as db
-from scripts import daily_shares as ds
+
 
 # MySQL Connection Settings
 ###########################
@@ -10,7 +11,6 @@ engine = create_engine(
 
 # Importing Trade History GBM
 #############################
-
 # Get trade history
 trade_hist_df = db.create_df('inputs/trade_history_CLG_GBM.csv')
 
@@ -19,26 +19,32 @@ trade_hist_df['Shares'] = trade_hist_df['Shares'].astype(int)
 
 # Create ticker lists
 yftickers = list(trade_hist_df['Yfinance_Ticker'].unique())
-tickers = list(trade_hist_df['Ticker'].unique())
 
-# Create empty share quantity dataframe
-share_quantity_df = ds.create_share_quantity_df(tickers)
+# Download Yahoo finance prices
+prices = yf.download(yftickers, start=sad.start_date, end=sad.end_date)
 
-# Create daily share quantity dataframe
-daily_share_quantity_df = ds.create_daily_share_quantity(
-    date_range=sad.date_range,
-    df=trade_hist_df,
-    ticker_list=tickers,
-    shares=share_quantity_df)
+# Use closing price
+closing_prices = prices.Close
 
 # Output to CSV
-daily_share_quantity_df.to_csv(
-    "outputs/daily_share_quantity_CLG_GBM.csv",
+closing_prices.to_csv(
+    "outputs/daily_prices_original_CLG_GBM.csv",
+    index=True, index_label='Date')
+
+# Interpolate missing values
+df_interpol = closing_prices.interpolate(
+    method='linear',
+    limit_direction='both')
+df_interpol.tail(10)
+
+# Output to CSV
+df_interpol.to_csv(
+    "outputs/daily_prices_interpolated_CLG_GBM.csv",
     index=True, index_label='Date')
 
 # Output to MySQL
-daily_share_quantity_df.to_sql(
-    name='daily_share_quantity_CLG_GBM',
+closing_prices.to_sql(
+    name='temp_daily_prices_CLG_GBM',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
