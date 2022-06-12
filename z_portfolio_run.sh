@@ -25,4 +25,7 @@ echo "Executing get_irr."
 echo "Executing get_returns."
 ./venv/bin/python3 get_returns.py
 
+echo "Executing get_daily_shares."
+./venv/bin/python3 get_daily_shares.py
+
 echo "All scripts executed successfully."
