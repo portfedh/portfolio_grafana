@@ -73,7 +73,7 @@ total_contributions_df2 = db.create_df(
     'outputs/daily_contributions_CLG_AllAccounts.csv')
 
 total_contributions_df2.to_sql(
-    name='daily_contributions_CLG_AllAccounts',  # Table name
+    name='daily_contributions_CLG_AllAccounts',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
