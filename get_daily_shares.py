@@ -22,13 +22,13 @@ yftickers = list(trade_hist_df['Yfinance_Ticker'].unique())
 tickers = list(trade_hist_df['Ticker'].unique())
 
 # Create empty share quantity dataframe
-share_quantity_df = ds.create_share_quantity_df(tickers)
+share_quantity_df = ds.create_share_quantity_df(yftickers)
 
 # Create daily share quantity dataframe
 daily_share_quantity_df = ds.create_daily_share_quantity(
     date_range=sad.date_range,
     df=trade_hist_df,
-    ticker_list=tickers,
+    ticker_list=yftickers,
     shares=share_quantity_df)
 
 # Output to CSV

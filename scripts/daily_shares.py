@@ -36,7 +36,7 @@ def create_daily_share_quantity(
         # For loop: Go through every ticker:
         for ticker in ticker_list:
             # Filter dataframe by ticker
-            filter_df = df[df['Ticker'] == ticker]
+            filter_df = df[df['Yfinance_Ticker'] == ticker]
             # Filter dataframe up to date
             day_filter_df = filter_df.loc[:date]
             # Sum shares in dataframe for that ticker
