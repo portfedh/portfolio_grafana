@@ -1,5 +1,4 @@
 import pandas as pd
-import set_portfolio_targets as t
 from sqlalchemy import create_engine
 from scripts import daily_balance as db
 
@@ -8,10 +7,16 @@ from scripts import daily_balance as db
 engine = create_engine(
     'mysql+pymysql://root:password1@localhost:3306/CLG_database')
 
+# Imports
+#########
+
 # Import CSV files and create data frames
 shares_df = db.create_df('outputs/daily_share_quantity_CLG_GBM.csv')
 prices_df = db.create_df('outputs/daily_prices_interpolated_CLG_GBM.csv')
 cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
+
+# Transformations
+#################
 
 # Rename columns: Add Quantity or price simbol
 shares_df = shares_df.add_prefix('Q_')
@@ -101,31 +106,15 @@ df_interpol['Tot_Portfolio'] = (
     df_interpol['Tot_FixedIncome'] +
     df_interpol['Tot_Alternatives'])
 
-
-# ### Check if needed. If not Delete ###
-
-# Total Equity (%)
-df_interpol['Tot_Equity_PCT'] = (
-    df_interpol['Tot_Equity'] / df_interpol['Tot_Portfolio'])
-# Calculando Total Fixed Income(%)
-df_interpol['Tot_FixedIncome_PCT'] = (
-    df_interpol['Tot_FixedIncome'] / df_interpol['Tot_Portfolio'])
-# Calculando Total Alternatives(%)
-df_interpol['Tot_Alternatives_PCT'] = (
-    df_interpol['Tot_Alternatives'] / df_interpol['Tot_Portfolio'])
-
-# Target Equity(%)
-df_interpol['Target_Equity_PCT'] = t.target_equity
-# Target Fixed Income(%)
-df_interpol['Target_FixedIncome_PCT'] = t.target_fixed_income
-# Target Fixed Alternatives(%)
-df_interpol['Target_Alternatives_PCT'] = t.target_alternatives
-
-#######################################
-
 # Reorder Column Position
 my_column = df_interpol.pop('Tot_Acct_Cetes_MXN')
 df_interpol.insert(31, my_column.name, my_column)
+
+# Remove Quantity and Price Columns
+df_interpol.drop(df_interpol.iloc[:, 0:20], inplace=True, axis=1)
+
+# Save Output
+#############
 
 # Output to CSV
 df_interpol.to_csv(
