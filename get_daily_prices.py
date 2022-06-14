@@ -44,7 +44,7 @@ df_interpol.to_csv(
 
 # Output to MySQL
 closing_prices.to_sql(
-    name='temp_daily_prices_CLG_GBM',
+    name='daily_prices_CLG_GBM',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
