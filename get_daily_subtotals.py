@@ -9,7 +9,6 @@ engine = create_engine(
 
 # Imports
 #########
-
 # Import CSV files and create data frames
 shares_df = db.create_df('outputs/daily_share_quantity_CLG_GBM.csv')
 prices_df = db.create_df('outputs/daily_prices_interpolated_CLG_GBM.csv')
@@ -17,7 +16,6 @@ cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 
 # Transformations
 #################
-
 # Rename columns: Add Quantity or price simbol
 shares_df = shares_df.add_prefix('Q_')
 prices_df = prices_df.add_prefix('P_')
@@ -32,7 +30,6 @@ df_interpol = new_df.interpolate(method='linear', limit_direction='both')
 
 # Portfolio Calculations
 ########################
-
 # Subtotals ($)
 df_interpol['Sub_VOO'] = (
     df_interpol['Q_VOO'] *
@@ -113,9 +110,8 @@ df_interpol.insert(31, my_column.name, my_column)
 # Remove Quantity and Price Columns
 df_interpol.drop(df_interpol.iloc[:, 0:20], inplace=True, axis=1)
 
-# Save Output
-#############
-
+# Outputs
+#########
 # Output to CSV
 df_interpol.to_csv(
     "outputs/daily_subtotals_CLG_AllAccounts.csv",

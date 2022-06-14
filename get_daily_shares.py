@@ -10,7 +10,6 @@ engine = create_engine(
 
 # Importing Trade History GBM
 #############################
-
 # Get trade history
 trade_hist_df = db.create_df('inputs/trade_history_CLG_GBM.csv')
 
@@ -31,6 +30,8 @@ daily_share_quantity_df = ds.create_daily_share_quantity(
     ticker_list=yftickers,
     shares=share_quantity_df)
 
+# Outputs
+#########
 # Output to CSV
 daily_share_quantity_df.to_csv(
     "outputs/daily_share_quantity_CLG_GBM.csv",

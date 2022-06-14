@@ -30,7 +30,6 @@ daily_contribution_balance_df.to_sql(
     if_exists='replace',
     index=True, index_label='Date')
 
-
 # GBM Account
 ###############
 # Get monthly balance
@@ -55,7 +54,6 @@ daily_contribution_balance_df2.to_sql(
     if_exists='replace',
     index=True, index_label='Date')
 
-
 # Sum both Accounts
 ###################
 # Get total daily balance
@@ -64,6 +62,8 @@ total_contributions_df = db.consolidate(
     file_name_2='outputs/daily_contributions_CLG_GBM.csv',
     sum_col_name='Tot_Contribuciones_MXN')
 
+# Outputs
+#########
 # Output to CSV
 total_contributions_df.to_csv(
     "outputs/daily_contributions_CLG_AllAccounts.csv", index=False)

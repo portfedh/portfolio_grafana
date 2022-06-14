@@ -34,4 +34,7 @@ echo "Executing get_daily_prices."
 echo "Executing get_daily_subtotals."
 ./venv/bin/python3 get_daily_subtotals.py
 
+echo "Executing get_daily_percentages."
+./venv/bin/python3 get_daily_percentages.py
+
 echo "All scripts executed successfully."

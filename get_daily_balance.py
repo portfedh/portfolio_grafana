@@ -29,7 +29,6 @@ daily_balance_df2.to_sql(
     if_exists='replace',
     index=True, index_label='Date')
 
-
 # GBM Account
 #############
 # Get monthly balance
@@ -53,7 +52,6 @@ daily_balance_df.to_sql(
     if_exists='replace',
     index=True, index_label='Date')
 
-
 # Sum both Accounts
 ###################
 # Get total daily balance
@@ -62,6 +60,8 @@ total_balance_df = db.consolidate(
     file_name_2='outputs/daily_acct_balance_CLG_GBM.csv',
     sum_col_name='Tot_Acct_Portafolio_MXN')
 
+# Outputs
+#########
 # Output to CSV
 total_balance_df.to_csv(
     "outputs/daily_acct_balance_CLG_AllAccounts.csv",
@@ -72,7 +72,7 @@ total_balance_df2 = db.create_df(
     'outputs/daily_acct_balance_CLG_AllAccounts.csv')
 
 total_balance_df2.to_sql(
-    name='daily_acct_balance_CLG_AllAccounts',  # Table name
+    name='daily_acct_balance_CLG_AllAccounts',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')

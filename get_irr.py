@@ -4,7 +4,6 @@ from sqlalchemy import create_engine
 from scripts import irr_calculations as irr
 from scripts import daily_balance as db
 
-
 # MySQL Connection Settings
 ###########################
 engine = create_engine(
@@ -43,9 +42,10 @@ irr_value = irr.calculate_xirr(
     contributions_df=db.create_df(
         'outputs/irr_contributions_CLG_AllAccounts.csv'),
     balance_col_name='Tot_Acct_Portafolio_MXN',
-    contrib_col_name='Tot_Contribuciones_MXN'
-)
+    contrib_col_name='Tot_Contribuciones_MXN')
 
+# Outputs
+#########
 # Save value to CSV
 today = (f'{date.today():%Y-%m-%d}')
 data = [today, irr_value]
@@ -55,7 +55,7 @@ df.to_csv("outputs/irr_xirr_CLG.csv", index=False)
 # Save value to MySQL
 xirr = db.create_df('outputs/irr_xirr_CLG.csv')
 xirr.to_sql(
-    name='irr_xirr_CLG',  # Table name
+    name='irr_xirr_CLG',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')

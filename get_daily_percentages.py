@@ -9,13 +9,11 @@ engine = create_engine(
 
 # Imports
 #########
-
 # Import CSV files and create data frames
 subtotals_df = db.create_df('outputs/daily_subtotals_CLG_AllAccounts.csv')
 
 # Portfolio Calculations
 ########################
-
 # Total Equity (%)
 subtotals_df['Tot_Equity_PCT'] = (
     subtotals_df['Tot_Equity'] / subtotals_df['Tot_Portfolio'])
@@ -38,7 +36,6 @@ subtotals_df.drop(subtotals_df.iloc[:, 0:16], inplace=True, axis=1)
 
 # Outputs
 #########
-
 # Output to CSV
 subtotals_df.to_csv(
     "daily_percentages_CLG_GBM",

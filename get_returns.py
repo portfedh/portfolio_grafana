@@ -2,7 +2,6 @@ from sqlalchemy import create_engine
 from scripts import daily_balance as db
 from scripts import return_calculations as rc
 
-
 # MySQL Connection Settings
 ###########################
 engine = create_engine(
@@ -18,8 +17,10 @@ returns_df = rc.returns(
     col_contributions='Tot_Contribuciones_MXN',
     col_balance='Tot_Acct_Portafolio_MXN',
     col_subtraction='Tot_Portfolio_Return_MXN',
-    col_ratio='Tot_Portfolio_Return_Percent'
-)
+    col_ratio='Tot_Portfolio_Return_Percent')
+
+# Outputs
+#########
 # Save value to CSV
 returns_df.to_csv(
     "outputs/returns_portfolio_CLG_AllAccounts.csv",
@@ -28,7 +29,7 @@ returns_df.to_csv(
 # Save value to MySQL
 returns_mysql = db.create_df('outputs/returns_portfolio_CLG_AllAccounts.csv')
 returns_mysql.to_sql(
-    name='returns_portfolio_CLG_AllAccounts',  # Table name
+    name='returns_portfolio_CLG_AllAccounts',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')

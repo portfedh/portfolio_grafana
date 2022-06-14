@@ -3,7 +3,6 @@ import set_analysis_dates as sad
 from sqlalchemy import create_engine
 from scripts import daily_balance as db
 
-
 # MySQL Connection Settings
 ###########################
 engine = create_engine(
@@ -37,6 +36,8 @@ df_interpol = closing_prices.interpolate(
     limit_direction='both')
 df_interpol.tail(10)
 
+# Outputs
+#########
 # Output to CSV
 df_interpol.to_csv(
     "outputs/daily_prices_interpolated_CLG_GBM.csv",
