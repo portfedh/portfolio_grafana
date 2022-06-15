@@ -38,7 +38,7 @@ subtotals_df.drop(subtotals_df.iloc[:, 0:16], inplace=True, axis=1)
 #########
 # Output to CSV
 subtotals_df.to_csv(
-    "daily_percentages_CLG_GBM",
+    "outputs/daily_percentages_CLG_GBM.csv",
     index=True,
     index_label='Date')
 
