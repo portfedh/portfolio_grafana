@@ -10,7 +10,7 @@ engine = create_engine(
 # Create Portfolio Returns
 ##########################
 returns_df = rc.returns(
-    contributions=db.create_df(
+    returns=db.create_df(
         'outputs/daily_contributions_CLG_AllAccounts.csv'),
     balance=db.create_df(
         'outputs/daily_acct_balance_CLG_AllAccounts.csv'),

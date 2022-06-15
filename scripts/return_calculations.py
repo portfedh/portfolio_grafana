@@ -18,47 +18,47 @@ def returns(
 
         Parameters:
         -----------
-            file1: pd.
+            contributions: pd.
                 Consolidated Daily Contributions.
-            file2: pd.
+            balance: pd.
                 Consolidated Daily Account Balance.
-            col_name1: str.
+            col_contributions: str.
                 Column name from file 1.
-            col_name2: str.
+            col_balance: str.
                 Column name from file 2.
-            col_name3: str.
+            col_subtraction: str.
                 Column name for subtraction:
                     (col_name2 - col_name1).
-            col_name4: str.
+            col_ratio: str.
                 Column name for ratio:
                     (col_name2 / col_name1) - 1.
 
         Returns:
         --------
-            file1: pd.
+            returns: pd.
                 Dataframe with 3 columns:
                     'Date' column as index in datetime format.
-                    col_name3: int. Column with product of column2 - column1.
-                    col_name4: float. Column with ratio (column2 / column1)-1.
+                    col_subtraction: int. Product of (balance - contributions).
+                    col_ratio: float. Ratio of (balance / contributions)-1.
     """
     # Merge two files
-    contributions = contributions.merge(
+    returns = contributions.merge(
         balance,
         left_index=True,
         right_index=True)
     # Add Column with the subtraction of column2 from column1
-    contributions[col_subtraction] = (
-        contributions[col_balance] - contributions[col_contributions])
+    returns[col_subtraction] = (
+        returns[col_balance] - returns[col_contributions])
     # Save as Integer
-    contributions[col_subtraction] = (
-        contributions[col_subtraction].astype('int'))
+    returns[col_subtraction] = (
+        returns[col_subtraction].astype('int'))
     # Add Column with the ratio of column2 from column1
-    contributions[col_ratio] = (
-        (contributions[col_balance] / contributions[col_contributions])-1)
+    returns[col_ratio] = (
+        (returns[col_balance] / returns[col_contributions])-1)
     # Drop individual columns
-    contributions.drop(
+    returns.drop(
         [col_contributions, col_balance],
         axis=1,
         inplace=True)
     # Return dataframe
-    return contributions
+    return returns
