@@ -10,7 +10,7 @@ engine = create_engine(
 ###############
 # Get contribution balance
 contribution_balance_df = db.create_df(
-    'inputs/contributions_CLG_CETES.csv')
+    'inputs/clg/contributions_CLG_CETES.csv')
 
 # Create daily balance.
 daily_contribution_balance_df = db.daily_balance(
@@ -34,7 +34,7 @@ daily_contribution_balance_df.to_sql(
 ###############
 # Get monthly balance
 contribution_balance_df2 = db.create_df(
-    'inputs/contributions_CLG_GBM.csv')
+    'inputs/clg/contributions_CLG_GBM.csv')
 
 # Create daily balance
 daily_contribution_balance_df2 = db.daily_balance(

@@ -12,8 +12,8 @@ engine = create_engine(
 # Create Consolidated Contributions File
 ########################################
 cont_file = irr.irr_contributions_df(
-    file1='inputs/contributions_CLG_CETES.csv',
-    file2='inputs/contributions_CLG_GBM.csv',
+    file1='inputs/clg/contributions_CLG_CETES.csv',
+    file2='inputs/clg/contributions_CLG_GBM.csv',
     col_name1='Contribuciones_Cetes_MXN',
     col_name2='Contribuciones_GBM_MXN',
     sum_col_name='Tot_Contribuciones_MXN')
@@ -24,8 +24,8 @@ cont_file.to_csv(
 # Create Consolidated Monthly Account Balance
 #############################################
 consolidated_df = irr.irr_monthly_balance_df(
-    file1=db.create_df('inputs/monthly_account_balance_CLG_CETES.csv'),
-    file2=db.create_df('inputs/monthly_account_balance_CLG_GBM.csv'),
+    file1=db.create_df('inputs/clg/monthly_account_balance_CLG_CETES.csv'),
+    file2=db.create_df('inputs/clg/monthly_account_balance_CLG_GBM.csv'),
     col_name1='Tot_Acct_Cetes_MXN',
     col_name2='Tot_Acct_GBM_MXN',
     sum_col_name='Tot_Acct_Portafolio_MXN')

@@ -11,7 +11,7 @@ engine = create_engine(
 # Importing Trade History GBM
 #############################
 # Get trade history
-trade_hist_df = db.create_df('inputs/trade_history_CLG_GBM.csv')
+trade_hist_df = db.create_df('inputs/clg/trade_history_CLG_GBM.csv')
 
 # Transform Shares column from string to integer
 trade_hist_df['Shares'] = trade_hist_df['Shares'].astype(int)

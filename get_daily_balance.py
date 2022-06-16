@@ -9,7 +9,7 @@ engine = create_engine(
 # CETES Account
 ###############
 # Get monthly balance
-balance_df2 = db.create_df('inputs/monthly_account_balance_CLG_CETES.csv')
+balance_df2 = db.create_df('inputs/clg/monthly_account_balance_CLG_CETES.csv')
 
 # Create daily balance
 daily_balance_df2 = db.daily_balance(
@@ -32,7 +32,7 @@ daily_balance_df2.to_sql(
 # GBM Account
 #############
 # Get monthly balance
-balance_df = db.create_df('inputs/monthly_account_balance_CLG_GBM.csv')
+balance_df = db.create_df('inputs/clg/monthly_account_balance_CLG_GBM.csv')
 
 # Create daily balance
 daily_balance_df = db.daily_balance(
