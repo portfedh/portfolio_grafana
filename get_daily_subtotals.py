@@ -71,6 +71,30 @@ df_interpol['Sub_SHV'] = (
     df_interpol['Q_SHV'] *
     df_interpol['P_SHV'])
 
+df_interpol['Sub_BABAN'] = (
+    df_interpol['Q_BABAN'] *
+    df_interpol['P_BABAN'])
+
+df_interpol['Sub_PG'] = (
+    df_interpol['Q_PG'] *
+    df_interpol['P_PG'])
+
+df_interpol['Sub_FB'] = (
+    df_interpol['Q_FB'] *
+    df_interpol['P_FB'])
+
+df_interpol['Sub_INTC'] = (
+    df_interpol['Q_INTC'] *
+    df_interpol['P_INTC'])
+
+df_interpol['Sub_BAC'] = (
+    df_interpol['Q_BAC'] *
+    df_interpol['P_BAC'])
+
+df_interpol['Sub_MU'] = (
+    df_interpol['Q_MU'] *
+    df_interpol['P_MU'])
+
 # Total Fixed Income GBM ($)
 df_interpol['Tot_FixedIncome_GBM'] = (
     df_interpol['Sub_CETETRCISHRS'] +
@@ -90,7 +114,13 @@ df_interpol['Tot_Equity'] = (
     df_interpol['Sub_VGK'] +
     df_interpol['Sub_VPL'] +
     df_interpol['Sub_IEMG'] +
-    df_interpol['Sub_MCHI'])
+    df_interpol['Sub_MCHI'] +
+    df_interpol['Sub_BABAN'] +
+    df_interpol['Sub_PG'] +
+    df_interpol['Sub_FB'] +
+    df_interpol['Sub_INTC'] +
+    df_interpol['Sub_BAC'] +
+    df_interpol['Sub_MU'])
 
 # Total Alternatives ($)
 df_interpol['Tot_Alternatives'] = (
