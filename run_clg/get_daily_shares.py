@@ -28,7 +28,7 @@ daily_share_quantity_df = ds.create_daily_share_quantity(
     date_range=sad.date_range,
     trade_history=trade_hist_df,
     ticker_list=yftickers,
-    daily_shares=share_quantity_df)
+    df=share_quantity_df)
 
 # Outputs
 #########

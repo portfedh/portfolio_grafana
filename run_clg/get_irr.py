@@ -41,8 +41,8 @@ irr_value = irr.calculate_xirr(
         'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'),
     contributions_df=db.create_df(
         'outputs/irr_contributions_CLG_AllAccounts.csv'),
-    balance_col_name='Tot_Acct_Portafolio_MXN',
-    contrib_col_name='Tot_Contribuciones_MXN')
+    bal_column='Tot_Acct_Portafolio_MXN',
+    cont_column='Tot_Contribuciones_MXN')
 
 # Outputs
 #########

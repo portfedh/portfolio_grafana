@@ -1,3 +1,19 @@
+# irr_calculations.py
+"""Provide calculations to calculate the portfolio IRR.
+
+Uses consolidated contributions and account balance data frames.
+The module contains the following functions:
+
+- irr_contributions_df( file1, file2, col_name1, col_name2, sum_col_name):
+    Returns a consolidated constibutions df from two accounts.
+
+- irr_monthly_balance_df( file1, file2, col_name1, col_name2, sum_col_name):
+    Returns a consolidated monthly account balance from two accounts.
+
+- calculate_xirr( acct_balance_df, contributions_df, bal_column, cont_column):
+    Returns the xirr from consolidated contributions and account balance.
+"""
+
 import pandas as pd
 from pyxirr import xirr
 
@@ -14,23 +30,25 @@ def irr_contributions_df(
 
     From contribution files for individual accounts.
     Takes two df and returns a new df with the addition of both values.
+    Contributions are shown as negative numbers (-).
+    Distributions are shown as positive numbers (+).
+
         Parameters:
-        -----------
-            file1: str, Input.
+            file1:
                 String with contributions CSV 1 <path/filename.csv>.
-            file2: str, Input.
+            file2:
                 String with contributions CSV 2 <path/filename.csv>.
-            col_name1: str, Input.
+            col_name1:
                 String with column name for file 1 with contribution data.
-            col_name2: str, Input.
+            col_name2:
                 String with column name for file 2 with contribution data.
-            sum_col_name: str, Output.
-                String with column name for output DF with consolidated data.
+            sum_col_name:
+                String with column name for output df with consolidated data.
+
         Returns:
-        --------
-            result: pd
+            result:
                 'Date' column as the index, in datetime format.
-                 Column Values, with sum_col_name3 as column title, int.
+                Column values, with sum_col_name as column title.
     """
     # Import data
     df_1 = pd.read_csv(file1)
@@ -67,25 +85,25 @@ def irr_monthly_balance_df(
         sum_col_name: str
         ) -> 'pd':
     """
-    Creates a consolidated monthly account balance.
+    Returns a consolidated monthly account balance from two accounts.
 
-    From monthly account balance files for individual accounts.
-    Takes two df and returns a new df with the addition of both values.
+    Uses monthly account balance dataframes from two accounts.
+    Returns a new df with the addition of both values.
+
         Parameters:
-        -----------
-            file1: str, Input.
-                Contributions CSV 1 <path/filename.csv>.
-            file2: str, Input.
-                Contributions CSV 2 <path/filename.csv>.
-            col_name1: str, Input.
+            file1:
+                Account balance CSV 1 <path/filename.csv>.
+            file2:
+                Account balance CSV 2 <path/filename.csv>.
+            col_name1:
                 Column name for file 1 with account balance data.
-            col_name2: str, Input.
+            col_name2:
                 Column name for file 2 with account balance data.
-            sum_col_name: str, Output.
-                Column name for output DF with consolidated data.
+            sum_col_name:
+                Column name for output  with consolidated data.
+
         Returns:
-        --------
-            result: pd
+            result:
                 'Date' column as the index, in datetime format.
                  Column Values, with sum_col_name as column title, int.
     """
@@ -104,42 +122,42 @@ def irr_monthly_balance_df(
 def calculate_xirr(
         acct_balance_df: 'pd',
         contributions_df: 'pd',
-        balance_col_name: str,
-        contrib_col_name: str
+        bal_column: str,
+        cont_column: str
         ) -> float:
     """
     Calculates the XIRR from contributions and account balance dataframes.
 
     Uses consolidated contributions and consolidated account balances.
-    Takes two df and returns the XIRR as a float number.
+    Returns the XIRR as a float number.
+
         Parameters:
-        -----------
-            acct_balance_file: df, Input.
-                Consolidated account balances.
-            contributions_file: df, Input.
-                Consolidated contributions.
-            balance_col_name: str, Input.
-                Column name for acct_balance_file with account balance data.
-            contrib_col_name: str, Input.
-                Column name for contributions_file with contribution data.
+            acct_balance_file:
+                Consolidated account balances df.
+            contributions_file: Input.
+                Consolidated contributions df.
+            bal_column:
+                Column name containing values in acct_balance_df.
+            cont_column: Input.
+                Column name containing values in contributions_df.
+
         Returns:
-        --------
-            xirr_result: float
+            xirr_result:
                 XIRR value expressed as a decimal number.
-                Must be multiplied by 100 to get as percentage.
+                Must be multiplied by 100 to expess as percentage.
     """
     # Get last value from account balances
     last_balance_value = acct_balance_df.copy(deep=True)
     last_balance_value = last_balance_value.iloc[-1:]
     # Rename column to match contributions df
     last_balance_value.rename(
-        columns={balance_col_name: contrib_col_name},
+        columns={bal_column: cont_column},
         inplace=True)
     # Concatenate dataframes
     irr_df = pd.concat([contributions_df, last_balance_value])
     # Separate df into two lists
     pd_List1 = irr_df.index.tolist()
-    pd_List2 = list(irr_df[contrib_col_name])
+    pd_List2 = list(irr_df[cont_column])
     # Pass lists into xirr function
     xirr_result = xirr(pd_List1, pd_List2)
     return xirr_result

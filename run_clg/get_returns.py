@@ -14,9 +14,9 @@ returns_df = rc.returns(
         'outputs/daily_contributions_CLG_AllAccounts.csv'),
     balance=db.create_df(
         'outputs/daily_acct_balance_CLG_AllAccounts.csv'),
-    col_contributions='Tot_Contribuciones_MXN',
+    col_contrb='Tot_Contribuciones_MXN',
     col_balance='Tot_Acct_Portafolio_MXN',
-    col_subtraction='Tot_Portfolio_Return_MXN',
+    col_sub='Tot_Portfolio_Return_MXN',
     col_ratio='Tot_Portfolio_Return_Percent')
 
 # Outputs
