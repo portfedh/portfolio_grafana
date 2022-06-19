@@ -1,17 +1,19 @@
 # irr_calculations.py
-"""Provide calculations to calculate the portfolio IRR.
+"""Calculate the IRR of the portfolio.
 
-Uses consolidated contributions and account balance data frames.
+Uses consolidated contributions and the last value in
+the consolidated account balance.
+
 The module contains the following functions:
 
-- irr_contributions_df( file1, file2, col_name1, col_name2, sum_col_name):
+- irr_contributions_df(file1, file2, col_name1, col_name2, sum_col_name):
     Returns a consolidated constibutions df from two accounts.
 
 - irr_monthly_balance_df( file1, file2, col_name1, col_name2, sum_col_name):
     Returns a consolidated monthly account balance from two accounts.
 
 - calculate_xirr( acct_balance_df, contributions_df, bal_column, cont_column):
-    Returns the xirr from consolidated contributions and account balance.
+    Returns the xirr of the portfolio using contributions and account balances.
 """
 
 import pandas as pd
@@ -30,18 +32,22 @@ def irr_contributions_df(
 
     From contribution files for individual accounts.
     Takes two df and returns a new df with the addition of both values.
-    Contributions are shown as negative numbers (-).
-    Distributions are shown as positive numbers (+).
+        - Contributions are shown as negative numbers (-).
+        - Distributions are shown as positive numbers (+).
 
         Parameters:
             file1:
-                String with contributions CSV 1 <path/filename.csv>.
+                String with contributions csv file 1 <path/filename.csv>.
+
             file2:
-                String with contributions CSV 2 <path/filename.csv>.
+                String with contributions csv file 2 <path/filename.csv>.
+
             col_name1:
                 String with column name for file 1 with contribution data.
+
             col_name2:
                 String with column name for file 2 with contribution data.
+
             sum_col_name:
                 String with column name for output df with consolidated data.
 
@@ -92,15 +98,19 @@ def irr_monthly_balance_df(
 
         Parameters:
             file1:
-                Account balance CSV 1 <path/filename.csv>.
+                Account balance csv file 1 <path/filename.csv>.
+
             file2:
-                Account balance CSV 2 <path/filename.csv>.
+                Account balance csv file 2 <path/filename.csv>.
+
             col_name1:
                 Column name for file 1 with account balance data.
+
             col_name2:
                 Column name for file 2 with account balance data.
+
             sum_col_name:
-                Column name for output  with consolidated data.
+                Column name for output with consolidated data.
 
         Returns:
             result:
@@ -126,25 +136,28 @@ def calculate_xirr(
         cont_column: str
         ) -> float:
     """
-    Calculates the XIRR from contributions and account balance dataframes.
+    Calculates the XIRR of a portfolio from contributions and account balance.
 
     Uses consolidated contributions and consolidated account balances.
     Returns the XIRR as a float number.
 
         Parameters:
-            acct_balance_file:
-                Consolidated account balances df.
-            contributions_file: Input.
-                Consolidated contributions df.
+            acct_balance_df:
+                - Consolidated account balances df.
+
+            contributions_df: Input.
+                - Consolidated contributions df.
+
             bal_column:
-                Column name containing values in acct_balance_df.
+                - Column name containing values in acct_balance_df.
+
             cont_column: Input.
-                Column name containing values in contributions_df.
+                - Column name containing values in contributions_df.
 
         Returns:
             xirr_result:
-                XIRR value expressed as a decimal number.
-                Must be multiplied by 100 to expess as percentage.
+                - XIRR value expressed as a decimal number.
+                - Must be multiplied by 100 to expess as percentage.
     """
     # Get last value from account balances
     last_balance_value = acct_balance_df.copy(deep=True)

@@ -1,9 +1,7 @@
 # return_calculations.py
-"""Calculates a simple return for the portfolio.
+"""Calculates a simple return for the portfolio in $ and % amounts.
 
-Te model calculates the following:
-Calculates Return$ = (Balance - Contributions).
-Calculates Return% = (Balance / Contributions) -1.
+The module contains the following functions:
 
 - returns(contributions, balance, col_contrb, col_balance, col_sub, col_ratio):
     Calculates a simple return for the portfolio in $ ammount and % ammount.
@@ -21,30 +19,36 @@ def returns(
         col_ratio: str
         ) -> 'pd':
     """
-    Calculates a simple return for the portfolio.
+    Calculates a simple return for the portfolio in $ and % amounts.
 
-    Calculates Return$ = (Balance - Contributions).
-    Calculates Return% = (Balance / Contributions) -1.
+    Calculations are as follows:
+        Return $ = (Balance - Contributions).
+        Return % = (Balance / Contributions) - 1.
 
         Parameters:
             contributions:
-                Consolidated daily contributions dataframe.
+                - Consolidated daily contributions dataframe.
+
             balance:
-                Consolidated daily account balance dataframe.
+                - Consolidated daily account balance dataframe.
+
             col_contrb:
-                Column name from file 1.
+                - Column name from file 1 with values.
+
             col_balance:
-                Column name from file 2.
+                - Column name from file 2 with values.
+
             col_sub:
-                Column name for subtraction:
+                - Column name for subtraction results:
                     (col_name2 - col_name1).
+
             col_ratio:
-                Column name for ratio:
+                - Column name for ratio results:
                     (col_name2 / col_name1) - 1.
 
         Returns:
             returns:
-                Dataframe with 3 columns:
+                - Dataframe with 3 columns:
                     'Date' column as index in datetime format.
                     col_sub: int. Product of (balance - contributions).
                     col_ratio: float. Ratio of (balance / contributions)-1.

@@ -1,19 +1,19 @@
 # daily_balance.py
-"""Provide calculations to get daily balances for all accounts.
+""" Get daily balances for all accounts.
 
-This module allows the user get daily balances for each account
-and consolidate  to get a total daily balance for all accounts.
+This module takes monthly balances for each account as inputs and
+consolidates them to return a total daily balance for all accounts.
 
 The module contains the following functions:
 
 - create_df(file_name):
-    Returns pandas df with values and dates in datetime format.
+    Returns an empty pandas df acepting values and dates in datetime format.
 
 - daily_balance(df, column_name, sum):
-    Returns daily values from monthly balance.
+    Returns a df with daily values from a monthly balance.
 
 - consolidate (file_name_1, file_name_2, sum_col_name):
-    Returns pandas df with added amounts of two daily balances.
+    Returns a pandas df with the added amounts of two account balances.
 """
 
 
@@ -23,18 +23,18 @@ import set_analysis_dates
 
 def create_df(file_name: str) -> 'pd':
     """
-    Takes a CSV file and returns a df with an index in datetime format.
+    Takes a csv file and returns a df with its index in datetime format.
 
-    Input CSV File must have two columns: Date column and value column.
+    Input csv file must have two columns: Date column and values column.
 
         Parameters:
             filename:
-                String with input CSV <path/filename.csv>.
+                - csv filename to import data: <path/filename.csv>.
 
         Returns:
             df: Dataframe with two columns:
-                'Date' column as the index, in datetime format.
-                Column Values, int or float.
+                - 'Date' column as the index, in datetime format.
+                - Column Values, int or float.
     """
     df = pd.read_csv(file_name)
     # Create list from 'Date' column
@@ -53,26 +53,28 @@ def create_df(file_name: str) -> 'pd':
 
 def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
     """
-    Will take the monthly account balance and produce a daily balance.
+    Takes as input a monthly account balance and produces a daily balance.
 
-    Takes a df with dates and values and returns a df with daily values.
-    Uses the return df from 'create_df function' as input.
+    Uses a df with dates and monthly values and returns a df with daily values.
+    Uses the output of create_df() function as input.
 
         Parameters:
             df:
-                Input Dataframe.
-                Must have a date column in datetime format.
-                Must have a value column.
+                - Input dataframe.
+                - Must contain a date column in datetime format.
+                - Must contain a column with values.
+
             column_name:
-                Must be equal to the name of the column in df.
+                - Must be the name of the column with values in df.
+
             sum:
-                True: Will add values up to each date.
-                False: Will append the latest value.
+                - True: Will add the values up to a certain date.
+                - False: Will append the latest value.
 
         Returns:
-            daily_df: pd.
+            daily_df:
                 'Date' column as index in datetime format.
-                column_name: int. Values
+                column_name: Values.
     """
     # Create output dataframe
     daily_df = pd.DataFrame(columns=[column_name])
@@ -103,22 +105,22 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
 
 def consolidate(file_name_1: str, file_name_2: str, sum_col_name: str) -> 'pd':
     """
-    Will consolidate the daily balance of two accounts and show total values.
-
-    Takes two df and returns a new df with the added column values.
+    The function takes two df and returns a df with the added column values.
 
         Parameters:
             file_name_1:
-                String with CSV <path/filename.csv>.
+                String with input csv file: <path/filename.csv>.
+
             file_name_2:
-                String with CSV <path/filename.csv>.
+                String with csv file: <path/filename.csv>.
+
             sum_col_name:
-                Name of the column that adds the values from file1 & file2.
+                Name of the column with added values from file1 & file2.
 
         Returns:
             df_total: df
                 'Date' column as index in datetime format.
-                sum_col_name: int. Added values
+                sum_col_name: Added values
     """
     # Get balances from CSVs
     df_1 = pd.read_csv(file_name_1)
