@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Cleaning outputs directory:"
+rm -v outputs/*
+
 echo "Setting Up Docker files:"
 docker-compose up -d
 sleep 5
