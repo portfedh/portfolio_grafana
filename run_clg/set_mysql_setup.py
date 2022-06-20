@@ -1,108 +1,70 @@
 import mysql.connector
 
+# Connect to database
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="password1")
+    host="localhost",
+    user="root",
+    password="password1")
 
+# Instantiate cursor
 mycursor = mydb.cursor()
 
 # Create Database
 mycursor.execute("DROP DATABASE IF EXISTS CLG_database")
 mycursor.execute("CREATE DATABASE CLG_database")
 
+# Use Database
+mycursor.execute("USE CLG_database")
+
+# Create Tables:
+# dict = {table_name: column_name}
+
+# Create Table: Daily account balance, Daily contributions
+int_dict = {
+    'daily_acct_balance_CLG_AllAccounts': 'Tot_Acct_Portafolio_MXN',
+    'daily_acct_balance_CLG_CETES': 'Tot_Acct_Cetes_MXN',
+    'daily_acct_balance_CLG_GBM': 'Tot_Acct_GBM_MXN',
+
+    'daily_contributions_CLG_AllAccounts': 'Tot_Contribuciones_MXN',
+    'daily_contributions_CLG_CETES': 'Contribuciones_Cetes_MXN',
+    'daily_contributions_CLG_GBM': 'Contribuciones_GBM_MXN',
+    }
+
+for x, y in int_dict.items():
+    mycursor.execute(f"DROP TABLE IF EXISTS {x}")
+    mycursor.execute(
+        f"CREATE TABLE {x} "
+        f"(Date TIMESTAMP, {y} INT)")
+
+# Create Table: IRR
+float_dict = {
+    'irr_xirr_CLG': 'XIRR',
+    'irr_contributions_CLG_AllAccounts': 'Tot_Contribuciones_MXN',
+    'irr_monthly_account_balance_CLG_AllAccounts': 'Tot_Acct_Portafolio_MXN',
+    }
+
+for x, y in float_dict.items():
+    mycursor.execute(f"DROP TABLE IF EXISTS {x}")
+    mycursor.execute(
+        f"CREATE TABLE {x} "
+        f"(Date TIMESTAMP, {y} FLOAT)")
+
+# Create Table: Returns
+return_dict = {
+    'returns_portfolio_CLG_AllAccounts':
+    ['Tot_Portfolio_Return_MXN', 'Tot_Portfolio_Return_Percent']
+    }
+
+for x, y in return_dict.items():
+    mycursor.execute(f"DROP TABLE IF EXISTS {x}")
+    mycursor.execute(
+        f"CREATE TABLE {x} "
+        f"(Date TIMESTAMP, {y[0]} INT, {y[1]} FLOAT)")
+
 # Show Databases
 # mycursor.execute("SHOW DATABASES")
 # for x in mycursor:
 #    print(x)
-
-# Use Database
-mycursor.execute("USE CLG_database")
-
-# Create Tables: Daily Account Balance
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_acct_balance_CLG_AllAccounts")
-mycursor.execute(
-    "CREATE TABLE \
-    daily_acct_balance_CLG_AllAccounts \
-    (Date TIMESTAMP, Tot_Acct_Portafolio_MXN INT)")
-
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_acct_balance_CLG_CETES")
-mycursor.execute(
-    "CREATE TABLE \
-    daily_acct_balance_CLG_CETES \
-    (Date TIMESTAMP, Tot_Acct_Cetes_MXN INT)")
-
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_acct_balance_CLG_GBM")
-mycursor.execute(
-    "CREATE TABLE \
-    daily_acct_balance_CLG_GBM \
-    (Date TIMESTAMP, Tot_Acct_GBM_MXN INT)")
-
-# Create Tables: Daily Contributions
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_contributions_CLG_AllAccounts")
-mycursor.execute(
-    "CREATE TABLE \
-    daily_contributions_CLG_AllAccounts \
-    (Date TIMESTAMP, Tot_Contribuciones_MXN INT)")
-
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_contributions_CLG_CETES")
-mycursor.execute(
-    "CREATE TABLE \
-    daily_contributions_CLG_CETES \
-    (Date TIMESTAMP, Contribuciones_Cetes_MXN INT)")
-
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    daily_contributions_CLG_GBM")
-mycursor.execute(
-    "CREATE TABLE \
-    daily_contributions_CLG_GBM \
-    (Date TIMESTAMP, Contribuciones_GBM_MXN INT)")
-
-# Create Tables: IRR
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    irr_xirr_CLG")
-mycursor.execute(
-    "CREATE TABLE \
-    irr_xirr_CLG \
-    (Date TIMESTAMP, XIRR INT)")
-
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    irr_contributions_CLG_AllAccounts")
-mycursor.execute(
-    "CREATE TABLE \
-    irr_contributions_CLG_AllAccounts \
-    (Date TIMESTAMP, Tot_Contribuciones_MXN INT)")
-
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    irr_monthly_account_balance_CLG_AllAccounts")
-mycursor.execute(
-    "CREATE TABLE \
-    irr_monthly_account_balance_CLG_AllAccounts \
-    (Date TIMESTAMP, Tot_Acct_Portafolio_MXN INT)")
-
-# Create Tables: Returns
-mycursor.execute(
-    "DROP TABLE IF EXISTS \
-    returns_portfolio_CLG_AllAccounts")
-mycursor.execute(
-    "CREATE TABLE \
-    returns_portfolio_CLG_AllAccounts \
-    (Date TIMESTAMP, \
-    Tot_Portfolio_Return_MXN INT, Tot_Portfolio_Return_Percent FLOAT)")
 
 # Show tables
 # mycursor.execute("SHOW TABLES")
