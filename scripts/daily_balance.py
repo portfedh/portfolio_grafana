@@ -29,7 +29,8 @@ def create_df(file_name: str) -> 'pd':
 
         Parameters:
             filename:
-                - csv filename to import data: <path/filename.csv>.
+                - csv file name, including file extention.
+                  'path/filename.csv'
 
         Returns:
             df: Dataframe with two columns:
@@ -109,18 +110,20 @@ def consolidate(file_name_1: str, file_name_2: str, sum_col_name: str) -> 'pd':
 
         Parameters:
             file_name_1:
-                String with input csv file: <path/filename.csv>.
+                - csv file name, including file extention.
+                  'path/filename.csv'
 
             file_name_2:
-                String with csv file: <path/filename.csv>.
+                - csv file name, including file extention.
+                  'path/filename.csv'
 
             sum_col_name:
-                Name of the column with added values from file1 & file2.
+                - Name of the column with added values from file1 & file2.
 
         Returns:
             df_total: df
-                'Date' column as index in datetime format.
-                sum_col_name: Added values
+                - 'Date' column as index in datetime format.
+                - sum_col_name: Added values
     """
     # Get balances from CSVs
     df_1 = pd.read_csv(file_name_1)
