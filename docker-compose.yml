@@ -11,7 +11,7 @@
 services:
   my_sql:
   # container_name
-    image: portfedh/portfolio_dashboard:pcl_mysql
+    image: mysql
     ports:
       - "3306:3306"
     # host:container
