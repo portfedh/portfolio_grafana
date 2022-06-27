@@ -20,8 +20,8 @@ cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 shares_df = shares_df.add_prefix('Q_')
 prices_df = prices_df.add_prefix('P_')
 # Rename columns: Remove .MX to avoid problems in SQL
-shares_df.columns = shares_df.columns.str.rstrip('.MX')
-prices_df.columns = prices_df.columns.str.rstrip('.MX')
+shares_df.columns = shares_df.columns.str.removesuffix('.MX')
+prices_df.columns = prices_df.columns.str.removesuffix('.MX')
 # Merge Dataframes
 new_df = pd.concat(([shares_df, prices_df, cetes_df]), axis=1)
 
