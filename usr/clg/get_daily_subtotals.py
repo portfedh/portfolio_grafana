@@ -31,69 +31,14 @@ df_interpol = new_df.interpolate(method='linear', limit_direction='both')
 # Portfolio Calculations
 ########################
 # Subtotals ($)
-df_interpol['Sub_VOO'] = (
-    df_interpol['Q_VOO'] *
-    df_interpol['P_VOO'])
+ticker_list = ['VOO', 'VGK', 'VPL', 'IEMG', 'MCHI', 'GOLDN', 'FIBRAPL14',
+               'CETETRCISHRS', 'IB1MXXN', 'SHV', 'BABAN', 'PG', 'FB', 'INTC',
+               'BAC', 'MU']
 
-df_interpol['Sub_VGK'] = (
-    df_interpol['Q_VGK'] *
-    df_interpol['P_VGK'])
-
-df_interpol['Sub_VPL'] = (
-    df_interpol['Q_VPL'] *
-    df_interpol['P_VPL'])
-
-df_interpol['Sub_IEMG'] = (
-    df_interpol['Q_IEMG'] *
-    df_interpol['P_IEMG'])
-
-df_interpol['Sub_MCHI'] = (
-    df_interpol['Q_MCHI'] *
-    df_interpol['P_MCHI'])
-
-df_interpol['Sub_GOLDN'] = (
-    df_interpol['Q_GOLDN'] *
-    df_interpol['P_GOLDN'])
-
-df_interpol['Sub_FIBRAPL14'] = (
-    df_interpol['Q_FIBRAPL14'] *
-    df_interpol['P_FIBRAPL14'])
-
-df_interpol['Sub_CETETRCISHRS'] = (
-    df_interpol['Q_CETETRCISHRS'] *
-    df_interpol['P_CETETRCISHRS'])
-
-df_interpol['Sub_IB1MXXN'] = (
-    df_interpol['Q_IB1MXXN'] *
-    df_interpol['P_IB1MXXN'])
-
-df_interpol['Sub_SHV'] = (
-    df_interpol['Q_SHV'] *
-    df_interpol['P_SHV'])
-
-df_interpol['Sub_BABAN'] = (
-    df_interpol['Q_BABAN'] *
-    df_interpol['P_BABAN'])
-
-df_interpol['Sub_PG'] = (
-    df_interpol['Q_PG'] *
-    df_interpol['P_PG'])
-
-df_interpol['Sub_FB'] = (
-    df_interpol['Q_FB'] *
-    df_interpol['P_FB'])
-
-df_interpol['Sub_INTC'] = (
-    df_interpol['Q_INTC'] *
-    df_interpol['P_INTC'])
-
-df_interpol['Sub_BAC'] = (
-    df_interpol['Q_BAC'] *
-    df_interpol['P_BAC'])
-
-df_interpol['Sub_MU'] = (
-    df_interpol['Q_MU'] *
-    df_interpol['P_MU'])
+for x in ticker_list:
+    df_interpol[f'Sub_{x}'] = (
+        df_interpol[f'Q_{x}'] *
+        df_interpol[f'P_{x}'])
 
 # Total Fixed Income GBM ($)
 df_interpol['Tot_FixedIncome_GBM'] = (
