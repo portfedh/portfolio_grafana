@@ -4,8 +4,8 @@ from scripts import return_calculations as rc
 
 # MySQL Connection Settings
 ###########################
-engine = create_engine(
-    'mysql+pymysql://root:password1@localhost:3306/PCL_database')
+url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
+engine = create_engine(url)
 
 # Create Portfolio Returns
 ##########################

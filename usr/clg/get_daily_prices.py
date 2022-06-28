@@ -5,8 +5,8 @@ from scripts import daily_balance as db
 
 # MySQL Connection Settings
 ###########################
-engine = create_engine(
-    'mysql+pymysql://root:password1@localhost:3306/CLG_database')
+url = 'mysql+pymysql://root:password1@localhost:3306/CLG_database'
+engine = create_engine(url)
 
 # Importing Trade History GBM
 #############################
