@@ -1,8 +1,9 @@
 import pandas as pd
 from datetime import date
 from sqlalchemy import create_engine
-from scripts import irr_calculations as irr
 from scripts import daily_balance as db
+from scripts import irr_calculations as irr
+
 
 # MySQL Connection Settings
 ###########################
@@ -29,6 +30,7 @@ consolidated_df = irr.irr_monthly_balance_df(
     col_name1='Tot_Acct_Cetes_MXN',
     col_name2='Tot_Acct_GBM_MXN',
     sum_col_name='Tot_Acct_Portafolio_MXN')
+
 # Save value to CSV
 consolidated_df.to_csv(
     "outputs/irr_monthly_account_balance_PCL_AllAccounts.csv",
@@ -54,6 +56,7 @@ df.to_csv("outputs/irr_xirr_PCL.csv", index=False)
 
 # Save value to MySQL
 xirr = db.create_df('outputs/irr_xirr_PCL.csv')
+
 xirr.to_sql(
     name='irr_xirr_PCL',
     con=engine,

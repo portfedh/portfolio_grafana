@@ -33,7 +33,6 @@ closing_prices.to_csv(filename1, index=True, index_label='Date')
 df_interpol = closing_prices.interpolate(
     method='linear',
     limit_direction='both')
-df_interpol.tail(10)
 
 # Outputs
 #########
