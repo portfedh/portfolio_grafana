@@ -34,8 +34,6 @@ df_interpol = closing_prices.interpolate(
     method='linear',
     limit_direction='both')
 
-# Outputs
-#########
 # Output to CSV
 filename2 = 'outputs/daily_prices_interpolated_PCL_GBM.csv'
 df_interpol.to_csv(filename2, index=True, index_label='Date')

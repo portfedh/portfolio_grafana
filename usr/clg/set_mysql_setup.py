@@ -59,13 +59,3 @@ for x, y in return_dict.items():
     mycursor.execute(
         f"CREATE TABLE {x} "
         f"(Date TIMESTAMP, {y[0]} INT, {y[1]} FLOAT)")
-
-# Show Databases
-# mycursor.execute("SHOW DATABASES")
-# for x in mycursor:
-#    print(x)
-
-# Show tables
-# mycursor.execute("SHOW TABLES")
-# for x in mycursor:
-#     print(x)
