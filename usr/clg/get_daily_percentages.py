@@ -37,14 +37,14 @@ subtotals_df.drop(subtotals_df.iloc[:, 0:16], inplace=True, axis=1)
 # Outputs
 #########
 # Output to CSV
-subtotals_df.to_csv(
-    "outputs/daily_percentages_CLG_GBM.csv",
-    index=True,
-    index_label='Date')
+filename = 'outputs/daily_percentages_CLG_GBM.csv'
+subtotals_df.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
+table_name = 'daily_percentages_CLG_GBM'
 subtotals_df.to_sql(
-    name='daily_percentages_CLG_GBM',
+    name=table_name,
     con=engine,
     if_exists='replace',
-    index=True, index_label='Date')
+    index=True,
+    index_label='Date')

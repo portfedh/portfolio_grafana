@@ -24,7 +24,6 @@ shares_df.columns = shares_df.columns.str.removesuffix('.MX')
 prices_df.columns = prices_df.columns.str.removesuffix('.MX')
 # Merge Dataframes
 new_df = pd.concat(([shares_df, prices_df, cetes_df]), axis=1)
-
 # Interpolate missing values (prices are NaN on weekend dates)
 df_interpol = new_df.interpolate(method='linear', limit_direction='both')
 
@@ -79,23 +78,21 @@ df_interpol['Tot_Portfolio'] = (
     df_interpol['Tot_Alternatives'])
 
 # Reorder Column Position
+# Re-check if new tickers are added.
 my_column = df_interpol.pop('Tot_Acct_Cetes_MXN')
 df_interpol.insert(31, my_column.name, my_column)
 
 # Remove Quantity and Price Columns
+# Re-check if new tickers are added.
 df_interpol.drop(df_interpol.iloc[:, 0:20], inplace=True, axis=1)
 
 # Outputs
 #########
 # Output to CSV
-df_interpol.to_csv(
-    "outputs/daily_subtotals_CLG_AllAccounts.csv",
-    index=True,
-    index_label='Date')
+filename = 'outputs/daily_subtotals_CLG_AllAccounts.csv'
+df_interpol.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
-df_interpol.to_sql(
-    name='daily_subtotals_CLG_GBM',
-    con=engine,
-    if_exists='replace',
-    index=True, index_label='Date')
+table_name = 'daily_subtotals_CLG_GBM'
+df_interpol.to_sql(name=table_name, con=engine, if_exists='replace',
+                   index=True, index_label='Date')

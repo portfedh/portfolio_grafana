@@ -18,7 +18,6 @@ trade_hist_df['Shares'] = trade_hist_df['Shares'].astype(int)
 
 # Create ticker lists
 yftickers = list(trade_hist_df['Yfinance_Ticker'].unique())
-# tickers = list(trade_hist_df['Ticker'].unique())
 
 # Create empty share quantity dataframe
 share_quantity_df = ds.create_share_quantity_df(yftickers)
@@ -33,13 +32,14 @@ daily_share_quantity_df = ds.create_daily_share_quantity(
 # Outputs
 #########
 # Output to CSV
-daily_share_quantity_df.to_csv(
-    "outputs/daily_share_quantity_PCL_GBM.csv",
-    index=True, index_label='Date')
+filename = 'outputs/daily_share_quantity_PCL_GBM.csv'
+daily_share_quantity_df.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
+table_name = 'daily_share_quantity_PCL_GBM'
 daily_share_quantity_df.to_sql(
-    name='daily_share_quantity_PCL_GBM',
+    name=table_name,
     con=engine,
     if_exists='replace',
-    index=True, index_label='Date')
+    index=True,
+    index_label='Date')

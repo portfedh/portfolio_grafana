@@ -26,9 +26,8 @@ prices = yf.download(yftickers, start=sad.start_date, end=sad.end_date)
 closing_prices = prices.Close
 
 # Output to CSV
-closing_prices.to_csv(
-    "outputs/daily_prices_original_PCL_GBM.csv",
-    index=True, index_label='Date')
+filename1 = "outputs/daily_prices_original_PCL_GBM.csv"
+closing_prices.to_csv(filename1, index=True, index_label='Date')
 
 # Interpolate missing values
 df_interpol = closing_prices.interpolate(
@@ -39,13 +38,14 @@ df_interpol.tail(10)
 # Outputs
 #########
 # Output to CSV
-df_interpol.to_csv(
-    "outputs/daily_prices_interpolated_PCL_GBM.csv",
-    index=True, index_label='Date')
+filename2 = 'outputs/daily_prices_interpolated_PCL_GBM.csv'
+df_interpol.to_csv(filename2, index=True, index_label='Date')
 
 # Output to MySQL
+table_name = 'daily_prices_PCL_GBM'
 closing_prices.to_sql(
-    name='daily_prices_PCL_GBM',
+    name=table_name,
     con=engine,
     if_exists='replace',
-    index=True, index_label='Date')
+    index=True,
+    index_label='Date')

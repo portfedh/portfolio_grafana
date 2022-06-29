@@ -22,14 +22,11 @@ returns_df = rc.returns(
 # Outputs
 #########
 # Save value to CSV
-returns_df.to_csv(
-    "outputs/returns_portfolio_PCL_AllAccounts.csv",
-    index=True, index_label='Date')
+filename = 'outputs/returns_portfolio_PCL_AllAccounts.csv'
+returns_df.to_csv(filename, index=True, index_label='Date')
 
 # Save value to MySQL
-returns_mysql = db.create_df('outputs/returns_portfolio_PCL_AllAccounts.csv')
-returns_mysql.to_sql(
-    name='returns_portfolio_PCL_AllAccounts',
-    con=engine,
-    if_exists='replace',
-    index=True, index_label='Date')
+returns_mysql = db.create_df(filename)
+table_name = 'returns_portfolio_PCL_AllAccounts'
+returns_mysql.to_sql(name=table_name, con=engine, if_exists='replace',
+                     index=True, index_label='Date')

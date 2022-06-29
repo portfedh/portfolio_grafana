@@ -18,9 +18,8 @@ daily_balance_df2 = db.daily_balance(
     sum=False)
 
 # Output to CSV
-daily_balance_df2.to_csv(
-    "outputs/daily_acct_balance_PCL_CETES.csv",
-    index=True, index_label='Date')
+filename1 = 'outputs/daily_acct_balance_PCL_CETES.csv'
+daily_balance_df2.to_csv(filename1, index=True, index_label='Date')
 
 # Output to MySQL
 daily_balance_df2.to_sql(
@@ -41,9 +40,8 @@ daily_balance_df = db.daily_balance(
     sum=False)
 
 # Output to CSV
-daily_balance_df.to_csv(
-    "outputs/daily_acct_balance_PCL_GBM.csv",
-    index=True, index_label='Date')
+filename2 = 'outputs/daily_acct_balance_PCL_GBM.csv'
+daily_balance_df.to_csv(filename2, index=True, index_label='Date')
 
 # Output to MySQL
 daily_balance_df.to_sql(
@@ -60,16 +58,12 @@ total_balance_df = db.consolidate(
     file_name_2='outputs/daily_acct_balance_PCL_GBM.csv',
     sum_col_name='Tot_Acct_Portafolio_MXN')
 
-# Outputs
-#########
 # Output to CSV
-total_balance_df.to_csv(
-    "outputs/daily_acct_balance_PCL_AllAccounts.csv",
-    index=False)
+filename3 = 'outputs/daily_acct_balance_PCL_AllAccounts.csv'
+total_balance_df.to_csv(filename3, index=False)
 
 # Output to MySQL
-total_balance_df2 = db.create_df(
-    'outputs/daily_acct_balance_PCL_AllAccounts.csv')
+total_balance_df2 = db.create_df(filename3)
 
 total_balance_df2.to_sql(
     name='daily_acct_balance_PCL_AllAccounts',
