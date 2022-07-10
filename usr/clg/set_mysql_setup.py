@@ -38,9 +38,7 @@ for x, y in int_dict.items():
         f"(Date TIMESTAMP, {y} INT)")
 
 # Create Float Table: XIRR
-float_dict = {
-    'irr_xirr_CLG': 'XIRR',
-    }
+float_dict = {'irr_xirr_CLG': 'XIRR'}
 
 for x, y in float_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")

@@ -24,6 +24,7 @@ int_dict = {
     'daily_acct_balance_PCL_AllAccounts': 'Tot_Acct_Portafolio_MXN',
     'daily_acct_balance_PCL_CETES': 'Tot_Acct_Cetes_MXN',
     'daily_acct_balance_PCL_GBM': 'Tot_Acct_GBM_MXN',
+    'daily_acct_balance_PCL_IBKR': 'Tot_Acct_IBKR_MXN',
     'daily_contributions_PCL_AllAccounts': 'Tot_Contribuciones_MXN',
     'daily_contributions_PCL_CETES': 'Contribuciones_Cetes_MXN',
     'daily_contributions_PCL_GBM': 'Contribuciones_GBM_MXN',
@@ -38,9 +39,7 @@ for x, y in int_dict.items():
         f"(Date TIMESTAMP, {y} INT)")
 
 # Create Float Table: XIRR
-float_dict = {
-    'irr_xirr_PCL': 'XIRR',
-    }
+float_dict = {'irr_xirr_PCL': 'XIRR'}
 
 for x, y in float_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")

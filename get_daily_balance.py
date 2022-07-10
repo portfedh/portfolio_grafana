@@ -6,6 +6,29 @@ from scripts import daily_balance as db
 url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
 engine = create_engine(url)
 
+
+# IBKR Account
+###############
+# Get monthly balance
+balance_df3 = db.create_df('inputs/pcl/monthly_account_balance_PCL_IBKR.csv')
+
+# Create daily balance
+daily_balance_df3 = db.daily_balance(
+    df=balance_df3,
+    column_name='Tot_Acct_IBKR_MXN',
+    sum=False)
+
+# Output to CSV
+filename1 = 'outputs/daily_acct_balance_PCL_IBKR.csv'
+daily_balance_df3.to_csv(filename1, index=True, index_label='Date')
+
+# Output to MySQL
+daily_balance_df3.to_sql(
+    name='daily_acct_balance_PCL_IBKR',  # Table name
+    con=engine,
+    if_exists='replace',
+    index=True, index_label='Date')
+
 # CETES Account
 ###############
 # Get monthly balance
