@@ -8,8 +8,7 @@ rm -v outputs/*
 
 echo "Setting Up Docker files:"
 docker-compose up -d
-sleep 10
-# sleep 30
+sleep 5
 echo
 
 echo "Executing Portfolio Scripts:"
