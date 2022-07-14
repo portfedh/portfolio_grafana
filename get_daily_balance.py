@@ -6,7 +6,7 @@ from scripts import daily_balance as db
 url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
 engine = create_engine(url)
 
-
+"""
 # IBKR Account
 ###############
 # Get monthly balance
@@ -28,7 +28,7 @@ daily_balance_df3.to_sql(
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
-
+"""
 # CETES Account
 ###############
 # Get monthly balance
