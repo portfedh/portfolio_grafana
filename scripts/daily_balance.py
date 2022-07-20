@@ -69,7 +69,7 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
                 - Must be the name of the column with values in df.
 
             sum:
-                - True: Will add the values up to a certain date.
+                - True: Will add the values up to date.
                 - False: Will append the latest value.
 
         Returns:
@@ -87,7 +87,11 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
             value = filtered_blance_df[column_name].sum()
         else:
             # Get last value
-            value = filtered_blance_df[column_name].iloc[-1]
+            try:
+                value = filtered_blance_df[column_name].iloc[-1]
+            except IndexError:
+                # In case the df is empty at that date
+                value = 0
         # Create dictionary with value
         new_dic_row = {column_name: value}
         # Create dataframe from dictionary
@@ -104,6 +108,7 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
     return daily_df
 
 
+# # TO DELETE ################################################################
 def consolidate(file_name_1: str, file_name_2: str, sum_col_name: str) -> 'pd':
     """
     The function takes two df and returns a df with the added column values.
@@ -139,3 +144,30 @@ def consolidate(file_name_1: str, file_name_2: str, sum_col_name: str) -> 'pd':
     df_total.drop(
         columns=[df_total.columns[1], df_total.columns[2]], inplace=True)
     return df_total
+# # TO DELETE ################################################################
+
+
+# Consolidation Functions
+##############################################################################
+def add_df(*args):
+    """ Function to concatenate columns of unlimited dataframes"""
+    list = []
+    for file in args:
+        df = pd.read_csv(file)
+        list.append(df)
+    return pd.concat(list, axis=1)
+
+
+def remove_duplicates(df):
+    """Function to Remove duplicates"""
+    columns = ~df.columns.duplicated()
+    df = df.loc[:, columns]
+    df = df.copy()
+    return df
+
+
+def add_total_column(df, col_name):
+    """Function to add column values in a total column"""
+    df2 = df.drop('Date', axis=1)
+    df[col_name] = df2.sum(axis=1)
+    return df
