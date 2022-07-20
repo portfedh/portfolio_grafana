@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Check who depends on set_analysis_dates
-# Check who used daily percentages
 
 echo "Cleaning outputs directory:"
 rm -v outputs/*
@@ -37,7 +36,4 @@ echo "    - Executing get_daily_prices."
 echo "    - Executing get_daily_subtotals."
 ./venv_linux/bin/python3 get_daily_subtotals.py
 
-echo "    - Executing get_daily_percentages."
-./venv_linux/bin/python3 get_daily_percentages.py
-
-echo "All scripts executed successfully."
+echo "All scripts executed."
