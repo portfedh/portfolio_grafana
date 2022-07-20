@@ -19,7 +19,8 @@ mycursor.execute("USE PCL_database")
 # Create Tables:
 # dict = {table_name: column_name}
 
-# Create INT Tables: Daily account balance, Daily contributions, IRR
+# Create INT Tables
+# Daily account balance, Daily contributions, IRR
 int_dict = {
     'daily_acct_balance_PCL_AllAccounts': 'Tot_Acct_Portafolio_MXN',
     'daily_acct_balance_PCL_CETES': 'Tot_Acct_Cetes_MXN',
@@ -28,10 +29,10 @@ int_dict = {
     'daily_contributions_PCL_AllAccounts': 'Tot_Contribuciones_MXN',
     'daily_contributions_PCL_CETES': 'Contribuciones_Cetes_MXN',
     'daily_contributions_PCL_GBM': 'Contribuciones_GBM_MXN',
+    'daily_contributions_PCL_IBKR': 'Contribuciones_IBKR_MXN',
     'irr_contributions_PCL_AllAccounts': 'Tot_Contribuciones_MXN',
     'irr_monthly_account_balance_PCL_AllAccounts': 'Tot_Acct_Portafolio_MXN',
     }
-
 for x, y in int_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
@@ -40,7 +41,6 @@ for x, y in int_dict.items():
 
 # Create Float Table: XIRR
 float_dict = {'irr_xirr_PCL': 'XIRR'}
-
 for x, y in float_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
@@ -52,7 +52,6 @@ return_dict = {
     'returns_portfolio_PCL_AllAccounts':
     ['Tot_Portfolio_Return_MXN', 'Tot_Portfolio_Return_Percent']
     }
-
 for x, y in return_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
