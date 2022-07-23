@@ -7,7 +7,7 @@ services:
       # host:container
     volumes:
       - my_sql_DB:/var/lib/mysql/
-      # Host_directory_name:Container_directory
+      # host_directory_name:container_directory
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password1
