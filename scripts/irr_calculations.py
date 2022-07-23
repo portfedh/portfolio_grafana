@@ -20,6 +20,57 @@ import pandas as pd
 from pyxirr import xirr
 
 
+# ### New Functions ###
+# Concatenate unlimited dataframes
+def concat_df(*args):
+    list = []
+    for x in args:
+        e = pd.read_csv(x)
+        list.append(e)
+    # Concatenate
+    result = pd.concat(list, axis=0)
+    # Substitute NA values with zeros
+    result = result.fillna(0)
+    return result
+
+
+# Create total column
+def add_total_df(df, col_name):
+    df2 = df.drop('Date', axis=1)
+    df[col_name] = df2.sum(axis=1)
+    return df
+
+
+# Filter dataframe to keep selected columns
+def filter_df(df, columns):
+    df = df.filter(columns)
+    return df
+
+
+# Invert values as cashflows
+def invert_cf_df(df, column_name):
+    df[column_name] = df[column_name]*-1
+    return df
+
+
+# Save values as integers
+def integers_df(df, column_name):
+    df[column_name] = df[column_name].astype('int')
+    return df
+
+
+# Turn date to datetime format
+# Like daily_balance but does not require csv
+def to_datetime_df(df, date_column):
+    datetime_date = pd.to_datetime(df[date_column], dayfirst=True)
+    datetime_index_trades = pd.DatetimeIndex(datetime_date.values)
+    df = df.set_index(datetime_index_trades)
+    df = df.rename_axis(date_column, axis=1)
+    df.drop(date_column, axis=1, inplace=True)
+    return df
+# ### End New Functions ###
+
+
 def irr_contributions_df(
         file1: str,
         file2: str,

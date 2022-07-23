@@ -9,6 +9,33 @@ from scripts import irr_calculations as irr
 ###########################
 url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
 engine = create_engine(url)
+"""
+# Create Consolidated Contributions File: V2
+############################################
+file_1 = 'inputs/pcl/contributions_PCL_CETES.csv'
+file_2 = 'inputs/pcl/contributions_PCL_GBM.csv'
+file_3 = 'inputs/pcl/contributions_PCL_IBKR.csv'
+total_column = 'Contribuciones_Totales_MXN'
+columns_to_keep = ['Date', 'Contribuciones_Totales_MXN']
+cont_out_file = "outputs/irr_contributions_PCL_AllAccounts.csv"
+
+# Concatenate all files
+contributions = irr.concat_df(file_1, file_2, file_3)
+# Create total column
+contributions = irr.add_total_df(contributions, total_column)
+# Keep only Date and Total Column
+contributions = irr.filter_df(contributions, columns_to_keep)
+# Invert contributions as cashflow inflows and outflows
+contributions = irr.invert_cf_df(contributions, total_column)
+# Turn values to integers
+contributions = irr.integers_df(contributions, total_column)
+# Turn dataframe dates to datetime
+contributions = irr.to_datetime_df(contributions, 'Date')
+# Sort values by date in ascending order
+contributions.sort_index()
+# Save output as CSV
+contributions.to_csv(cont_out_file, index=True, index_label='Date')
+"""
 
 # Create Consolidated Contributions File
 ########################################
@@ -21,6 +48,7 @@ cont_file = irr.irr_contributions_df(
 cont_file.to_csv(
     "outputs/irr_contributions_PCL_AllAccounts.csv",
     index=True, index_label='Date')
+
 
 # Create Consolidated Monthly Account Balance
 #############################################

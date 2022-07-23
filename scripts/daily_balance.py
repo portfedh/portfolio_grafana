@@ -21,6 +21,7 @@ import pandas as pd
 import set_analysis_dates
 
 
+# Modify to take df directly without creating pd from csv
 def create_df(file_name: str) -> 'pd':
     """
     Takes a csv file and returns a df with its index in datetime format.
