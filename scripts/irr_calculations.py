@@ -22,8 +22,6 @@ from pyxirr import xirr
 
 # ### New Functions ##########################################################
 # Will Substitute irr_contributions()
-
-
 def concat_df(*args):
     """Concatenate unlimited dataframes"""
     list = []
@@ -54,6 +52,8 @@ def add_total_df(df, col_name):
     return df
 
 
+# Check if column variable can be changed to a string
+# df = df.filter([columns])
 def filter_df(df: pd, columns: list):
     "Filter df to keep columns in list"
     df = df.filter(columns)
@@ -66,6 +66,9 @@ def invert_cf_df(df, column_name):
     return df
 
 
+# Can be eliminated if dataframe has date as index
+# Simply run:
+# df = df.astype('int')
 def integers_df(df, column_name):
     """Save values as integers"""
     df[column_name] = df[column_name].astype('int')
@@ -73,7 +76,7 @@ def integers_df(df, column_name):
 # ### End New Functions ######################################################
 
 
-# ### To DELETE ##############################################################
+# ### To Delete ##############################################################
 def irr_contributions_df(
         file1: str,
         file2: str,
@@ -135,9 +138,25 @@ def irr_contributions_df(
     result.sort_index()
     # Return dataframe
     return result
-# ### To DELETE ##############################################################
+# ### End To Delete ##########################################################
+
+# ### New Functions ##########################################################
+# Will Substitute irr_monthly_balance_df()
 
 
+# Very similar to concat_df but with axis=1 and without read CSV
+def merge_df(*args: pd):
+    """Merge unlimited dataframes"""
+    list = []
+    for x in args:
+        list.append(x)
+    # Concatenate
+    result = pd.concat(list, axis=1)
+    return result
+# ### End New Functions ######################################################
+
+
+# ### To Delete ##############################################################
 def irr_monthly_balance_df(
         file1: 'pd',
         file2: 'pd',
@@ -182,6 +201,7 @@ def irr_monthly_balance_df(
     file1.drop([col_name1, col_name2], axis=1, inplace=True)
     # Return dataframe
     return file1
+# ### End To Delete ##########################################################
 
 
 def calculate_xirr(

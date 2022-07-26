@@ -36,8 +36,8 @@ contributions.sort_index()
 contributions.to_csv(cont_out_file, index=True, index_label='Date')
 
 """
-# Create Consolidated Contributions File
-########################################
+# Create Consolidated Contributions File V1
+###########################################
 cont_file = irr.irr_contributions_df(
     file1='inputs/pcl/contributions_PCL_CETES.csv',
     file2='inputs/pcl/contributions_PCL_GBM.csv',
@@ -49,43 +49,63 @@ cont_file.to_csv(
     index=True, index_label='Date')
 """
 
-# Create Consolidated Monthly Account Balance
-#############################################
+# Create Consolidated Monthly Account Balance V2
+################################################
+file4 = db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv')
+file5 = db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv')
+file6 = db.create_df('inputs/pcl/monthly_account_balance_PCL_IBKR.csv')
+sum_col_name = 'Tot_Acct_Portafolio_MXN'
+balance_out_file = "outputs/irr_monthly_account_balance_PCL_AllAccounts2.csv"
+
+# Merge all files
+balance = irr.merge_df(file4, file5, file6)
+# Create total column
+balance = irr.add_total_df(balance, sum_col_name)
+# Turn values to integers
+balance = balance.astype('int')
+# Keep only Date and Total Column
+balance = irr.filter_df(balance, [sum_col_name])
+# Save output as CSV
+balance.to_csv(balance_out_file, index=True, index_label='Date')
+
+"""
+# Create Consolidated Monthly Account Balance V1
+################################################
 consolidated_df = irr.irr_monthly_balance_df(
     file1=db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv'),
     file2=db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv'),
     col_name1='Tot_Acct_Cetes_MXN',
     col_name2='Tot_Acct_GBM_MXN',
     sum_col_name='Tot_Acct_Portafolio_MXN')
-
 # Save value to CSV
 consolidated_df.to_csv(
     "outputs/irr_monthly_account_balance_PCL_AllAccounts.csv",
     index=True, index_label='Date')
+"""
 
-# Caculate IRR
-##############
-irr_value = irr.calculate_xirr(
-    acct_balance_df=db.create_df(
-        'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'),
-    contributions_df=db.create_df(
-        'outputs/irr_contributions_PCL_AllAccounts.csv'),
-    bal_column='Tot_Acct_Portafolio_MXN',
-    cont_column='Tot_Contribuciones_MXN')
+# # Caculate IRR
+# ##############
+# irr_value = irr.calculate_xirr(
+#     acct_balance_df=db.create_df(
+#         'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'),
+#     contributions_df=db.create_df(
+#         'outputs/irr_contributions_PCL_AllAccounts.csv'),
+#     bal_column='Tot_Acct_Portafolio_MXN',
+#     cont_column='Tot_Contribuciones_MXN')
 
-# Outputs
-#########
-# Save value to CSV
-today = (f'{date.today():%Y-%m-%d}')
-data = [today, irr_value]
-df = pd.DataFrame([data], columns=['Date', 'XIRR'])
-df.to_csv("outputs/irr_xirr_PCL.csv", index=False)
+# # Outputs
+# #########
+# # Save value to CSV
+# today = (f'{date.today():%Y-%m-%d}')
+# data = [today, irr_value]
+# df = pd.DataFrame([data], columns=['Date', 'XIRR'])
+# df.to_csv("outputs/irr_xirr_PCL.csv", index=False)
 
-# Save value to MySQL
-xirr = db.create_df('outputs/irr_xirr_PCL.csv')
+# # Save value to MySQL
+# xirr = db.create_df('outputs/irr_xirr_PCL.csv')
 
-xirr.to_sql(
-    name='irr_xirr_PCL',
-    con=engine,
-    if_exists='replace',
-    index=True, index_label='Date')
+# xirr.to_sql(
+#     name='irr_xirr_PCL',
+#     con=engine,
+#     if_exists='replace',
+#     index=True, index_label='Date')
