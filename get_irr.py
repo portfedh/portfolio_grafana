@@ -56,7 +56,7 @@ file4 = db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv')
 file5 = db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv')
 file6 = db.create_df('inputs/pcl/monthly_account_balance_PCL_IBKR.csv')
 sum_col_name = 'Tot_Acct_Portafolio_MXN'
-balance_out_file = "outputs/irr_monthly_account_balance_PCL_AllAccounts2.csv"
+balance_out_file = "outputs/irr_monthly_account_balance_PCL_AllAccounts.csv"
 
 # Merge all files
 balance = irr.merge_df(file4, file5, file6)
