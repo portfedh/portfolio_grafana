@@ -49,6 +49,7 @@ cont_file.to_csv(
     index=True, index_label='Date')
 """
 
+
 # Create Consolidated Monthly Account Balance V2
 ################################################
 file4 = db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv')
@@ -83,8 +84,28 @@ consolidated_df.to_csv(
     index=True, index_label='Date')
 """
 
-# # Caculate IRR
-# ##############
+# # Caculate IRR V2
+###################
+balance_csv = 'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'
+contrib_csv = 'outputs/irr_contributions_PCL_AllAccounts.csv'
+balance_df = db.create_df(balance_csv)
+contributions_df = db.create_df(contrib_csv)
+bal_column = 'Tot_Acct_Portafolio_MXN'
+cont_column = 'Contribuciones_Totales_MXN'  # Antes 'Tot_Contribuciones_MXN'
+
+# Get las value from dataframe
+a = irr.get_last_value(balance_df)
+# Rename column as contriburions column
+b = irr.rename_column(a, bal_column, cont_column)
+# Concatenate into one df
+irr_df = pd.concat([contributions_df, b])
+# Separate df into two lists
+dates, values = irr.split_df(irr_df, cont_column)
+# Pass lists into xirr function
+xirr_result = irr.xirr(dates, values)
+
+# # Caculate IRR V1
+# #################
 # irr_value = irr.calculate_xirr(
 #     acct_balance_df=db.create_df(
 #         'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'),
@@ -93,19 +114,19 @@ consolidated_df.to_csv(
 #     bal_column='Tot_Acct_Portafolio_MXN',
 #     cont_column='Tot_Contribuciones_MXN')
 
-# # Outputs
-# #########
-# # Save value to CSV
-# today = (f'{date.today():%Y-%m-%d}')
-# data = [today, irr_value]
-# df = pd.DataFrame([data], columns=['Date', 'XIRR'])
-# df.to_csv("outputs/irr_xirr_PCL.csv", index=False)
+# Outputs
+#########
+# Save value to CSV
+today = (f'{date.today():%Y-%m-%d}')
+data = [today, xirr_result]
+df = pd.DataFrame([data], columns=['Date', 'XIRR'])
+df.to_csv("outputs/irr_xirr_PCL.csv", index=False)
 
-# # Save value to MySQL
-# xirr = db.create_df('outputs/irr_xirr_PCL.csv')
+# Save value to MySQL
+xirr = db.create_df('outputs/irr_xirr_PCL.csv')
 
-# xirr.to_sql(
-#     name='irr_xirr_PCL',
-#     con=engine,
-#     if_exists='replace',
-#     index=True, index_label='Date')
+xirr.to_sql(
+    name='irr_xirr_PCL',
+    con=engine,
+    if_exists='replace',
+    index=True, index_label='Date')

@@ -204,6 +204,30 @@ def irr_monthly_balance_df(
 # ### End To Delete ##########################################################
 
 
+# ### New Functions ##########################################################
+# Will Substitute calculate_xirr()
+
+# Get las value from pd dataframe
+def get_last_value(df):
+    df = df.iloc[-1:]
+    return df
+
+
+# Rename balance column like contributions column
+def rename_column(df, balance_column, contributions_column):
+    df = df.rename(columns={balance_column: contributions_column})
+    return df
+
+
+def split_df(df, contributions_column):
+    # Separate df into two lists
+    date_list = df.index.tolist()
+    values_list = list(df[contributions_column])
+    return date_list, values_list
+# ### End New Functions ######################################################
+
+
+# ### To Delete ##############################################################
 def calculate_xirr(
         acct_balance_df: 'pd',
         contributions_df: 'pd',
@@ -249,3 +273,4 @@ def calculate_xirr(
     # Pass lists into xirr function
     xirr_result = xirr(pd_List1, pd_List2)
     return xirr_result
+# ### End To Delete ##########################################################
