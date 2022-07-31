@@ -16,9 +16,6 @@ mycursor.execute("CREATE DATABASE PCL_database")
 # Use Database
 mycursor.execute("USE PCL_database")
 
-# Create Tables:
-# dict = {table_name: column_name}
-
 # Create INT Tables
 # Daily account balance, Daily contributions, IRR
 int_dict = {

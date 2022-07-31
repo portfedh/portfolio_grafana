@@ -35,20 +35,6 @@ contributions.sort_index()
 # Save output as CSV
 contributions.to_csv(cont_out_file, index=True, index_label='Date')
 
-"""
-# Create Consolidated Contributions File V1
-###########################################
-cont_file = irr.irr_contributions_df(
-    file1='inputs/pcl/contributions_PCL_CETES.csv',
-    file2='inputs/pcl/contributions_PCL_GBM.csv',
-    col_name1='Contribuciones_Cetes_MXN',
-    col_name2='Contribuciones_GBM_MXN',
-    sum_col_name='Tot_Contribuciones_MXN')
-cont_file.to_csv(
-    "outputs/irr_contributions_PCL_AllAccounts.csv",
-    index=True, index_label='Date')
-"""
-
 
 # Create Consolidated Monthly Account Balance V2
 ################################################
@@ -69,20 +55,6 @@ balance = irr.filter_df(balance, [sum_col_name])
 # Save output as CSV
 balance.to_csv(balance_out_file, index=True, index_label='Date')
 
-"""
-# Create Consolidated Monthly Account Balance V1
-################################################
-consolidated_df = irr.irr_monthly_balance_df(
-    file1=db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv'),
-    file2=db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv'),
-    col_name1='Tot_Acct_Cetes_MXN',
-    col_name2='Tot_Acct_GBM_MXN',
-    sum_col_name='Tot_Acct_Portafolio_MXN')
-# Save value to CSV
-consolidated_df.to_csv(
-    "outputs/irr_monthly_account_balance_PCL_AllAccounts.csv",
-    index=True, index_label='Date')
-"""
 
 # # Caculate IRR V2
 ###################
@@ -104,15 +76,6 @@ dates, values = irr.split_df(irr_df, cont_column)
 # Pass lists into xirr function
 xirr_result = irr.xirr(dates, values)
 
-# # Caculate IRR V1
-# #################
-# irr_value = irr.calculate_xirr(
-#     acct_balance_df=db.create_df(
-#         'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'),
-#     contributions_df=db.create_df(
-#         'outputs/irr_contributions_PCL_AllAccounts.csv'),
-#     bal_column='Tot_Acct_Portafolio_MXN',
-#     cont_column='Tot_Contribuciones_MXN')
 
 # Outputs
 #########
