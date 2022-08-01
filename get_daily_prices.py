@@ -9,7 +9,7 @@ url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
 engine = create_engine(url)
 
 # Importing Trade History GBM
-#############################
+##############################################################################
 # Get trade history
 trade_hist_df = db.create_df('inputs/pcl/trade_history_PCL_GBM.csv')
 
@@ -44,3 +44,6 @@ prices_df.to_sql(
     if_exists='replace',
     index=True,
     index_label='Date')
+
+# Importing Trade History IBKR
+##############################################################################
