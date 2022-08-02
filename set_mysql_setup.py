@@ -1,3 +1,6 @@
+# Script to delete any previous data
+# and setup tables in correct datatypes
+
 import mysql.connector
 
 # Connect to database

@@ -4,13 +4,13 @@
 
 ## What it does
 
-The project is a custom portfolio visualizer to display information about investments in the stock market.
+The project is a custom portfolio visualizer to display information about an investment portfolio.
 
-It's similar to dashboards in online banking portals, but with a few key differences:
+It's similar to dashboards you can find in online banking portals, but with a few key differences:
 
 - Its open source.
 
-- Graphs are dynamic (not static).
+- Graphs are dynamic.
 
 - You can consolidate more than one bank account.
 
@@ -51,7 +51,7 @@ To run the scripts, simply execute the script from your terminal:
 ./02_portfolio_close.sh
 ```
 
-Currently, both of the files above use a virtual enviroment. You will need to change that bit of code to reflect where your python files are located.
+Currently, both of the files above use a virtual enviroment. You will need to change that bit of code to reflect where python is installed.
 For example:
 
 ```bash
