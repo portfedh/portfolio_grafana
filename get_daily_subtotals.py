@@ -1,96 +1,108 @@
+# Script to create subtotal amounts from price & quantity data
+
 import pandas as pd
 from sqlalchemy import create_engine
 from scripts import daily_balance as db
 
 # MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
+##############################################################################
+url = 'mysql+pymysql://root:passwo rd1@localhost:3306/PCL_database'
 engine = create_engine(url)
+
+# GBM Account
+##############################################################################
 
 # Imports
 #########
 # Import CSV files and create data frames
-shares_df = db.create_df('outputs/daily_share_quantity_PCL_GBM.csv')
-prices_df = db.create_df('outputs/daily_prices_interpolated_PCL_GBM.csv')
-cetes_df = db.create_df('outputs/daily_acct_balance_PCL_CETES.csv')
+shares_gbm_df = db.create_df('outputs/daily_share_quantity_PCL_GBM.csv')
+prices_gbm_df = db.create_df('outputs/daily_prices_interpolated_PCL_GBM.csv')
 
 # Transformations
 #################
 # Rename columns: Add Quantity or price simbol
-shares_df = shares_df.add_prefix('Q_')
-prices_df = prices_df.add_prefix('P_')
+shares_gbm_df = shares_gbm_df.add_prefix('Q_')
+prices_gbm_df = prices_gbm_df.add_prefix('P_')
 # Rename columns: Remove .MX to avoid problems in SQL
-shares_df.columns = shares_df.columns.str.removesuffix('.MX')
-prices_df.columns = prices_df.columns.str.removesuffix('.MX')
+shares_gbm_df.columns = shares_gbm_df.columns.str.removesuffix('.MX')
+prices_gbm_df.columns = prices_gbm_df.columns.str.removesuffix('.MX')
 # Merge Dataframes
-new_df = pd.concat(([shares_df, prices_df, cetes_df]), axis=1)
+concat_gbm_df = pd.concat(([shares_gbm_df, prices_gbm_df]), axis=1)
 # Interpolate missing values (prices are NaN on weekend dates)
-df_interpol = new_df.interpolate(method='linear', limit_direction='both')
+interpol_gbm_df = concat_gbm_df.interpolate(
+    method='linear', limit_direction='both')
+
+# Subtotal Calculations
+########################
+# Tickers and column drop are hardcoded
+# Subtotals ($)
+tickers_gbm = ['VGK', 'IEMG', 'VTI', 'BNDX', 'BND', 'VPL', 'VOO', 'SHV',
+               'MCHI', 'GOLDN', 'FIBRAPL14', 'BABAN', 'PG', 'INTC']
+# Calculate subtotals
+for x in tickers_gbm:
+    interpol_gbm_df[f'Sub_{x}'] = (
+        interpol_gbm_df[f'Q_{x}'] *
+        interpol_gbm_df[f'P_{x}'])
+# Remove Quantity and Price Columns
+# Re-check if new tickers are added.
+interpol_gbm_df.drop(interpol_gbm_df.iloc[:, 0:28], inplace=True, axis=1)
+
+# Outputs
+##########
+# Output to CSV
+filename = 'outputs/daily_subtotals_PCL_GBM.csv'
+interpol_gbm_df.to_csv(filename, index=True, index_label='Date')
+
+# Output to MySQL
+table_name = 'daily_subtotals_PCL_GBM'
+interpol_gbm_df.to_sql(name=table_name, con=engine, if_exists='replace',
+                       index=True, index_label='Date')
+
+# IBKR Account
+##############################################################################
+
+# Imports
+#########
+# Import CSV files and create data frames
+shares_ibkr_df = db.create_df('outputs/daily_share_quantity_PCL_IBKR.csv')
+prices_ibkr_df = db.create_df('outputs/daily_prices_interpolated_PCL_IBKR.csv')
+
+# Transformations
+#################
+# Rename columns: Add Quantity or price simbol
+shares_ibkr_df = shares_ibkr_df.add_prefix('Q_')
+prices_ibkr_df = prices_ibkr_df.add_prefix('P_')
+
+# Rename columns: Remove .MX to avoid problems in SQL
+shares_ibkr_df.columns = shares_ibkr_df.columns.str.removesuffix('.MX')
+prices_ibkr_df.columns = prices_ibkr_df.columns.str.removesuffix('.MX')
+
+# Merge Dataframes
+concat_df_ibkr = pd.concat(([shares_ibkr_df, prices_ibkr_df]), axis=1)
+# Interpolate missing values (prices are NaN on weekend dates)
+interpol_ibkr_df = concat_df_ibkr.interpolate(
+    method='linear', limit_direction='both')
 
 # Portfolio Calculations
 ########################
+# Tickers and column drop are hardcoded
 # Subtotals ($)
-tickers = ['VGK', 'IEMG', 'VTI', 'BNDX', 'BND', 'VPL', 'VOO', 'SHV',
-           'MCHI', 'GOLDN', 'FIBRAPL14', 'BABAN', 'PG', 'INTC']
-
+tickers_ibkr = ['VPL', 'IEMG', 'BABAN', 'PG']
 # Calculate subtotals
-for x in tickers:
-    df_interpol[f'Sub_{x}'] = (
-        df_interpol[f'Q_{x}'] *
-        df_interpol[f'P_{x}'])
-
-# Total Fixed Income GBM ($)
-df_interpol['Tot_FixedIncome_GBM'] = (
-    df_interpol['Sub_BNDX'] +
-    df_interpol['Sub_BND'] +
-    df_interpol['Sub_SHV'])
-
-# Total Fixed Income GBM + CETES ($)
-df_interpol['Tot_FixedIncome'] = (
-    df_interpol['Sub_BNDX'] +
-    df_interpol['Sub_BND'] +
-    df_interpol['Sub_SHV'] +
-    df_interpol['Tot_Acct_Cetes_MXN'])
-
-# Total Equity ($)
-df_interpol['Tot_Equity'] = (
-    df_interpol['Sub_VGK'] +
-    df_interpol['Sub_IEMG'] +
-    df_interpol['Sub_VTI'] +
-    df_interpol['Sub_VPL'] +
-    df_interpol['Sub_VOO'] +
-    df_interpol['Sub_MCHI'] +
-    df_interpol['Sub_BABAN'] +
-    df_interpol['Sub_PG'] +
-    df_interpol['Sub_INTC'])
-
-# Total Alternatives ($)
-df_interpol['Tot_Alternatives'] = (
-    df_interpol['Sub_GOLDN'] +
-    df_interpol['Sub_FIBRAPL14'])
-
-# Total  Portafolio ($)
-df_interpol['Tot_Portfolio'] = (
-    df_interpol['Tot_Equity'] +
-    df_interpol['Tot_FixedIncome'] +
-    df_interpol['Tot_Alternatives'])
-
-# Reorder Column Position:
-# Re-check if new tickers are added.
-my_column = df_interpol.pop('Tot_Acct_Cetes_MXN')
-df_interpol.insert(43, my_column.name, my_column)
-
+for x in tickers_ibkr:
+    interpol_ibkr_df[f'Sub_{x}'] = (
+        interpol_ibkr_df[f'Q_{x}'] *
+        interpol_ibkr_df[f'P_{x}'])
 # Remove Quantity and Price Columns
-# Re-check if new tickers are added.
-df_interpol.drop(df_interpol.iloc[:, 0:28], inplace=True, axis=1)
+interpol_ibkr_df.drop(interpol_ibkr_df.iloc[:, 0:8], inplace=True, axis=1)
 
 # Outputs
 #########
 # Output to CSV
-filename = 'outputs/daily_subtotals_PCL_AllAccounts.csv'
-df_interpol.to_csv(filename, index=True, index_label='Date')
+filename = 'outputs/daily_subtotals_PCL_IBKR.csv'
+interpol_ibkr_df.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_subtotals_PCL_GBM'
-df_interpol.to_sql(name=table_name, con=engine, if_exists='replace',
-                   index=True, index_label='Date')
+table_name = 'daily_subtotals_PCL_IBKR'
+interpol_ibkr_df.to_sql(name=table_name, con=engine, if_exists='replace',
+                        index=True, index_label='Date')
