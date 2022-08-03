@@ -1,3 +1,5 @@
+# Script to get daily prices for every ticker in the portfolio.
+
 import yfinance as yf
 import set_analysis_dates as sad
 from sqlalchemy import create_engine

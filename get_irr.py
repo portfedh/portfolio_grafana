@@ -1,3 +1,6 @@
+# Script calculates the XIRR for the investment portfolio.
+# Calculation is static for the latest date available
+
 import pandas as pd
 from datetime import date
 from sqlalchemy import create_engine

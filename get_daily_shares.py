@@ -1,3 +1,5 @@
+# Script to get daily share quantities for every ticker in the portfolio
+
 import set_analysis_dates as sad
 from sqlalchemy import create_engine
 from scripts import daily_balance as db

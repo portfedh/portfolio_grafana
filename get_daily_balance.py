@@ -1,3 +1,6 @@
+# Script to calculate the daily balance of the portfolio for every
+# day during the investment period. 
+
 from sqlalchemy import create_engine
 from scripts import daily_balance as db
 
