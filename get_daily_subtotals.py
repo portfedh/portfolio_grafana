@@ -6,7 +6,7 @@ from scripts import daily_balance as db
 
 # MySQL Connection Settings
 ##############################################################################
-url = 'mysql+pymysql://root:passwo rd1@localhost:3306/PCL_database'
+url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
 engine = create_engine(url)
 
 # GBM Account
@@ -50,12 +50,12 @@ interpol_gbm_df.drop(interpol_gbm_df.iloc[:, 0:28], inplace=True, axis=1)
 # Outputs
 ##########
 # Output to CSV
-filename = 'outputs/daily_subtotals_PCL_GBM.csv'
-interpol_gbm_df.to_csv(filename, index=True, index_label='Date')
+filename1 = 'outputs/daily_subtotals_PCL_GBM.csv'
+interpol_gbm_df.to_csv(filename1, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_subtotals_PCL_GBM'
-interpol_gbm_df.to_sql(name=table_name, con=engine, if_exists='replace',
+table_name1 = 'daily_subtotals_PCL_GBM'
+interpol_gbm_df.to_sql(name=table_name1, con=engine, if_exists='replace',
                        index=True, index_label='Date')
 
 # IBKR Account
@@ -99,10 +99,10 @@ interpol_ibkr_df.drop(interpol_ibkr_df.iloc[:, 0:8], inplace=True, axis=1)
 # Outputs
 #########
 # Output to CSV
-filename = 'outputs/daily_subtotals_PCL_IBKR.csv'
-interpol_ibkr_df.to_csv(filename, index=True, index_label='Date')
+filename2 = 'outputs/daily_subtotals_PCL_IBKR.csv'
+interpol_ibkr_df.to_csv(filename2, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_subtotals_PCL_IBKR'
-interpol_ibkr_df.to_sql(name=table_name, con=engine, if_exists='replace',
+table_name2 = 'daily_subtotals_PCL_IBKR'
+interpol_ibkr_df.to_sql(name=table_name2, con=engine, if_exists='replace',
                         index=True, index_label='Date')
