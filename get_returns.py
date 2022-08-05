@@ -1,3 +1,5 @@
+# Script to calculate the portfolio return in $ and % ammounts.
+
 from set_engine import engine
 from scripts import daily_balance as db
 from scripts import return_calculations as rc

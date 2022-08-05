@@ -1,3 +1,5 @@
+# Script to set a connection to MySQL to save data
+
 from sqlalchemy import create_engine
 
 # Connect to MySQL database

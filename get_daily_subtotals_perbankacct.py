@@ -1,4 +1,4 @@
-# Script to create subtotal amounts from price & quantity data
+# Script to create subtotal amounts from price & quantity data per account
 
 import pandas as pd
 from set_engine import engine

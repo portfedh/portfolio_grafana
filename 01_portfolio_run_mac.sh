@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check who depends on set_analysis_dates
+# Bash script to execute all python scripts
 
 echo "Cleaning outputs directory:"
 rm -v outputs/*

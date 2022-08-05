@@ -1,4 +1,4 @@
-# Temp file unchanged as a reference
+# Script creates subtotal amounts for asset allocations
 
 import pandas as pd
 from set_engine import engine
