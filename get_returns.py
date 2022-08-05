@@ -1,11 +1,6 @@
-from sqlalchemy import create_engine
+from set_engine import engine
 from scripts import daily_balance as db
 from scripts import return_calculations as rc
-
-# MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
-engine = create_engine(url)
 
 # Create Portfolio Returns
 ##########################

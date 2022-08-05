@@ -1,14 +1,9 @@
 # Script to get daily prices for every ticker in the portfolio.
 
 import yfinance as yf
+from set_engine import engine
 import set_analysis_dates as sad
-from sqlalchemy import create_engine
 from scripts import daily_balance as db
-
-# MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
-engine = create_engine(url)
 
 # Importing Trade History GBM
 ##############################################################################

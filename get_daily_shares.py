@@ -1,14 +1,9 @@
 # Script to get daily share quantities for every ticker in the portfolio
 
+from set_engine import engine
 import set_analysis_dates as sad
-from sqlalchemy import create_engine
 from scripts import daily_balance as db
 from scripts import daily_shares as ds
-
-# MySQL Connection Settings
-##############################################################################
-url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
-engine = create_engine(url)
 
 # Importing Trade History GBM
 ##############################################################################

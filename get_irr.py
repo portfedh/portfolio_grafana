@@ -3,15 +3,9 @@
 
 import pandas as pd
 from datetime import date
-from sqlalchemy import create_engine
+from set_engine import engine
 from scripts import daily_balance as db
 from scripts import irr_calculations as irr
-
-
-# MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/PCL_database'
-engine = create_engine(url)
 
 # Create Consolidated Contributions File: V2
 ############################################
