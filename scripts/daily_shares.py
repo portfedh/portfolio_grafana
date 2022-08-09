@@ -1,7 +1,8 @@
 # daily_shares.py
-"""Gets the daily shares for each ticker in an account.
+"""
+Get the daily shares for each ticker in an account.
 
-This module allows the user get daily share amounts for each ticker
+This module allows the user get the daily share quantities for each ticker
 in one account.
 
 The module contains the following functions:

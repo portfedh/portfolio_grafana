@@ -1,5 +1,6 @@
 # irr_calculations.py
-"""Calculate the IRR of the portfolio.
+"""
+Calculate the IRR of the portfolio.
 
 Uses consolidated contributions and the last value in
 the consolidated account balance.
