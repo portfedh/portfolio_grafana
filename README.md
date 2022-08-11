@@ -76,3 +76,7 @@ To Do
 ## Contributing
 
 To Do
+
+## To Do's
+
+- Update scripts for second user CLG

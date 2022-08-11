@@ -1,3 +1,5 @@
+# Script to delete any data at closing.
+
 import mysql.connector
 
 # Connect to database
@@ -10,4 +12,4 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 # Create Database
-mycursor.execute("DROP DATABASE IF EXISTS CLG_database")
+mycursor.execute("DROP DATABASE IF EXISTS PCL_database")
