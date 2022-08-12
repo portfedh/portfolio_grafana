@@ -44,7 +44,7 @@ float_dict = {'irr_xirr_PCL': 'XIRR'}
 for x, y in float_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
-        f"CREATE TABLE {x} "
+        f"CREATE TABLE {x}"
         f"(Date TIMESTAMP, {y} FLOAT)")
 
 # Create two column tables: Returns
@@ -55,5 +55,5 @@ return_dict = {
 for x, y in return_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
-        f"CREATE TABLE {x} "
+        f"CREATE TABLE {x}"
         f"(Date TIMESTAMP, {y[0]} INT, {y[1]} FLOAT)")

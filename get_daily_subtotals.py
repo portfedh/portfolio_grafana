@@ -1,11 +1,11 @@
+# Script to create subtotal amounts from price & quantity data per account
+
 import pandas as pd
-from sqlalchemy import create_engine
+from set_engine import engine
 from scripts import daily_balance as db
 
-# MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/CLG_database'
-engine = create_engine(url)
+# GBM Account
+##############################################################################
 
 # Imports
 #########

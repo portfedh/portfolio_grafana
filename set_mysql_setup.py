@@ -1,3 +1,6 @@
+# Script to delete any previous data
+# and setup tables in correct datatypes
+
 import mysql.connector
 
 # Connect to database
@@ -19,7 +22,8 @@ mycursor.execute("USE CLG_database")
 # Create Tables:
 # dict = {table_name: column_name}
 
-# Create INT Tables: Daily account balance, Daily contributions, IRR
+# Create INT Tables:
+# Daily account balance, Daily contributions, IRR
 int_dict = {
     'daily_acct_balance_CLG_AllAccounts': 'Tot_Acct_Portafolio_MXN',
     'daily_acct_balance_CLG_CETES': 'Tot_Acct_Cetes_MXN',
@@ -30,20 +34,18 @@ int_dict = {
     'irr_contributions_CLG_AllAccounts': 'Tot_Contribuciones_MXN',
     'irr_monthly_account_balance_CLG_AllAccounts': 'Tot_Acct_Portafolio_MXN',
     }
-
 for x, y in int_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
         f"CREATE TABLE {x} "
         f"(Date TIMESTAMP, {y} INT)")
 
-# Create Float Table: XIRR
+# Create Float Table:XIRR
 float_dict = {'irr_xirr_CLG': 'XIRR'}
-
 for x, y in float_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
-        f"CREATE TABLE {x} "
+        f"CREATE TABLE {x}"
         f"(Date TIMESTAMP, {y} FLOAT)")
 
 # Create two column tables: Returns
@@ -51,9 +53,8 @@ return_dict = {
     'returns_portfolio_CLG_AllAccounts':
     ['Tot_Portfolio_Return_MXN', 'Tot_Portfolio_Return_Percent']
     }
-
 for x, y in return_dict.items():
     mycursor.execute(f"DROP TABLE IF EXISTS {x}")
     mycursor.execute(
-        f"CREATE TABLE {x} "
+        f"CREATE TABLE {x}"
         f"(Date TIMESTAMP, {y[0]} INT, {y[1]} FLOAT)")

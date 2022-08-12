@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# Bash script to execute all python scripts
+
 echo "Cleaning outputs directory:"
 rm -v outputs/*
 
 echo "Setting Up Docker files:"
+docker pull portfedh/portfolio_dashboard:clg_grafana
 docker-compose up -d
 sleep 5
 echo
@@ -32,9 +35,8 @@ echo "    - Executing get_daily_prices."
 ./venv_linux/bin/python3 get_daily_prices.py
 
 echo "    - Executing get_daily_subtotals."
-./venv_linux/bin/python3 get_daily_subtotals.py
+#./venv_linux/bin/python3 get_daily_subtotals.py
+./venv_linux/bin/python3 get_daily_subtotals_singleacct.py
+./venv_linux/bin/python3 get_daily_subtotals_allaccounts.py
 
-echo "    - Executing get_daily_percentages."
-./venv_linux/bin/python3 get_daily_percentages.py
-
-echo "All scripts executed successfully."
+echo "Scripts executed."

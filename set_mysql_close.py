@@ -1,3 +1,5 @@
+# Script to delete any data at closing.
+
 import mysql.connector
 
 # Connect to database

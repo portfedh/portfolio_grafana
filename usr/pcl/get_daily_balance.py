@@ -1,5 +1,5 @@
-# Script to calculate the daily balance of the portfolio for every
-# day during the investment period.
+# Script to calculate the daily balance of the portfolio
+# for every day within the investment period.
 
 from set_engine import engine
 from scripts import daily_balance as db
@@ -21,7 +21,7 @@ daily_balance_df1.to_csv(filename1, index=True, index_label='Date')
 
 # Output to MySQL
 daily_balance_df1.to_sql(
-    name='daily_acct_balance_PCL_GBM',  # Table name
+    name='daily_acct_balance_PCL_GBM',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
@@ -43,7 +43,7 @@ daily_balance_df2.to_csv(filename2, index=True, index_label='Date')
 
 # Output to MySQL
 daily_balance_df2.to_sql(
-    name='daily_acct_balance_PCL_CETES',  # Table name
+    name='daily_acct_balance_PCL_CETES',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')
@@ -65,7 +65,7 @@ daily_balance_df3.to_csv(filename3, index=True, index_label='Date')
 
 # Output to MySQL
 daily_balance_df3.to_sql(
-    name='daily_acct_balance_PCL_IBKR',  # Table name
+    name='daily_acct_balance_PCL_IBKR',
     con=engine,
     if_exists='replace',
     index=True, index_label='Date')

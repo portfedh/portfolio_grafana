@@ -7,13 +7,13 @@ from set_engine import engine
 from scripts import daily_balance as db
 from scripts import irr_calculations as irr
 
-# Create Consolidated Contributions File: V2
-############################################
+# Create Consolidated Contributions File
+########################################
 file_1 = 'inputs/pcl/contributions_PCL_CETES.csv'
 file_2 = 'inputs/pcl/contributions_PCL_GBM.csv'
 file_3 = 'inputs/pcl/contributions_PCL_IBKR.csv'
 total_column = 'Contribuciones_Totales_MXN'
-cont_out_file = "outputs/irr_contributions_PCL_AllAccounts.csv"
+cont_out_file = 'outputs/irr_contributions_PCL_AllAccounts.csv'
 
 # Concatenate all files
 contributions = irr.concat_df(file_1, file_2, file_3)
@@ -33,13 +33,13 @@ contributions.sort_index()
 contributions.to_csv(cont_out_file, index=True, index_label='Date')
 
 
-# Create Consolidated Monthly Account Balance V2
-################################################
+# Create Consolidated Monthly Account Balance
+#############################################
 file4 = db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv')
 file5 = db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv')
 file6 = db.create_df('inputs/pcl/monthly_account_balance_PCL_IBKR.csv')
 sum_col_name = 'Tot_Acct_Portafolio_MXN'
-balance_out_file = "outputs/irr_monthly_account_balance_PCL_AllAccounts.csv"
+balance_out_file = 'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'
 
 # Merge all files
 balance = irr.merge_df(file4, file5, file6)
@@ -53,14 +53,14 @@ balance = irr.filter_df(balance, [sum_col_name])
 balance.to_csv(balance_out_file, index=True, index_label='Date')
 
 
-# # Caculate IRR V2
-###################
-balance_csv = 'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'
+# # Caculate IRR
+################
 contrib_csv = 'outputs/irr_contributions_PCL_AllAccounts.csv'
+balance_csv = 'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'
 balance_df = db.create_df(balance_csv)
 contributions_df = db.create_df(contrib_csv)
 bal_column = 'Tot_Acct_Portafolio_MXN'
-cont_column = 'Contribuciones_Totales_MXN'  # Antes 'Tot_Contribuciones_MXN'
+cont_column = 'Contribuciones_Totales_MXN'
 
 # Get las value from dataframe
 a = irr.get_last_value(balance_df)

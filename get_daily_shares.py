@@ -1,19 +1,16 @@
+# Script to get daily share quantities for every ticker in the portfolio
+
+from set_engine import engine
 import set_analysis_dates as sad
-from sqlalchemy import create_engine
 from scripts import daily_balance as db
 from scripts import daily_shares as ds
 
-# MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/CLG_database'
-engine = create_engine(url)
-
 # Importing Trade History GBM
-#############################
+##############################################################################
 # Get trade history
 trade_hist_df = db.create_df('inputs/clg/trade_history_CLG_GBM.csv')
 
-# Transform Shares column from string to integer
+# Transform shares column from string to integer
 trade_hist_df['Shares'] = trade_hist_df['Shares'].astype(int)
 
 # Create ticker lists
@@ -29,8 +26,6 @@ daily_share_quantity_df = ds.create_daily_share_quantity(
     ticker_list=yftickers,
     df=share_quantity_df)
 
-# Outputs
-#########
 # Output to CSV
 filename = 'outputs/daily_share_quantity_CLG_GBM.csv'
 daily_share_quantity_df.to_csv(filename, index=True, index_label='Date')

@@ -10,7 +10,7 @@ from scripts import daily_shares as ds
 # Get trade history
 trade_hist_df = db.create_df('inputs/pcl/trade_history_PCL_GBM.csv')
 
-# Transform Shares column from string to integer
+# Transform shares column from string to integer
 trade_hist_df['Shares'] = trade_hist_df['Shares'].astype(int)
 
 # Create ticker lists
@@ -31,9 +31,8 @@ filename = 'outputs/daily_share_quantity_PCL_GBM.csv'
 daily_share_quantity_df.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_share_quantity_PCL_GBM'
 daily_share_quantity_df.to_sql(
-    name=table_name,
+    name='daily_share_quantity_PCL_GBM',
     con=engine,
     if_exists='replace',
     index=True,
@@ -65,9 +64,8 @@ filename2 = 'outputs/daily_share_quantity_PCL_IBKR.csv'
 daily_share_quantity_df2.to_csv(filename2, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_share_quantity_PCL_IBKR'
 daily_share_quantity_df2.to_sql(
-    name=table_name,
+    name='daily_share_quantity_PCL_IBKR',
     con=engine,
     if_exists='replace',
     index=True,

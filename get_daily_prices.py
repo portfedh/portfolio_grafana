@@ -1,15 +1,12 @@
+# Script to get daily prices for every ticker in the portfolio.
+
 import yfinance as yf
+from set_engine import engine
 import set_analysis_dates as sad
-from sqlalchemy import create_engine
 from scripts import daily_balance as db
 
-# MySQL Connection Settings
-###########################
-url = 'mysql+pymysql://root:password1@localhost:3306/CLG_database'
-engine = create_engine(url)
-
 # Importing Trade History GBM
-#############################
+##############################################################################
 # Get trade history
 trade_hist_df = db.create_df('inputs/clg/trade_history_CLG_GBM.csv')
 
@@ -42,4 +39,5 @@ prices_df.to_sql(
     name=table_name,
     con=engine,
     if_exists='replace',
-    index=True, index_label='Date')
+    index=True,
+    index_label='Date')
