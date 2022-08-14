@@ -15,7 +15,7 @@ prices_gbm_df = db.create_df('outputs/daily_prices_interpolated_PCL_GBM.csv')
 
 # Transformations
 #################
-# Rename columns: Add Quantity or price simbol
+# Rename columns: Add quantity or price symbol
 shares_gbm_df = shares_gbm_df.add_prefix('Q_')
 prices_gbm_df = prices_gbm_df.add_prefix('P_')
 # Rename columns: Remove .MX to avoid problems in SQL
@@ -39,7 +39,7 @@ for x in tickers_gbm:
         interpol_gbm_df[f'Q_{x}'] *
         interpol_gbm_df[f'P_{x}'])
 # Remove Quantity and Price Columns
-# Re-check if new tickers are added.
+# Check every time new tickers are added.
 interpol_gbm_df.drop(interpol_gbm_df.iloc[:, 0:28], inplace=True, axis=1)
 
 # Outputs

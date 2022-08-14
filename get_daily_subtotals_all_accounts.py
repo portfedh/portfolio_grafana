@@ -7,9 +7,8 @@ from scripts import daily_balance as db
 # Imports
 ##############################################################################
 # Import CSV files and create data frames
-gbm_df = db.create_df('outputs/daily_subtotals_PCL_GBM.csv')
-ibkr_df = db.create_df('outputs/daily_subtotals_PCL_IBKR.csv')
-cetes_df = db.create_df('outputs/daily_acct_balance_PCL_CETES.csv')
+gbm_df = db.create_df('outputs/daily_subtotals_CLG_GBM.csv')
+cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 
 
 # Portfolio Calculations
@@ -20,52 +19,49 @@ subtotals.index.name = 'Date'
 
 # Total Fixed Income GBM ($)
 subtotals['Tot_FixedIncome_GBM'] = (
-    gbm_df['Sub_BNDX'] +
-    gbm_df['Sub_BND'] +
+    gbm_df['Sub_CETETRCISHRS'] +
+    gbm_df['Sub_IB1MXXN'] +
     gbm_df['Sub_SHV'])
 
 # Total Fixed Income GBM + CETES ($)
 subtotals['Tot_FixedIncome'] = (
-    gbm_df['Sub_BNDX'] +
-    gbm_df['Sub_BND'] +
+    gbm_df['Sub_CETETRCISHRS'] +
+    gbm_df['Sub_IB1MXXN'] +
     gbm_df['Sub_SHV'] +
     cetes_df['Tot_Acct_Cetes_MXN'])
 
-# Total Equity GBM + IBKR($)
+# Total Equity ($)
 subtotals['Tot_Equity'] = (
-    gbm_df['Sub_VGK'] +
-    gbm_df['Sub_IEMG'] +
-    gbm_df['Sub_VTI'] +
-    gbm_df['Sub_VPL'] +
     gbm_df['Sub_VOO'] +
+    gbm_df['Sub_VGK'] +
+    gbm_df['Sub_VPL'] +
+    gbm_df['Sub_IEMG'] +
     gbm_df['Sub_MCHI'] +
     gbm_df['Sub_BABAN'] +
     gbm_df['Sub_PG'] +
+    gbm_df['Sub_FB'] +
     gbm_df['Sub_INTC'] +
-    ibkr_df['Sub_VPL'] +
-    ibkr_df['Sub_IEMG'] +
-    ibkr_df['Sub_BABAN'] +
-    ibkr_df['Sub_PG'])
+    gbm_df['Sub_BAC'] +
+    gbm_df['Sub_MU'])
 
-# Total Alternatives GBM ($)
+# Total Alternatives ($)
 subtotals['Tot_Alternatives'] = (
     gbm_df['Sub_GOLDN'] +
     gbm_df['Sub_FIBRAPL14'])
 
 # Total  Portafolio ($)
 subtotals['Tot_Portfolio'] = (
-    subtotals['Tot_Equity'] +
-    subtotals['Tot_FixedIncome'] +
-    subtotals['Tot_Alternatives'])
+    gbm_df['Tot_Equity'] +
+    gbm_df['Tot_FixedIncome'] +
+    gbm_df['Tot_Alternatives'])
 
 # Outputs
 ##############################################################################
-
 # Output to CSV
-filename = 'outputs/daily_subtotals_PCL_AllAccounts.csv'
+filename = 'outputs/daily_subtotals_CLG_all_accounts.csv'
 subtotals.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_subtotals_PCL_AllAccounts'
+table_name = 'daily_subtotals_CLG_all_accounts'
 subtotals.to_sql(name=table_name, con=engine, if_exists='replace',
                  index=True, index_label='Date')

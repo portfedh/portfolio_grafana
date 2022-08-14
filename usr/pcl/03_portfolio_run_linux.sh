@@ -35,7 +35,7 @@ echo "    - Executing get_daily_prices."
 ./venv_linux/bin/python3 get_daily_prices.py
 
 echo "    - Executing get_daily_subtotals."
-./venv_linux/bin/python3 get_daily_subtotals_singleacct.py
-./venv_linux/bin/python3 get_daily_subtotals_allaccounts.py
+./venv_linux/bin/python3 get_daily_subtotals_single_account.py
+./venv_linux/bin/python3 get_daily_subtotals_all_accounts.py
 
 echo "Scripts executed."
