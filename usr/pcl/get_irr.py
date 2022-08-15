@@ -6,6 +6,7 @@ from datetime import date
 from set_engine import engine
 from scripts import daily_balance as db
 from scripts import irr_calculations as irr
+from pyxirr import xirr
 
 # Create Consolidated Contributions File
 ########################################
@@ -71,7 +72,7 @@ irr_df = pd.concat([contributions_df, b])
 # Separate df into two lists
 dates, values = irr.split_df(irr_df, cont_column)
 # Pass lists into xirr function
-xirr_result = irr.xirr(dates, values)
+xirr_result = xirr(dates, values)
 
 
 # Outputs

@@ -10,7 +10,6 @@ from scripts import daily_balance as db
 gbm_df = db.create_df('outputs/daily_subtotals_CLG_GBM.csv')
 cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 
-
 # Portfolio Calculations
 ##############################################################################
 # Create Subtotals Dataframe ($)
@@ -39,7 +38,7 @@ subtotals['Tot_Equity'] = (
     gbm_df['Sub_MCHI'] +
     gbm_df['Sub_BABAN'] +
     gbm_df['Sub_PG'] +
-    gbm_df['Sub_FB'] +
+    gbm_df['Sub_META'] +
     gbm_df['Sub_INTC'] +
     gbm_df['Sub_BAC'] +
     gbm_df['Sub_MU'])
@@ -51,9 +50,9 @@ subtotals['Tot_Alternatives'] = (
 
 # Total  Portafolio ($)
 subtotals['Tot_Portfolio'] = (
-    gbm_df['Tot_Equity'] +
-    gbm_df['Tot_FixedIncome'] +
-    gbm_df['Tot_Alternatives'])
+    subtotals['Tot_Equity'] +
+    subtotals['Tot_FixedIncome'] +
+    subtotals['Tot_Alternatives'])
 
 # Outputs
 ##############################################################################

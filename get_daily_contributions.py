@@ -54,18 +54,12 @@ daily_contribution_balance_df2.to_sql(
 
 # Sum all accounts
 ##############################################################################
-acct_1 = 'outputs/daily_contributions_PCL_GBM.csv'
-acct_2 = 'outputs/daily_contributions_PCL_CETES.csv'
+acct_1 = 'outputs/daily_contributions_CLG_GBM.csv'
+acct_2 = 'outputs/daily_contributions_CLG_CETES.csv'
 
 added_df = db.add_df(acct_1, acct_2)
 unique_df = db.remove_duplicates(added_df)
 total_contributions = db.add_total_column(unique_df, 'Tot_Contribuciones_MXN')
-
-# # Get total daily balance
-# total_contributions_df = db.consolidate(
-#     file_name_1='outputs/daily_contributions_CLG_CETES.csv',
-#     file_name_2='outputs/daily_contributions_CLG_GBM.csv',
-#     sum_col_name='Tot_Contribuciones_MXN')
 
 # Output to CSV
 file3 = 'outputs/daily_contributions_CLG_AllAccounts.csv'

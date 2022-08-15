@@ -13,11 +13,6 @@ The module contains the following functions:
 - daily_balance(df, column_name, sum):
     Returns a df with daily values from a monthly balance.
 
-### To delete ###
-- consolidate (file_name_1, file_name_2, sum_col_name):
-    Returns a pandas df with the added amounts of two account balances.
-
-### New ###
 - add_df(*args):
     Returns a dataframe appending all the columns in the input dataframes.
 
@@ -119,45 +114,6 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
     daily_df = daily_df.rename_axis(
         'Date', axis=1)
     return daily_df
-
-
-# # TO DELETE ################################################################
-def consolidate(file_name_1: str, file_name_2: str, sum_col_name: str) -> 'pd':
-    """
-    The function takes two df and returns a df with the added column values.
-
-        Parameters:
-            file_name_1:
-                - csv file name, including file extention.
-                  'path/filename.csv'
-
-            file_name_2:
-                - csv file name, including file extention.
-                  'path/filename.csv'
-
-            sum_col_name:
-                - Name of the column with added values from file1 & file2.
-
-        Returns:
-            df_total: df
-                - 'Date' column as index in datetime format.
-                - sum_col_name: Added values
-    """
-    # Get balances from CSVs
-    df_1 = pd.read_csv(file_name_1)
-    df_2 = pd.read_csv(file_name_2)
-    # Merge dataframes
-    df_total = df_1.copy()
-    column_name = df_2.columns[1]
-    df_total[column_name] = df_2[[column_name]].copy()
-    # Add Total Values
-    df_total[sum_col_name] = (
-        df_total[df_total.columns[1]] + df_total[df_total.columns[2]])
-    # Drop other columns
-    df_total.drop(
-        columns=[df_total.columns[1], df_total.columns[2]], inplace=True)
-    return df_total
-# # TO DELETE ################################################################
 
 
 # Consolidation Functions

@@ -57,13 +57,6 @@ added_df = db.add_df(acct_1, acct_2)
 unique_df = db.remove_duplicates(added_df)
 total_balance_df = db.add_total_column(unique_df, 'Tot_Acct_Portafolio_MXN')
 
-# Test function then delete
-# # Get total daily balance
-# total_balance_df = db.consolidate(
-#     file_name_1='outputs/daily_acct_balance_CLG_CETES.csv',
-#     file_name_2='outputs/daily_acct_balance_CLG_GBM.csv',
-#     sum_col_name='Tot_Acct_Portafolio_MXN')
-
 # Output to CSV
 filename3 = 'outputs/daily_acct_balance_CLG_AllAccounts.csv'
 total_balance_df.to_csv(filename3, index=False)

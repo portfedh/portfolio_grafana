@@ -33,14 +33,12 @@ interpol_gbm_df = new_df.interpolate(
 # Tickers and column drop are hardcoded
 # Subtotals ($)
 tickers_gbm = ['VOO', 'VGK', 'VPL', 'IEMG', 'MCHI', 'GOLDN', 'FIBRAPL14',
-               'CETETRCISHRS', 'IB1MXXN', 'SHV', 'BABAN', 'PG', 'FB', 'INTC',
+               'CETETRCISHRS', 'IB1MXXN', 'SHV', 'BABAN', 'PG', 'META', 'INTC',
                'BAC', 'MU']
-
 for x in tickers_gbm:
     interpol_gbm_df[f'Sub_{x}'] = (
         interpol_gbm_df[f'Q_{x}'] *
         interpol_gbm_df[f'P_{x}'])
-
 # Reorder Column Position
 # Check every time new tickers are added.
 my_column = interpol_gbm_df.pop('Tot_Acct_Cetes_MXN')

@@ -6,6 +6,7 @@ from datetime import date
 from set_engine import engine
 from scripts import daily_balance as db
 from scripts import irr_calculations as irr
+from pyxirr import xirr
 
 # Create Consolidated Contributions File
 ########################################
@@ -31,16 +32,6 @@ contributions.sort_index()
 # Save output as CSV
 contributions.to_csv(cont_out_file, index=True, index_label='Date')
 
-# cont_file = irr.irr_contributions_df(
-#     file1='inputs/clg/contributions_CLG_CETES.csv',
-#     file2='inputs/clg/contributions_CLG_GBM.csv',
-#     col_name1='Contribuciones_Cetes_MXN',
-#     col_name2='Contribuciones_GBM_MXN',
-#     sum_col_name='Tot_Contribuciones_MXN')
-# cont_file.to_csv(
-#     "outputs/irr_contributions_CLG_AllAccounts.csv",
-#     index=True, index_label='Date')
-
 # Create Consolidated Monthly Account Balance
 #############################################
 file3 = db.create_df('inputs/clg/monthly_account_balance_CLG_CETES.csv')
@@ -52,22 +43,12 @@ balance_out_file = 'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'
 balance = irr.merge_df(file3, file4)
 # Create total column
 balance = irr.add_total_df(balance, sum_col_name)
-# Turn values to integers
-balance = balance.astype('int')
 # Keep only Date and Total Column
 balance = irr.filter_df(balance, [sum_col_name])
+# Turn values to integers
+balance = balance.astype('int')
 # Save output as CSV
 balance.to_csv(balance_out_file, index=True, index_label='Date')
-
-# consolidated_df = irr.irr_monthly_balance_df(
-#     file1=db.create_df('inputs/clg/monthly_account_balance_CLG_CETES.csv'),
-#     file2=db.create_df('inputs/clg/monthly_account_balance_CLG_GBM.csv'),
-#     col_name1='Tot_Acct_Cetes_MXN',
-#     col_name2='Tot_Acct_GBM_MXN',
-#     sum_col_name='Tot_Acct_Portafolio_MXN')
-# consolidated_df.to_csv(
-#     "outputs/irr_monthly_account_balance_CLG_AllAccounts.csv",
-#     index=True, index_label='Date')
 
 # Caculate IRR
 ##############
@@ -87,7 +68,7 @@ irr_df = pd.concat([contributions_df, b])
 # Separate df into two lists
 dates, values = irr.split_df(irr_df, cont_column)
 # Pass lists into xirr function
-xirr_result = irr.xirr(dates, values)
+xirr_result = xirr(dates, values)
 
 # irr_value = irr.calculate_xirr(
 #     acct_balance_df=db.create_df(
