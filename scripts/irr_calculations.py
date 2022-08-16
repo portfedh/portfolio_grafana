@@ -1,27 +1,27 @@
 # irr_calculations.py
 """
-Calculate the IRR of the portfolio.
+Functions used to calculate the IRR of the portfolio.
 
-Uses consolidated contributions and the last value in
-the consolidated account balance.
+Uses consolidated contributions file and the last value in
+the consolidated account balance file. 
 
 The module contains the following functions:
 
-Irr contributions functions
-- concat_df(*args)
-- to_datetime_df(df, date_column)
-- add_total_df(df, col_name)
-- filter_df(df: pd, columns: list
-- invert_cf_df(df, column_name)
-- integers_df(df, column_name)
+Irr contributions functions:
+    - concat_df(*args)
+    - to_datetime_df(df, date_column)
+    - add_total_df(df, col_name)
+    - filter_df(df: pd, columns: list
+    - invert_cf_df(df, column_name)
+    - integers_df(df, column_name)
 
-Monthly balance functions
-- merge_df(*args: pd)
+Monthly balance functions:
+    - merge_df(*args: pd)
 
-IRR Calculations
-- get_last_value(df)
-- rename_column(df, balance_column, contributions_column)
-- split_df(df, contributions_column)
+IRR Calculations:
+    - get_last_value(df)
+    - rename_column(df, balance_column, contributions_column)
+    - split_df(df, contributions_column)
 """
 
 import pandas as pd
@@ -99,20 +99,20 @@ def merge_df(*args: pd):
 # IRR Calculations
 ##############################################################################
 
-# Get las value from pd dataframe
 def get_last_value(df):
+    """Get las value from a pandas dataframe"""
     df = df.iloc[-1:]
     return df
 
 
-# Rename balance column like contributions column
 def rename_column(df, balance_column, contributions_column):
+    """Rename the balance column like the contributions column"""
     df = df.rename(columns={balance_column: contributions_column})
     return df
 
 
 def split_df(df, contributions_column):
-    # Separate df into two lists
+    """Separate the dataframe into two lists for the xirr function"""
     date_list = df.index.tolist()
     values_list = list(df[contributions_column])
     return date_list, values_list
