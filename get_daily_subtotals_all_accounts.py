@@ -57,10 +57,10 @@ subtotals['Tot_Portfolio'] = (
 # Outputs
 ##############################################################################
 # Output to CSV
-filename = 'outputs/daily_subtotals_CLG_all_accounts.csv'
+filename = 'outputs/daily_subtotals_CLG_AllAccounts.csv'
 subtotals.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_subtotals_CLG_all_accounts'
+table_name = 'daily_subtotals_CLG_AllAccounts'
 subtotals.to_sql(name=table_name, con=engine, if_exists='replace',
                  index=True, index_label='Date')
