@@ -60,7 +60,7 @@ def concat_df(*args: pd) -> pd:
 
 
 # Like daily_balance but does not require csv
-def to_datetime_df(df: pd, date_column: pd.column) -> pd:
+def to_datetime_df(df: pd, date_column: pd) -> pd:
     """Turn date to datetime format"""
     datetime_date = pd.to_datetime(df[date_column], dayfirst=True)
     datetime_index_trades = pd.DatetimeIndex(datetime_date.values)
@@ -70,7 +70,7 @@ def to_datetime_df(df: pd, date_column: pd.column) -> pd:
     return df
 
 
-def add_total_df(df: pd, col_name: pd.column) -> pd:
+def add_total_df(df: pd, col_name: pd) -> pd:
     """Add total column to df"""
     df[col_name] = df.sum(axis=1)
     return df

@@ -32,16 +32,16 @@ def merge_df(dataframe1: pd, dataframe2: pd) -> pd:
 
 def subtract_column(
         df: pd,
-        column1: pd.column,
-        column2: pd.column,
-        subtraction_col: pd.column,
+        column1: pd,
+        column2: pd,
+        subtraction_col: pd,
         ) -> pd:
     ''' Create column with the subtraction of column2 from column1'''
     df[subtraction_col] = (df[column1] - df[column2])
     return df
 
 
-def df_column_to_int(df: pd, column: pd.column) -> pd:
+def df_column_to_int(df: pd, column: pd) -> pd:
     ''' Transform column data to integers '''
     df[column] = (df[column].astype('int'))
     return df
@@ -50,15 +50,15 @@ def df_column_to_int(df: pd, column: pd.column) -> pd:
 def add_ratio_column(
         df: pd,
         column_name: str,
-        column2: pd.column,
-        column1: pd.column
+        column2: pd,
+        column1: pd
         ) -> pd:
     ''' Create column with the ratio of column2 / column1 '''
     df[column_name] = ((df[column2] / df[column1])-1)
     return df
 
 
-def drop_column(df: pd, *args: pd.column) -> pd:
+def drop_column(df: pd, *args: pd) -> pd:
     ''' Drop columns from dataframe '''
     df.drop(list(args), axis=1, inplace=True)
     return df
