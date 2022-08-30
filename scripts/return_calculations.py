@@ -32,9 +32,9 @@ def merge_df(dataframe1: pd, dataframe2: pd) -> pd:
 
 def subtract_column(
         df: pd,
-        column1: pd,
-        column2: pd,
-        subtraction_col: pd,
+        column1: str,
+        column2: str,
+        subtraction_col: str,
         ) -> pd:
     ''' Create column with the subtraction of column2 from column1'''
     df[subtraction_col] = (df[column1] - df[column2])
