@@ -50,8 +50,7 @@ def concat_df(*args: pd) -> pd:
     """Concatenate unlimited dataframes"""
     list = []
     for x in args:
-        e = pd.read_csv(x)
-        list.append(e)
+        list.append(x)
     # Concatenate
     result = pd.concat(list, axis=0)
     # Substitute NA values with zeros
