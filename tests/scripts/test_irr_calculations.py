@@ -8,6 +8,7 @@ from pandas import Timestamp
 import move_two_levels_up
 from scripts import irr_calculations as irr
 
+
 class TestReturnCalculations(unittest.TestCase):
     # Test class that inherits from  unittest.testacse
     # Gives access to testing capabilities.

@@ -101,7 +101,7 @@ def integers_df(df: pd, column_name: str) -> pd:
 # Monthly Balance Functions
 ##############################################################################
 
-# Very similar to concat_df but with axis=1 and without read CSV
+# Similar to concat_df but with axis=1
 def merge_df(*args: pd) -> pd:
     """Merge unlimited dataframes"""
     list = []
