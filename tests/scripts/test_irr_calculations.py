@@ -185,9 +185,9 @@ class TestReturnCalculations(unittest.TestCase):
         dates_actual, values_actual = irr.split_df(df1, 'Values')
         # Expectation
         dates_expected = [
-            Timestamp('2021-01-29 00:00:00', freq='D'),
-            Timestamp('2021-01-30 00:00:00', freq='D'),
-            Timestamp('2021-01-31 00:00:00', freq='D')
+            Timestamp('2021-01-29 00:00:00'),
+            Timestamp('2021-01-30 00:00:00'),
+            Timestamp('2021-01-31 00:00:00')
             ]
         values_expected = [99, 100, 101]
         # Test
