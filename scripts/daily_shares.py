@@ -79,9 +79,8 @@ def create_daily_share_quantity(
                 - Empty df creaded using create_share_quantity_df().
                 - Appended with one row per day with share totals per ticker.
     """
-    dates = date_range
     # For loop: Go through every date:
-    for date in dates:
+    for date in date_range:
         # Temporary list
         values = []
         # For loop: Go through every ticker:
@@ -99,6 +98,9 @@ def create_daily_share_quantity(
         new_row = dict(zip(ticker_list, values))
         # Create dataframe from dictionary
         new_row_df = pd.DataFrame(new_row, index=[date])
+        new_row_df = new_row_df.rename_axis('Date', axis=1)
         # Merge new row with dataframe from create_share_quantity_df()
         df = pd.concat([new_row_df, df])
+    df.sort_index(ascending=True, inplace=True)
+    df = df.astype(int)
     return df
