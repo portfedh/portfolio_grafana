@@ -18,7 +18,7 @@ from datetime import datetime
 import pandas as pd
 
 
-def create_share_quantity_df(tickers: list) -> 'pd':
+def create_empty_share_quantity_df(tickers: list) -> 'pd':
     """
     Create an empty dataframe with Date as index and each ticker as a column.
 
