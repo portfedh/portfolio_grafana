@@ -5,6 +5,7 @@
 from set_engine import engine
 import move_two_levels_up
 from scripts import daily_balance as db
+from set_analysis_dates import date_range
 
 
 # GBM Account
@@ -17,7 +18,8 @@ contribution_balance_df1 = db.create_df(
 daily_contribution_balance_df1 = db.daily_balance(
     df=contribution_balance_df1,
     column_name='Contribuciones_GBM_MXN',
-    sum=True)
+    sum=True,
+    range=date_range)
 
 # Output to CSV
 file1 = 'outputs/daily_contributions_CLG_GBM.csv'
@@ -41,7 +43,8 @@ contribution_balance_df2 = db.create_df(
 daily_contribution_balance_df2 = db.daily_balance(
     df=contribution_balance_df2,
     column_name='Contribuciones_Cetes_MXN',
-    sum=True)
+    sum=True,
+    range=date_range)
 
 # Output to CSV
 file2 = 'outputs/daily_contributions_CLG_CETES.csv'

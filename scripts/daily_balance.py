@@ -61,7 +61,7 @@ def create_df(file_name: str) -> 'pd':
     return df
 
 
-def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
+def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     """
     Takes as input a monthly account balance and produces a daily balance.
 
@@ -80,6 +80,9 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
             sum:
                 - True: Will add the values up to date.
                 - False: Will append the latest value.
+            
+            range:
+                - Date range for the daily balance
 
         Returns:
             daily_df:
@@ -88,7 +91,7 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
     """
     # Create output dataframe
     daily_df = pd.DataFrame(columns=[column_name])
-    for date in set_analysis_dates.date_range:
+    for date in range:
         # Filter dataframe up to date
         filtered_blance_df = df.loc[:date]
         if sum is True:
