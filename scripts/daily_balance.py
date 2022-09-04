@@ -25,7 +25,7 @@ The module contains the following functions:
 
 
 import pandas as pd
-# import set_analysis_dates 
+# import set_analysis_dates
 # Eliminate set_analysis_dates call from daily_balance
 
 
@@ -80,7 +80,7 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
             sum:
                 - True: Will add the values up to date.
                 - False: Will append the latest value.
-            
+
             range:
                 - Date range for the daily balance
 
