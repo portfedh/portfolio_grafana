@@ -8,7 +8,7 @@ consolidates them to return a total daily balance for all accounts.
 The module contains the following functions:
 
 - create_df(file_name):
-    Returns an empty pandas df acepting values and dates in datetime format.
+    Returns an pandas df with values and dates in datetime format.
 
 - daily_balance(df, column_name, sum):
     Returns a df with daily values from a monthly balance.
@@ -25,11 +25,8 @@ The module contains the following functions:
 
 
 import pandas as pd
-# import set_analysis_dates
-# Eliminate set_analysis_dates call from daily_balance
 
 
-# Modify to take df directly without creating pd from csv
 def create_df(file_name: str) -> 'pd':
     """
     Takes a csv file and returns a df with its index in datetime format.

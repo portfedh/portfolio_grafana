@@ -1,6 +1,3 @@
-# Run using:
-# $ python3 -m unittest -v tests/scripts/test_return_calculations.py
-
 import unittest
 import pandas as pd
 import move_two_levels_up

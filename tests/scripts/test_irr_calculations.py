@@ -1,6 +1,3 @@
-# Run using:
-# $ python3 -m unittest -v tests/scripts/test_irr_calculations.py
-
 import unittest
 import pandas as pd
 from pandas import Timestamp
