@@ -12,12 +12,12 @@ class TestReturnCalculations(unittest.TestCase):
     # Test class that inherits from  unittest.testacse
     # Gives access to testing capabilities.
 
-    def test_create_share_quantity_df(self):
+    def test_create_empty_share_quantity_df(self):
         # Setup
         ticker_list = ["VOO", "VGK", "VPL"]
 
         # Call function
-        actual = ds.create_share_quantity_df(ticker_list)
+        actual = ds.create_empty_share_quantity_df(ticker_list)
 
         # Expectation
         # Create ticker list
@@ -52,7 +52,7 @@ class TestReturnCalculations(unittest.TestCase):
             }, index=dates1)
         df1 = df1.rename_axis('Date', axis=1)
         yftickers = list(df1['Yfinance_Ticker'].unique())
-        df2 = ds.create_share_quantity_df(yftickers)
+        df2 = ds.create_empty_share_quantity_df(yftickers)
 
         # Call function
         actual = ds.create_daily_share_quantity(
