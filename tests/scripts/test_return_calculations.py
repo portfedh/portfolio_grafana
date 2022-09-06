@@ -3,7 +3,6 @@
 
 import unittest
 import pandas as pd
-from pandas.util.testing import assert_frame_equal
 import move_two_levels_up
 from scripts import return_calculations as rt
 
@@ -40,7 +39,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_d': ['d1', 'd2', 'd3'],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_subtract_column(self):
         # Setup
@@ -57,7 +56,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_c': [20, 20, 20],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_df_column_to_int(self):
         # Setup
@@ -73,7 +72,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [30.3, 30.4, 30.5],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_add_ratio_column(self):
         # Setup
@@ -92,7 +91,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_c': [-0.5, -0.5, -0.5],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_drop_column(self):
         # Setup
@@ -109,7 +108,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_b': [400, 500, 600],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
 
 if __name__ == "__main__":

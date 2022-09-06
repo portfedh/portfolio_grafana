@@ -3,7 +3,6 @@
 
 import unittest
 import pandas as pd
-from pandas.util.testing import assert_frame_equal
 from pandas import Timestamp
 import move_two_levels_up
 from scripts import irr_calculations as irr
@@ -32,7 +31,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [3, 4, 7, 8],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_to_datetime_df(self):
         # Setup
@@ -48,7 +47,7 @@ class TestReturnCalculations(unittest.TestCase):
         expected = pd.DataFrame(data, index=index)
         expected = expected.rename_axis('Date', axis=1)
         # Test
-        assert_frame_equal(actual, expected, check_freq=False)
+        pd.testing.assert_frame_equal(actual, expected, check_freq=False)
 
     def test_add_total_df(self):
         # Setup
@@ -67,7 +66,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_c': [5, 7, 9],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_filter_df(self):
         # Setup
@@ -85,7 +84,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_c': [7, 8, 9],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_invert_cf_df(self):
         # Setup
@@ -101,7 +100,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [-4, -5, -6],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_integers_df(self):
         # Setup
@@ -118,7 +117,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [4, 5, 6],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_merge_df(self):
         # Setup
@@ -140,7 +139,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_d': [10, 11, 12],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_get_last_value(self):
         # Setup
@@ -157,7 +156,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [6],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_rename_column(self):
         # Setup
@@ -173,7 +172,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_new': [4, 5, 6],
             })
         # Test
-        assert_frame_equal(actual, expected)
+        pd.testing.assert_frame_equal(actual, expected)
 
     def test_split_df(self):
         # Setup
