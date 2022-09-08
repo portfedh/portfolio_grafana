@@ -1,6 +1,9 @@
 import unittest
 import pandas as pd
+import os
+print(os.getcwd())
 import move_two_levels_up
+print(os.getcwd())
 from pandas import Timestamp
 from scripts import daily_shares as ds
 
