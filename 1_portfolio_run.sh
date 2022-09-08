@@ -80,7 +80,6 @@ sleep 5
 echo
 echo "Docker setup."
 
-
 # # Temp file: ERASE SOON
 # ########################
 # #VENV="./venv/bin/python3"
