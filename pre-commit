@@ -1,0 +1,50 @@
+#!/bin/bash
+
+echo "You are about to commit. Running test files to check for errors."
+
+# Select computer
+#################
+UNAME_STR=$(uname)
+if [[ ${UNAME_STR} == 'Linux' ]]; then
+   PLATFORM='linux'
+   echo 'Linux'
+elif [[ ${UNAME_STR} == 'Darwin' ]]; then
+   PLATFORM='darwin'
+   echo 'Mac'
+else
+  echo "Error in computer name."
+  echo
+  exit 1
+fi
+
+if [[ "${PLATFORM}" == "linux" ]]
+then
+  echo "You are running the script from Linux."
+  VENV="./venv_linux/bin/python3"
+  echo "${VENV}"
+  echo
+elif [[ "${PLATFORM}" == "darwin" ]]
+then
+  echo "You are running the script from a Mac."
+  VENV="./venv/bin/python3"
+  echo "${VENV}"
+  echo
+else
+  echo "Error in computer name."
+  echo
+  exit 1
+fi
+
+Run Unit Tests
+###############
+${VENV} -m unittest discover -v tests/scripts/
+
+if [ $? -eq 0 ]; then
+   echo "Tests passed. Continue with commit."
+   exit 0
+
+else
+   echo "Some tests failed. Aborting the commit."
+   exit 1
+fi
+
