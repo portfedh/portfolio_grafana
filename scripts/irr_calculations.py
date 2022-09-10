@@ -102,6 +102,7 @@ def integers_df(df: pd, column_name: str) -> pd:
 ##############################################################################
 
 # Similar to concat_df but with axis=1
+# Identical to add_df() from daily_balance. Substitute
 def merge_df(*args: pd) -> pd:
     """Merge unlimited dataframes"""
     list = []
