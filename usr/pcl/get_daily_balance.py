@@ -78,9 +78,9 @@ daily_balance_df3.to_sql(
 
 # Sum All Accounts
 ##############################################################################
-acct_1 = 'outputs/daily_acct_balance_PCL_CETES.csv'
-acct_2 = 'outputs/daily_acct_balance_PCL_GBM.csv'
-acct_3 = 'outputs/daily_acct_balance_PCL_IBKR.csv'
+acct_1 = db.create_df('outputs/daily_acct_balance_PCL_CETES.csv')
+acct_2 = db.create_df('outputs/daily_acct_balance_PCL_GBM.csv')
+acct_3 = db.create_df('outputs/daily_acct_balance_PCL_IBKR.csv')
 
 added_df = db.add_df(acct_1, acct_2, acct_3)
 unique_df = db.remove_duplicates(added_df)
@@ -88,7 +88,7 @@ total_balance_df = db.add_total_column(unique_df, 'Tot_Acct_Portafolio_MXN')
 
 # Output to CSV
 filename4 = 'outputs/daily_acct_balance_PCL_AllAccounts.csv'
-total_balance_df.to_csv(filename4, index=False)
+total_balance_df.to_csv(filename4, index=True, index_label='Date')
 
 # Output to MySQL
 total_balance_df2 = db.create_df(filename4)

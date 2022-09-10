@@ -80,9 +80,9 @@ daily_contribution_balance_df3.to_sql(
 
 # Sum all accounts
 ##############################################################################
-acct_1 = 'outputs/daily_contributions_PCL_GBM.csv'
-acct_2 = 'outputs/daily_contributions_PCL_CETES.csv'
-acct_3 = 'outputs/daily_contributions_PCL_IBKR.csv'
+acct_1 = db.create_df('outputs/daily_contributions_PCL_GBM.csv')
+acct_2 = db.create_df('outputs/daily_contributions_PCL_CETES.csv')
+acct_3 = db.create_df('outputs/daily_contributions_PCL_IBKR.csv')
 
 added_df = db.add_df(acct_1, acct_2, acct_3)
 unique_df = db.remove_duplicates(added_df)
@@ -90,7 +90,7 @@ total_contributions = db.add_total_column(unique_df, 'Tot_Contribuciones_MXN')
 
 # Output to CSV
 file4 = 'outputs/daily_contributions_PCL_AllAccounts.csv'
-total_contributions.to_csv(file4, index=False)
+total_contributions.to_csv(file4, index=True, index_label='Date')
 
 # Output to MySQL
 total_contributions_df2 = db.create_df(file4)

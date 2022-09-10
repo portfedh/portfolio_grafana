@@ -119,7 +119,9 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
 
 # Consolidation Functions
 ##############################################################################
-def add_df(*args: str) -> 'pd':
+
+# Same as merge_df() in irr_calculations.py. Eliminate merge_df().
+def add_df(*args: pd) -> 'pd':
     """
     Returns a dataframe appending all the columns in the input dataframes.
 
@@ -134,12 +136,13 @@ def add_df(*args: str) -> 'pd':
                 - Other columns: Added values
     """
     list = []
-    for file in args:
-        df = pd.read_csv(file)
+    for df in args:
         list.append(df)
     return pd.concat(list, axis=1)
 
 
+# Should be unnecesary now that ad_df(*args) uses pd as input instead of strings.
+# Does not crash. We can keep for now. 
 def remove_duplicates(df: 'pd') -> 'pd':
     """
     Returns a dataframe removing duplicated columns.
@@ -187,6 +190,5 @@ def add_total_column(df, col_name):
                     Column2: 'Amount2'
                     Column2: 'Total'  (Amount1+Amount2)
     """
-    df2 = df.drop('Date', axis=1)
-    df[col_name] = df2.sum(axis=1)
+    df[col_name] = df.sum(axis=1)
     return df
