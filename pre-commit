@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Bash script to run all unit tests before every commit
+
 echo "You are about to commit. Running test files to check for errors."
 
 # Select computer

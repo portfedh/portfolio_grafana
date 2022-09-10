@@ -12,19 +12,30 @@ echo
 
 # Select computer
 #################
-read -p 'Enter computer used ( linux / mac ): ' COMPUTER
+UNAME_STR=$(uname)
+if [[ ${UNAME_STR} == 'Linux' ]]; then
+   PLATFORM='linux'
+   echo 'Linux'
+elif [[ ${UNAME_STR} == 'Darwin' ]]; then
+   PLATFORM='darwin'
+   echo 'Mac'
+else
+  echo "Error in computer name."
+  echo
+  exit 1
+fi
 
-if [[ "${COMPUTER}" == "linux" ]]
+if [[ "${PLATFORM}" == "linux" ]]
 then
   echo "You are running the script from Linux."
   VENV="./venv_linux/bin/python3"
-  #echo "${VENV}"
+  echo "${VENV}"
   echo
-elif [[ "${COMPUTER}" == "mac" ]]
+elif [[ "${PLATFORM}" == "darwin" ]]
 then
   echo "You are running the script from a Mac."
   VENV="./venv/bin/python3"
-  #echo "${VENV}"
+  echo "${VENV}"
   echo
 else
   echo "Error in computer name."
@@ -80,13 +91,6 @@ sleep 5
 echo
 echo "Docker setup."
 
-# # Temp file: ERASE SOON
-# ########################
-# #VENV="./venv/bin/python3"
-# VENV="./venv_linux/bin/python3"
-# FILE_PATH="usr/clg/"
-# #FILE_PATH="usr/pcl/"
-# #########################
 
 # Running python files
 ######################
