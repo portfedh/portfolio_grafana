@@ -87,6 +87,24 @@ class TestDailyBalance(unittest.TestCase):
         # Test
         pd.testing.assert_frame_equal(actual, expected)
 
+    def test_add_total_column(self):
+        # Setup
+        df1 = pd.DataFrame({
+            'col_a': [1, 2, 3],
+            'col_b': [4, 5, 6],
+            })
+        # Call function
+        actual = db.add_total_column(df1, 'col_tot')
+        # Expectation
+        expected = pd.DataFrame({
+            'col_a': [1, 2, 3],
+            'col_b': [4, 5, 6],
+            'col_tot': [5, 7, 9],
+            })
+        expected
+        # Test
+        pd.testing.assert_frame_equal(actual, expected)
+
 
 if __name__ == "__main__":
     unittest.main()
