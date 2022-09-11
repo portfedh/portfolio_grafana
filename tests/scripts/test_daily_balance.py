@@ -64,6 +64,29 @@ class TestDailyBalance(unittest.TestCase):
         pd.testing.assert_frame_equal(actual1, expected1, check_freq=False)
         pd.testing.assert_frame_equal(actual2, expected2, check_freq=False)
 
+    def test_add_df(self):
+        # Setup
+        df1 = pd.DataFrame({
+            'col_a': [1, 2, 3],
+            'col_b': [4, 5, 6],
+            })
+        df2 = pd.DataFrame({
+            'col_c': [7, 8, 9],
+            'col_d': [10, 11, 12],
+            })
+        # Call function
+        actual = db.add_df(df1, df2)
+        # Expectation
+        expected = pd.DataFrame({
+            'col_a': [1, 2, 3],
+            'col_b': [4, 5, 6],
+            'col_c': [7, 8, 9],
+            'col_d': [10, 11, 12],
+            })
+        expected
+        # Test
+        pd.testing.assert_frame_equal(actual, expected)
+
 
 if __name__ == "__main__":
     unittest.main()
