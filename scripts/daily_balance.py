@@ -8,7 +8,7 @@ consolidates them to return a total daily balance for all accounts.
 The module contains the following functions:
 
 - create_df(file_name):
-    Returns an empty pandas df acepting values and dates in datetime format.
+    Returns an pandas df with values and dates in datetime format.
 
 - daily_balance(df, column_name, sum):
     Returns a df with daily values from a monthly balance.
@@ -25,10 +25,8 @@ The module contains the following functions:
 
 
 import pandas as pd
-import set_analysis_dates
 
 
-# Modify to take df directly without creating pd from csv
 def create_df(file_name: str) -> 'pd':
     """
     Takes a csv file and returns a df with its index in datetime format.
@@ -60,7 +58,7 @@ def create_df(file_name: str) -> 'pd':
     return df
 
 
-def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
+def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     """
     Takes as input a monthly account balance and produces a daily balance.
 
@@ -80,6 +78,9 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
                 - True: Will add the values up to date.
                 - False: Will append the latest value.
 
+            range:
+                - Date range for the daily balance
+
         Returns:
             daily_df:
                 'Date' column as index in datetime format.
@@ -87,7 +88,7 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
     """
     # Create output dataframe
     daily_df = pd.DataFrame(columns=[column_name])
-    for date in set_analysis_dates.date_range:
+    for date in range:
         # Filter dataframe up to date
         filtered_blance_df = df.loc[:date]
         if sum is True:
@@ -118,7 +119,9 @@ def daily_balance(df: 'pd', column_name: str, sum: bool) -> 'pd':
 
 # Consolidation Functions
 ##############################################################################
-def add_df(*args: str) -> 'pd':
+
+# Same as merge_df() in irr_calculations.py. Eliminate merge_df().
+def add_df(*args: pd) -> 'pd':
     """
     Returns a dataframe appending all the columns in the input dataframes.
 
@@ -133,37 +136,9 @@ def add_df(*args: str) -> 'pd':
                 - Other columns: Added values
     """
     list = []
-    for file in args:
-        df = pd.read_csv(file)
+    for df in args:
         list.append(df)
     return pd.concat(list, axis=1)
-
-
-def remove_duplicates(df: 'pd') -> 'pd':
-    """
-    Returns a dataframe removing duplicated columns.
-
-    Parameters:
-        df:
-            - dataframe with duplicate columns.
-                Example:
-                    Column0: 'Date'
-                    Column1: 'Amount1'
-                    Column2: 'Date'
-                    Column3: 'Amount2'
-    Returns:
-        df:
-            - Dataframe without duplicate columns
-                Example:
-                    Column0: 'Date'
-                    Column1: 'Amount1'
-                    Column2: 'Date'
-                    Column2: 'Amount2'
-    """
-    columns = ~df.columns.duplicated()
-    df = df.loc[:, columns]
-    df = df.copy()
-    return df
 
 
 def add_total_column(df, col_name):
@@ -186,6 +161,5 @@ def add_total_column(df, col_name):
                     Column2: 'Amount2'
                     Column2: 'Total'  (Amount1+Amount2)
     """
-    df2 = df.drop('Date', axis=1)
-    df[col_name] = df2.sum(axis=1)
+    df[col_name] = df.sum(axis=1)
     return df

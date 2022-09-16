@@ -50,8 +50,7 @@ def concat_df(*args: pd) -> pd:
     """Concatenate unlimited dataframes"""
     list = []
     for x in args:
-        e = pd.read_csv(x)
-        list.append(e)
+        list.append(x)
     # Concatenate
     result = pd.concat(list, axis=0)
     # Substitute NA values with zeros
@@ -102,7 +101,8 @@ def integers_df(df: pd, column_name: str) -> pd:
 # Monthly Balance Functions
 ##############################################################################
 
-# Very similar to concat_df but with axis=1 and without read CSV
+# Similar to concat_df but with axis=1
+# Identical to add_df() from daily_balance. Substitute
 def merge_df(*args: pd) -> pd:
     """Merge unlimited dataframes"""
     list = []

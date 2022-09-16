@@ -4,6 +4,8 @@
 from set_engine import engine
 import move_two_levels_up
 from scripts import daily_balance as db
+from set_analysis_dates import date_range
+
 
 # GBM Account
 ##############################################################################
@@ -14,7 +16,8 @@ balance_df1 = db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv')
 daily_balance_df1 = db.daily_balance(
     df=balance_df1,
     column_name='Tot_Acct_GBM_MXN',
-    sum=False)
+    sum=False,
+    range=date_range)
 
 # Output to CSV
 filename1 = 'outputs/daily_acct_balance_PCL_GBM.csv'
@@ -36,7 +39,8 @@ balance_df2 = db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv')
 daily_balance_df2 = db.daily_balance(
     df=balance_df2,
     column_name='Tot_Acct_Cetes_MXN',
-    sum=False)
+    sum=False,
+    range=date_range)
 
 # Output to CSV
 filename2 = 'outputs/daily_acct_balance_PCL_CETES.csv'
@@ -58,7 +62,8 @@ balance_df3 = db.create_df('inputs/pcl/monthly_account_balance_PCL_IBKR.csv')
 daily_balance_df3 = db.daily_balance(
     df=balance_df3,
     column_name='Tot_Acct_IBKR_MXN',
-    sum=False)
+    sum=False,
+    range=date_range)
 
 # Output to CSV
 filename3 = 'outputs/daily_acct_balance_PCL_IBKR.csv'
@@ -73,17 +78,16 @@ daily_balance_df3.to_sql(
 
 # Sum All Accounts
 ##############################################################################
-acct_1 = 'outputs/daily_acct_balance_PCL_CETES.csv'
-acct_2 = 'outputs/daily_acct_balance_PCL_GBM.csv'
-acct_3 = 'outputs/daily_acct_balance_PCL_IBKR.csv'
+acct_1 = db.create_df('outputs/daily_acct_balance_PCL_CETES.csv')
+acct_2 = db.create_df('outputs/daily_acct_balance_PCL_GBM.csv')
+acct_3 = db.create_df('outputs/daily_acct_balance_PCL_IBKR.csv')
 
 added_df = db.add_df(acct_1, acct_2, acct_3)
-unique_df = db.remove_duplicates(added_df)
-total_balance_df = db.add_total_column(unique_df, 'Tot_Acct_Portafolio_MXN')
+total_balance_df = db.add_total_column(added_df, 'Tot_Acct_Portafolio_MXN')
 
 # Output to CSV
 filename4 = 'outputs/daily_acct_balance_PCL_AllAccounts.csv'
-total_balance_df.to_csv(filename4, index=False)
+total_balance_df.to_csv(filename4, index=True, index_label='Date')
 
 # Output to MySQL
 total_balance_df2 = db.create_df(filename4)

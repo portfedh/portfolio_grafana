@@ -13,8 +13,8 @@ from scripts import irr_calculations as irr
 
 # Create Consolidated Contributions File
 ########################################
-file_1 = 'inputs/clg/contributions_CLG_CETES.csv'
-file_2 = 'inputs/clg/contributions_CLG_GBM.csv'
+file_1 = pd.read_csv('inputs/clg/contributions_CLG_CETES.csv')
+file_2 = pd.read_csv('inputs/clg/contributions_CLG_GBM.csv')
 total_column = 'Contribuciones_Totales_MXN'
 cont_out_file = 'outputs/irr_contributions_CLG_AllAccounts.csv'
 

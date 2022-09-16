@@ -12,9 +12,9 @@ from scripts import irr_calculations as irr
 
 # Create Consolidated Contributions File
 ########################################
-file_1 = 'inputs/pcl/contributions_PCL_CETES.csv'
-file_2 = 'inputs/pcl/contributions_PCL_GBM.csv'
-file_3 = 'inputs/pcl/contributions_PCL_IBKR.csv'
+file_1 = pd.read_csv('inputs/pcl/contributions_PCL_CETES.csv')
+file_2 = pd.read_csv('inputs/pcl/contributions_PCL_GBM.csv')
+file_3 = pd.read_csv('inputs/pcl/contributions_PCL_IBKR.csv')
 total_column = 'Contribuciones_Totales_MXN'
 cont_out_file = 'outputs/irr_contributions_PCL_AllAccounts.csv'
 
