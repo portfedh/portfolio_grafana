@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Bash script to run all unit tests before every commit
+# Saved in .git/hooks
 
 echo "You are about to commit. Running test files to check for errors."
 

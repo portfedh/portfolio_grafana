@@ -141,35 +141,6 @@ def add_df(*args: pd) -> 'pd':
     return pd.concat(list, axis=1)
 
 
-# Should be unnecesary now that ad_df(*args) uses pd as input instead of strings.
-# Does not crash. We can keep for now. 
-def remove_duplicates(df: 'pd') -> 'pd':
-    """
-    Returns a dataframe removing duplicated columns.
-
-    Parameters:
-        df:
-            - dataframe with duplicate columns.
-                Example:
-                    Column0: 'Date'
-                    Column1: 'Amount1'
-                    Column2: 'Date'
-                    Column3: 'Amount2'
-    Returns:
-        df:
-            - Dataframe without duplicate columns
-                Example:
-                    Column0: 'Date'
-                    Column1: 'Amount1'
-                    Column2: 'Date'
-                    Column2: 'Amount2'
-    """
-    columns = ~df.columns.duplicated()
-    df = df.loc[:, columns]
-    df = df.copy()
-    return df
-
-
 def add_total_column(df, col_name):
     """
     Returns a dataframe with a total column, adding all column values.
