@@ -60,8 +60,7 @@ acct_1 = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 acct_2 = db.create_df('outputs/daily_acct_balance_CLG_GBM.csv')
 
 added_df = db.add_df(acct_1, acct_2)
-unique_df = db.remove_duplicates(added_df)
-total_balance_df = db.add_total_column(unique_df, 'Tot_Acct_Portafolio_MXN')
+total_balance_df = db.add_total_column(added_df, 'Tot_Acct_Portafolio_MXN')
 
 # Output to CSV
 filename3 = 'outputs/daily_acct_balance_CLG_AllAccounts.csv'

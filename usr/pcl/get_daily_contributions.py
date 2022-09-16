@@ -85,8 +85,7 @@ acct_2 = db.create_df('outputs/daily_contributions_PCL_CETES.csv')
 acct_3 = db.create_df('outputs/daily_contributions_PCL_IBKR.csv')
 
 added_df = db.add_df(acct_1, acct_2, acct_3)
-unique_df = db.remove_duplicates(added_df)
-total_contributions = db.add_total_column(unique_df, 'Tot_Contribuciones_MXN')
+total_contributions = db.add_total_column(added_df, 'Tot_Contribuciones_MXN')
 
 # Output to CSV
 file4 = 'outputs/daily_contributions_PCL_AllAccounts.csv'
