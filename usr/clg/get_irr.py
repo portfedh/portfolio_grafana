@@ -19,11 +19,11 @@ total_column = 'Contribuciones_Totales_MXN'
 cont_out_file = 'outputs/irr_contributions_CLG_AllAccounts.csv'
 
 # Concatenate all files
-contributions = irr.concat_df(file_1, file_2)
+contributions = db.add_df(file_1, file_2, type=0)
 # Turn DataFrame dates to datetime
 contributions = irr.to_datetime_df(contributions, 'Date')
 # Create total column
-contributions = irr.add_total_df(contributions, total_column)
+contributions = db.add_total_column(contributions, total_column)
 # Keep only Date and Total Column
 contributions = irr.filter_df(contributions, [total_column])
 # Invert contributions as cashflow inflows and outflows
@@ -43,9 +43,9 @@ sum_col_name = 'Tot_Acct_Portafolio_MXN'
 balance_out_file = 'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'
 
 # Merge all files
-balance = irr.merge_df(file3, file4)
+balance = db.add_df(file3, file4, type=1)
 # Create total column
-balance = irr.add_total_df(balance, sum_col_name)
+balance = db.add_total_column(balance, sum_col_name)
 # Keep only Date and Total Column
 balance = irr.filter_df(balance, [sum_col_name])
 # Turn values to integers

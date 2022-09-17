@@ -9,27 +9,6 @@ class TestReturnCalculations(unittest.TestCase):
     # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
-    def test_concat_df(self):
-        # Setup
-        df1 = pd.DataFrame({
-            'col_a': [1, 2],
-            'col_b': [3, 4],
-            })
-        df2 = pd.DataFrame({
-            'col_a': [5, 6],
-            'col_b': [7, 8],
-            })
-        # Call function
-        actual = irr.concat_df(df1, df2)
-        actual = actual.reset_index(drop=True)
-        # Expectation
-        expected = pd.DataFrame({
-            'col_a': [1, 2, 5, 6],
-            'col_b': [3, 4, 7, 8],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
-
     def test_to_datetime_df(self):
         # Setup
         df1 = pd.DataFrame({
@@ -45,25 +24,6 @@ class TestReturnCalculations(unittest.TestCase):
         expected = expected.rename_axis('Date', axis=1)
         # Test
         pd.testing.assert_frame_equal(actual, expected, check_freq=False)
-
-    def test_add_total_df(self):
-        # Setup
-        df1 = pd.DataFrame({
-            'col_a': [1, 2, 3],
-            'col_b': [4, 5, 6],
-            })
-
-        # Call function
-        actual = irr.add_total_df(df1, 'col_c')
-
-        # Expectation
-        expected = pd.DataFrame({
-            'col_a': [1, 2, 3],
-            'col_b': [4, 5, 6],
-            'col_c': [5, 7, 9],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
 
     def test_filter_df(self):
         # Setup
@@ -112,28 +72,6 @@ class TestReturnCalculations(unittest.TestCase):
         expected = pd.DataFrame({
             'col_a': [1.4, 2.5, 3.6],
             'col_b': [4, 5, 6],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
-
-    def test_merge_df(self):
-        # Setup
-        df1 = pd.DataFrame({
-            'col_a': [1, 2, 3],
-            'col_b': [4, 5, 6],
-            })
-        df2 = pd.DataFrame({
-            'col_c': [7, 8, 9],
-            'col_d': [10, 11, 12],
-            })
-        # Call function
-        actual = irr.merge_df(df1, df2)
-        # Expectation
-        expected = pd.DataFrame({
-            'col_a': [1, 2, 3],
-            'col_b': [4, 5, 6],
-            'col_c': [7, 8, 9],
-            'col_d': [10, 11, 12],
             })
         # Test
         pd.testing.assert_frame_equal(actual, expected)

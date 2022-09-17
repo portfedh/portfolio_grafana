@@ -14,9 +14,6 @@ Irr contributions functions:
     - to_datetime_df(df, date_column)
         Turn date to datetime format
 
-    - add_total_df(df, col_name)
-        Add total column to df
-
     - filter_df(df: pd, columns: list
         Filter df to keep columns in list
 
@@ -25,10 +22,6 @@ Irr contributions functions:
 
     - integers_df(df, column_name)
         Save values as integers
-
-Monthly balance functions:
-    - merge_df(*args: pd)
-        Merge unlimited DataFrames
 
 IRR Calculations:
     - get_last_value(df)
@@ -46,17 +39,6 @@ import pandas as pd
 
 # irr_contributions functions
 #############################
-def concat_df(*args: pd) -> pd:
-    """Concatenate unlimited DataFrames"""
-    list = []
-    for x in args:
-        list.append(x)
-    # Concatenate
-    result = pd.concat(list, axis=0)
-    # Substitute NA values with zeros
-    result = result.fillna(0)
-    return result
-
 
 # Like daily_balance but does not require csv
 def to_datetime_df(df: pd, date_column: pd) -> pd:
@@ -66,12 +48,6 @@ def to_datetime_df(df: pd, date_column: pd) -> pd:
     df = df.set_index(datetime_index_trades)
     df = df.rename_axis(date_column, axis=1)
     df.drop(date_column, axis=1, inplace=True)
-    return df
-
-
-def add_total_df(df: pd, col_name: pd) -> pd:
-    """Add total column to df"""
-    df[col_name] = df.sum(axis=1)
     return df
 
 
@@ -96,21 +72,6 @@ def integers_df(df: pd, column_name: str) -> pd:
     """Save values as integers"""
     df[column_name] = df[column_name].astype('int')
     return df
-
-
-# Monthly Balance Functions
-###########################
-
-# Similar to concat_df but with axis=1
-# Identical to add_df() from daily_balance. Substitute
-def merge_df(*args: pd) -> pd:
-    """Merge unlimited DataFrames"""
-    list = []
-    for x in args:
-        list.append(x)
-    # Concatenate
-    result = pd.concat(list, axis=1)
-    return result
 
 
 # IRR Calculations

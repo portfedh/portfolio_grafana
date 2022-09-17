@@ -59,7 +59,7 @@ daily_balance_df2.to_sql(
 acct_1 = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 acct_2 = db.create_df('outputs/daily_acct_balance_CLG_GBM.csv')
 
-added_df = db.add_df(acct_1, acct_2)
+added_df = db.add_df(acct_1, acct_2, type=1)
 total_balance_df = db.add_total_column(added_df, 'Tot_Acct_Portafolio_MXN')
 
 # Output to CSV

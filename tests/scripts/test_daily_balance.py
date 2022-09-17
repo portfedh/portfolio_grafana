@@ -63,6 +63,7 @@ class TestDailyBalance(unittest.TestCase):
         # Tests
         pd.testing.assert_frame_equal(actual1, expected1, check_freq=False)
         pd.testing.assert_frame_equal(actual2, expected2, check_freq=False)
+        # ADD TEST TO CHECK NA VALUES ARE TURNED TO ZEROS
 
     def test_add_df(self):
         # Setup
@@ -75,7 +76,7 @@ class TestDailyBalance(unittest.TestCase):
             'col_d': [10, 11, 12],
             })
         # Call function
-        actual = db.add_df(df1, df2)
+        actual = db.add_df(df1, df2, type=1)
         # Expectation
         expected = pd.DataFrame({
             'col_a': [1, 2, 3],

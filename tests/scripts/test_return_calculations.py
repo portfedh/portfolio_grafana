@@ -8,27 +8,6 @@ class TestReturnCalculations(unittest.TestCase):
     # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
-    def test_merge_df(self):
-        # Setup
-        df1 = pd.DataFrame({
-                'col_a': ['a1', 'a2', 'a3'],
-                'col_b': ['b1', 'b2', 'b3'],
-            })
-        df2 = pd.DataFrame({
-                'col_c': ['c1', 'c2', 'c3'],
-                'col_d': ['d1', 'd2', 'd3'],
-            })
-        # Call function
-        actual = rt.merge_df(df1, df2)
-        # Expectation
-        expected = pd.DataFrame({
-                'col_a': ['a1', 'a2', 'a3'],
-                'col_b': ['b1', 'b2', 'b3'],
-                'col_c': ['c1', 'c2', 'c3'],
-                'col_d': ['d1', 'd2', 'd3'],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
 
     def test_subtract_column(self):
         # Setup
@@ -43,22 +22,6 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_a': [50, 50, 50],
                 'col_b': [30, 30, 30],
                 'col_c': [20, 20, 20],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
-
-    def test_df_column_to_int(self):
-        # Setup
-        df1 = pd.DataFrame({
-            'col_a': [50.7, 50.8, 50.9],
-            'col_b': [30.3, 30.4, 30.5],
-            })
-        # Call function
-        actual = rt.df_column_to_int(df1, 'col_a')
-        # Expectation
-        expected = pd.DataFrame({
-            'col_a': [50, 50, 50],
-            'col_b': [30.3, 30.4, 30.5],
             })
         # Test
         pd.testing.assert_frame_equal(actual, expected)

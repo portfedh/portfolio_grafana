@@ -114,28 +114,33 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     return daily_df
 
 
-# Same as merge_df() in irr_calculations.py. Eliminate merge_df().
-def add_df(*args: pd) -> 'pd':
+# Rename to concat_df() and change all dependencies at the end. 
+def add_df(*args: pd, type: int) -> 'pd':
     """
-    Returns a DataFrame appending all the columns in the input DataFrames.
+    Returns a DataFrame appending all the rows or columns in the input DataFrames.
 
         Parameters:
             *args:
-                - Unlimited csv file names, including file extensions.
-                    Example:
-                        'path/filename.csv'
+                Unlimited DataFrames
+            type:
+                0: Concatenate rows
+                1: Concatenate columns
         Returns:
             df:
-                - 'Date' column as index in datetime format.
-                - Other columns: Added values
+                'Date' column as index in datetime format.
+                Other columns: Added values
     """
     list = []
     for df in args:
         list.append(df)
-    return pd.concat(list, axis=1)
+    # Concatenate
+    result = pd.concat(list, axis=type)
+    # Substitute NA values with zeros
+    result = result.fillna(0)
+    return result
 
 
-def add_total_column(df, col_name):
+def add_total_column(df: pd, col_name: str) -> pd:
     """
     Returns a DataFrame with a total column, adding all column values.
 
@@ -148,7 +153,7 @@ def add_total_column(df, col_name):
                     Column2: 'Amount2'
     Returns:
         df:
-            - DataFrame without duplicate columns
+            - DataFrame with new column and total amounts
                 Example:
                     Column0: 'Date'
                     Column1: 'Amount1'
