@@ -1,4 +1,4 @@
-# Script to calculate the portfolio return in $ and % ammounts.
+# Script to calculate the portfolio return in $ and % amounts.
 
 from set_engine import engine
 import move_two_levels_up
@@ -18,7 +18,7 @@ col_balance = 'Tot_Acct_Portafolio_MXN'
 col_return = 'Tot_Portfolio_Return_MXN'
 col_ratio = 'Tot_Portfolio_Return_Percent'
 
-# Merge daily contributions and daily balance dataframes
+# Merge daily contributions and daily balance DataFrames
 return_df = rc.merge_df(contributions, balance)
 
 # Create column with the portfolio return $

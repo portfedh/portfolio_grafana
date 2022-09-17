@@ -23,7 +23,7 @@ prices_df = prices_gbm_df.add_prefix('P_')
 # Rename columns: Remove .MX to avoid problems in SQL
 shares_df.columns = shares_df.columns.str.removesuffix('.MX')
 prices_df.columns = prices_df.columns.str.removesuffix('.MX')
-# Merge Dataframes
+# Merge DataFrames
 new_df = pd.concat(([shares_df, prices_df, cetes_df]), axis=1)
 # Interpolate missing values (prices are NaN on weekend dates)
 interpol_gbm_df = new_df.interpolate(

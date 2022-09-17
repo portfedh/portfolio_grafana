@@ -3,8 +3,8 @@
 
 The module contains the following functions:
 
-- merge_df(dataframe1, dataframe2):
-    Merge dataframe2 into dataframe1
+- merge_df(DataFrame1, DataFrame2):
+    Merge DataFrame2 into DataFrame1
 
 - subtract_column(df, column1, column2, subtraction_col):
     Create column with the subtraction of column2 from column1
@@ -15,18 +15,18 @@ The module contains the following functions:
 - add_ratio_column(df, column_name, column2, column1):
     Create column with the ratio of column2 / column1
 
-- def drop_column(df: pd, *args: pd.column) -> pd:
-    Drop columns from dataframe
+- drop_column(df: pd, *args: pd.column) -> pd:
+    Drop columns from DataFrame
 
 """
 
 import pandas as pd
 
 
-def merge_df(dataframe1: pd, dataframe2: pd) -> pd:
-    ''' Merge dataframe2 into dataframe1'''
-    merged_df = dataframe1.merge(
-        dataframe2, left_index=True, right_index=True)
+def merge_df(DataFrame1: pd, DataFrame2: pd) -> pd:
+    ''' Merge DataFrame2 into DataFrame1'''
+    merged_df = DataFrame1.merge(
+        DataFrame2, left_index=True, right_index=True)
     return merged_df
 
 
@@ -59,6 +59,6 @@ def add_ratio_column(
 
 
 def drop_column(df: pd, *args: pd) -> pd:
-    ''' Drop columns from dataframe '''
+    ''' Drop columns from DataFrame '''
     df.drop(list(args), axis=1, inplace=True)
     return df

@@ -6,7 +6,7 @@ from scripts import daily_shares as ds
 
 
 class TestReturnCalculations(unittest.TestCase):
-    # Test class that inherits from  unittest.testacse
+    # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
     def test_create_empty_share_quantity_df(self):
@@ -24,7 +24,7 @@ class TestReturnCalculations(unittest.TestCase):
         date_column = pd.to_datetime(expected['Date'])
         # Make the 'Date' Column the Index
         index_date_column = pd.DatetimeIndex(date_column.values)
-        # Create dataframe with new index and add 'Date' as column name
+        # Create DataFrame with new index and add 'Date' as column name
         expected = expected.set_index(index_date_column)
         expected = expected.rename_axis('Date', axis=1)
         # Drop original 'Date' Column

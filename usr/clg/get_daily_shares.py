@@ -17,10 +17,10 @@ trade_hist_df['Shares'] = trade_hist_df['Shares'].astype(int)
 # Create ticker lists
 yftickers = list(trade_hist_df['Yfinance_Ticker'].unique())
 
-# Create empty share quantity dataframe
+# Create empty share quantity DataFrame
 share_quantity_df = ds.create_empty_share_quantity_df(yftickers)
 
-# Create daily share quantity dataframe
+# Create daily share quantity DataFrame
 daily_share_quantity_df = ds.create_daily_share_quantity(
     date_range=sad.date_range,
     trade_history=trade_hist_df,

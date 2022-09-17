@@ -14,13 +14,10 @@ The module contains the following functions:
     Returns a df with daily values from a monthly balance.
 
 - add_df(*args):
-    Returns a dataframe appending all the columns in the input dataframes.
-
-- remove_duplicates(df):
-    Returns a dataframe removing duplicated columns.
+    Returns a DataFrame appending all the columns in the input DataFrames.
 
 - add_total_column(df, col_name):
-    Returns a dataframe with a total column, adding all column values.
+    Returns a DataFrame with a total column, adding all column values.
 """
 
 
@@ -35,11 +32,11 @@ def create_df(file_name: str) -> 'pd':
 
         Parameters:
             filename:
-                - csv file name, including file extention.
+                - csv file name, including file extension.
                   'path/filename.csv'
 
         Returns:
-            df: Dataframe with two columns:
+            df: DataFrame with two columns:
                 - 'Date' column as the index, in datetime format.
                 - Column Values, int or float.
     """
@@ -49,7 +46,7 @@ def create_df(file_name: str) -> 'pd':
         df['Date'], dayfirst=True)
     # Make 'Date' column an index object
     datetime_list = pd.DatetimeIndex(datetime_list.values)
-    # Append new 'Date' column to dataframe, as index
+    # Append new 'Date' column to DataFrame, as index
     df = df.set_index(datetime_list)
     # Add 'Date' label to index column
     df = df.rename_axis('Date', axis=1)
@@ -67,7 +64,7 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
 
         Parameters:
             df:
-                - Input dataframe.
+                - Input DataFrame.
                 - Must contain a date column in datetime format.
                 - Must contain a column with values.
 
@@ -86,26 +83,26 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
                 'Date' column as index in datetime format.
                 column_name: Values.
     """
-    # Create output dataframe
+    # Create output DataFrame
     daily_df = pd.DataFrame(columns=[column_name])
     for date in range:
-        # Filter dataframe up to date
-        filtered_blance_df = df.loc[:date]
+        # Filter DataFrame up to date
+        filtered_balance_df = df.loc[:date]
         if sum is True:
             # Get the sum of values to date
-            value = filtered_blance_df[column_name].sum()
+            value = filtered_balance_df[column_name].sum()
         else:
             # Get last value
             try:
-                value = filtered_blance_df[column_name].iloc[-1]
+                value = filtered_balance_df[column_name].iloc[-1]
             except IndexError:
                 # In case the df is empty at that date
                 value = 0
         # Create dictionary with value
         new_dic_row = {column_name: value}
-        # Create dataframe from dictionary
+        # Create DataFrame from dictionary
         new_row_df = pd.DataFrame(new_dic_row, index=[date])
-        # Merge with output dataframe
+        # Merge with output DataFrame
         daily_df = pd.concat(
             [new_row_df, daily_df])
     # Set column from string to integer
@@ -117,17 +114,14 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     return daily_df
 
 
-# Consolidation Functions
-##############################################################################
-
 # Same as merge_df() in irr_calculations.py. Eliminate merge_df().
 def add_df(*args: pd) -> 'pd':
     """
-    Returns a dataframe appending all the columns in the input dataframes.
+    Returns a DataFrame appending all the columns in the input DataFrames.
 
         Parameters:
             *args:
-                - Unlimited csv file names, including file extentions.
+                - Unlimited csv file names, including file extensions.
                     Example:
                         'path/filename.csv'
         Returns:
@@ -143,18 +137,18 @@ def add_df(*args: pd) -> 'pd':
 
 def add_total_column(df, col_name):
     """
-    Returns a dataframe with a total column, adding all column values.
+    Returns a DataFrame with a total column, adding all column values.
 
     Parameters:
         df:
-            - dataframe with amounts.
+            - DataFrame with amounts.
                 Example:
                     Column0: 'Date'
                     Column1: 'Amount1'
                     Column2: 'Amount2'
     Returns:
         df:
-            - Dataframe without duplicate columns
+            - DataFrame without duplicate columns
                 Example:
                     Column0: 'Date'
                     Column1: 'Amount1'

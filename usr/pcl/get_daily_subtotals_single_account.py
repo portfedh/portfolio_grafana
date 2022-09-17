@@ -22,7 +22,7 @@ prices_gbm_df = prices_gbm_df.add_prefix('P_')
 # Rename columns: Remove .MX to avoid problems in SQL
 shares_gbm_df.columns = shares_gbm_df.columns.str.removesuffix('.MX')
 prices_gbm_df.columns = prices_gbm_df.columns.str.removesuffix('.MX')
-# Merge Dataframes
+# Merge DataFrames
 concat_gbm_df = pd.concat(([shares_gbm_df, prices_gbm_df]), axis=1)
 # Interpolate missing values (prices are NaN on weekend dates)
 interpol_gbm_df = concat_gbm_df.interpolate(
@@ -65,7 +65,7 @@ prices_ibkr_df = db.create_df('outputs/daily_prices_interpolated_PCL_IBKR.csv')
 
 # Transformations
 #################
-# Rename columns: Add Quantity or price simbol
+# Rename columns: Add Quantity or price symbol
 shares_ibkr_df = shares_ibkr_df.add_prefix('Q_')
 prices_ibkr_df = prices_ibkr_df.add_prefix('P_')
 
@@ -73,7 +73,7 @@ prices_ibkr_df = prices_ibkr_df.add_prefix('P_')
 shares_ibkr_df.columns = shares_ibkr_df.columns.str.removesuffix('.MX')
 prices_ibkr_df.columns = prices_ibkr_df.columns.str.removesuffix('.MX')
 
-# Merge Dataframes
+# Merge DataFrames
 concat_df_ibkr = pd.concat(([shares_ibkr_df, prices_ibkr_df]), axis=1)
 # Interpolate missing values (prices are NaN on weekend dates)
 interpol_ibkr_df = concat_df_ibkr.interpolate(

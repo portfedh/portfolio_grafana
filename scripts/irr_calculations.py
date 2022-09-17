@@ -9,7 +9,7 @@ The module contains the following functions:
 
 Irr contributions functions:
     - concat_df(*args)
-        Concatenate unlimited dataframes
+        Concatenate unlimited DataFrames
 
     - to_datetime_df(df, date_column)
         Turn date to datetime format
@@ -21,33 +21,33 @@ Irr contributions functions:
         Filter df to keep columns in list
 
     - invert_cf_df(df, column_name)
-        Invert values as cashflows
+        Invert values as cash flows
 
     - integers_df(df, column_name)
         Save values as integers
 
 Monthly balance functions:
     - merge_df(*args: pd)
-        Merge unlimited dataframes
+        Merge unlimited DataFrames
 
 IRR Calculations:
     - get_last_value(df)
-        Get las value from a pandas dataframe
+        Get las value from a pandas DataFrame
 
     - rename_column(df, balance_column, contributions_column)
         Rename the balance column like the contributions column
 
     - split_df(df, contributions_column)
-        Separate the dataframe into two lists for the xirr function
+        Separate the DataFrame into two lists for the xirr function
 """
 
 import pandas as pd
 
 
 # irr_contributions functions
-##############################################################################
+#############################
 def concat_df(*args: pd) -> pd:
-    """Concatenate unlimited dataframes"""
+    """Concatenate unlimited DataFrames"""
     list = []
     for x in args:
         list.append(x)
@@ -84,12 +84,12 @@ def filter_df(df: pd, columns: list) -> pd:
 
 
 def invert_cf_df(df: pd, column_name: str) -> pd:
-    """Invert values as cashflows"""
+    """Invert values as cash flows"""
     df[column_name] = df[column_name]*-1
     return df
 
 
-# Can be eliminated if dataframe has date as index
+# Can be eliminated if DataFrame has date as index
 # Simply run:
 # df = df.astype('int')
 def integers_df(df: pd, column_name: str) -> pd:
@@ -99,12 +99,12 @@ def integers_df(df: pd, column_name: str) -> pd:
 
 
 # Monthly Balance Functions
-##############################################################################
+###########################
 
 # Similar to concat_df but with axis=1
 # Identical to add_df() from daily_balance. Substitute
 def merge_df(*args: pd) -> pd:
-    """Merge unlimited dataframes"""
+    """Merge unlimited DataFrames"""
     list = []
     for x in args:
         list.append(x)
@@ -114,10 +114,10 @@ def merge_df(*args: pd) -> pd:
 
 
 # IRR Calculations
-##############################################################################
+##################
 
 def get_last_value(df: pd) -> pd:
-    """Get las value from a pandas dataframe"""
+    """Get las value from a pandas DataFrame"""
     df = df.iloc[-1:]
     return df
 
@@ -129,7 +129,7 @@ def rename_column(df: pd, balance_col: str, contributions_col: str) -> pd:
 
 
 def split_df(df: pd, contributions_column: str) -> pd:
-    """Separate the dataframe into two lists for the xirr function"""
+    """Separate the DataFrame into two lists for the xirr function"""
     date_list = df.index.tolist()
     values_list = list(df[contributions_column])
     return date_list, values_list

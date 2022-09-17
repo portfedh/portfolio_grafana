@@ -6,7 +6,7 @@ from scripts import irr_calculations as irr
 
 
 class TestReturnCalculations(unittest.TestCase):
-    # Test class that inherits from  unittest.testacse
+    # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
     def test_concat_df(self):

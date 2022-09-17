@@ -20,7 +20,7 @@ cont_out_file = 'outputs/irr_contributions_PCL_AllAccounts.csv'
 
 # Concatenate all files
 contributions = irr.concat_df(file_1, file_2, file_3)
-# Turn dataframe dates to datetime
+# Turn DataFrame dates to datetime
 contributions = irr.to_datetime_df(contributions, 'Date')
 # Create total column
 contributions = irr.add_total_df(contributions, total_column)
@@ -56,8 +56,8 @@ balance = irr.filter_df(balance, [sum_col_name])
 balance.to_csv(balance_out_file, index=True, index_label='Date')
 
 
-# # Caculate IRR
-################
+# # Calculate IRR
+#################
 contrib_csv = 'outputs/irr_contributions_PCL_AllAccounts.csv'
 balance_csv = 'outputs/irr_monthly_account_balance_PCL_AllAccounts.csv'
 balance_df = db.create_df(balance_csv)
@@ -65,9 +65,9 @@ contributions_df = db.create_df(contrib_csv)
 bal_column = 'Tot_Acct_Portafolio_MXN'
 cont_column = 'Contribuciones_Totales_MXN'
 
-# Get las value from dataframe
+# Get las value from DataFrame
 a = irr.get_last_value(balance_df)
-# Rename column as contriburions column
+# Rename column as contributions column
 b = irr.rename_column(a, bal_column, cont_column)
 # Concatenate into one df
 irr_df = pd.concat([contributions_df, b])

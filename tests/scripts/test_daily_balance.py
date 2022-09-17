@@ -7,7 +7,7 @@ from unittest import mock
 
 
 class TestDailyBalance(unittest.TestCase):
-    # Test class that inherits from  unittest.testacse
+    # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
     @mock.patch('scripts.daily_balance.pd.read_csv')

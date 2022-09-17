@@ -3,17 +3,9 @@ import pandas as pd
 import move_two_levels_up
 from scripts import return_calculations as rt
 
-# Tests
-#################
-#  1. merge_df()
-#  2. subtract_column()
-#  3. test_df_column_to_int():
-#  4. test_add_ratio_column():
-#  5. test_drop_column():
-
 
 class TestReturnCalculations(unittest.TestCase):
-    # Test class that inherits from  unittest.testacse
+    # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
     def test_merge_df(self):

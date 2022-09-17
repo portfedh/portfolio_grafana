@@ -13,7 +13,7 @@ cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 
 # Portfolio Calculations
 ##############################################################################
-# Create Subtotals Dataframe ($)
+# Create Subtotals DataFrame ($)
 subtotals = pd.DataFrame()
 subtotals.index.name = 'Date'
 
