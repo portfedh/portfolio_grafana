@@ -52,7 +52,7 @@ class TestReturnCalculations(unittest.TestCase):
         df2 = ds.create_empty_share_quantity_df(yftickers)
 
         # Call function
-        actual = ds.create_daily_share_quantity(
+        actual = ds.create_daily_share_quantity_df(
             date_range=date_range1,
             trade_history=df1,
             ticker_list=yftickers,

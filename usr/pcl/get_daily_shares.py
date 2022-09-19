@@ -21,7 +21,7 @@ yftickers = list(trade_hist_df['Yfinance_Ticker'].unique())
 share_quantity_df = ds.create_empty_share_quantity_df(yftickers)
 
 # Create daily share quantity DataFrame
-daily_share_quantity_df = ds.create_daily_share_quantity(
+daily_share_quantity_df = ds.create_daily_share_quantity_df(
     date_range=sad.date_range,
     trade_history=trade_hist_df,
     ticker_list=yftickers,
@@ -54,7 +54,7 @@ yftickers2 = list(trade_hist_df2['Yfinance_Ticker'].unique())
 share_quantity_df2 = ds.create_empty_share_quantity_df(yftickers2)
 
 # Create daily share quantity DataFrame
-daily_share_quantity_df2 = ds.create_daily_share_quantity(
+daily_share_quantity_df2 = ds.create_daily_share_quantity_df(
     date_range=sad.date_range,
     trade_history=trade_hist_df2,
     ticker_list=yftickers2,

@@ -1,23 +1,23 @@
 # daily_balance.py
 """
-Get daily balances for all accounts.
+This module contains the functions to transform monthly balances for each
+account as inputs and return a daily total balance.
 
-This module takes monthly balances for each account as inputs and
-consolidates them to return a total daily balance for all accounts.
+The functions are also used by by other scripts in their calculations.
 
 The module contains the following functions:
 
 - create_df(file_name):
-    Returns an pandas df with values and dates in datetime format.
+    Takes a csv file and returns a pandas df with its index in datetime format.
 
 - create_daily_balance_df(df, column_name, sum):
     Returns a df with daily values from a monthly balance.
 
 - concat_df(*args):
-    Returns a DataFrame appending all the columns in the input DataFrames.
+    Returns a DataFrame appending  rows or columns to the input DataFrame.
 
 - add_total_column(df, col_name):
-    Returns a DataFrame with a total column, adding all column values.
+    Returns a DataFrame with appended total column, adding all column values.
 """
 
 
@@ -26,19 +26,19 @@ import pandas as pd
 
 def create_df(file_name: str) -> 'pd':
     """
-    Takes a csv file and returns a df with its index in datetime format.
+    Takes a csv file and returns a pandas df with its index in datetime format.
 
-    Input csv file must have two columns: Date column and values column.
+    Input csv file must have two columns: 'Date' column and values column.
 
         Parameters:
             filename:
-                - csv file name, including file extension.
-                  'path/filename.csv'
+                csv file name, including file extension.
+                example: 'path/filename.csv'
 
         Returns:
-            df: DataFrame with two columns:
-                - 'Date' column as the index, in datetime format.
-                - Column Values, int or float.
+            DataFrame with two columns:
+                    'Date' column as the index, in datetime format.
+                    Column values as int or float.
     """
     df = pd.read_csv(file_name)
     # Create list from 'Date' column
@@ -58,26 +58,26 @@ def create_df(file_name: str) -> 'pd':
 def create_daily_balance_df(
         df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     """
-    Takes as input a monthly account balance and produces a daily balance.
+    Takes as input a monthly account balance and returns a daily balance.
 
-    Uses a df with dates and monthly values and returns a df with daily values.
-    Uses the output of create_df() function as input.
+    Uses a df with dates and monthly values as input.
+    Returns a df with daily values as output.
 
         Parameters:
             df:
-                - Input DataFrame.
-                - Must contain a date column in datetime format.
-                - Must contain a column with values.
+                Input DataFrame.
+                Must contain a date column in datetime format.
+                Must contain a column with values.
 
             column_name:
-                - Must be the name of the column with values in df.
+                Name of the column with values in output df.
 
             sum:
-                - True: Will add the values up to date.
-                - False: Will append the latest value.
+                True: Will add the values up to a date.
+                False: Will append the latest value.
 
             range:
-                - Date range for the daily balance
+                Date range for the daily balance
 
         Returns:
             daily_df:
@@ -115,21 +115,20 @@ def create_daily_balance_df(
     return daily_df
 
 
-# Rename to concat_df() and change all dependencies at the end.
 def concat_df(*args: pd, type: int) -> 'pd':
     """
-    Returns a DataFrame appending  rows or columns in the input DataFrames.
+    Returns a DataFrame appending  rows or columns to the input DataFrame.
 
         Parameters:
             *args:
-                Unlimited DataFrames
+                Unlimited DataFrames.
             type:
-                0: Concatenate rows
-                1: Concatenate columns
+                0: Concatenate rows.
+                1: Concatenate columns.
         Returns:
             df:
                 'Date' column as index in datetime format.
-                Other columns: Added values
+                Other columns: with values.
     """
     list = []
     for df in args:
@@ -143,23 +142,24 @@ def concat_df(*args: pd, type: int) -> 'pd':
 
 def add_total_column_to_df(df: pd, col_name: str) -> pd:
     """
-    Returns a DataFrame with a total column, adding all column values.
+    Returns a DataFrame with appended total column, adding all column values.
 
     Parameters:
-        df:
-            - DataFrame with amounts.
+        df: Input DataFrame with amounts.
                 Example:
-                    Column0: 'Date'
-                    Column1: 'Amount1'
-                    Column2: 'Amount2'
+                    Column_0: 'Date'
+                    Column_1: 'Amount_1'
+                    Column_2: 'Amount_2'
+        col_name:
+            Name of the column with added values.
+            In example below: 'Total'
     Returns:
-        df:
-            - DataFrame with new column and total amounts
+        df: DataFrame with new column and total amounts
                 Example:
-                    Column0: 'Date'
-                    Column1: 'Amount1'
-                    Column2: 'Amount2'
-                    Column2: 'Total'  (Amount1+Amount2)
+                    Column_0: 'Date'
+                    Column_1: 'Amount_1'
+                    Column_2: 'Amount_2'
+                    Column_3: 'Total'  (Amount_1+Amount_2)
     """
     df[col_name] = df.sum(axis=1)
     return df

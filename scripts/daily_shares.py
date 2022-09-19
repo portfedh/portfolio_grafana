@@ -1,16 +1,14 @@
 # daily_shares.py
 """
-Get the daily shares for each ticker in an account.
-
-This module allows the user get the daily share quantities for each ticker
-in one account.
+This module contains the functions to take the user trade history
+as inputs and return he daily shares for each ticker in a bank account.
 
 The module contains the following functions:
 
-- create_share_quantity_df(tickers):
-    Returns an empty df with a date column and one column per ticker.
+- create_empty_share_quantity_df(tickers):
+    Create an empty DataFrame with 'Date' as index and each ticker as a column.
 
-- create_daily_share_quantity(date_range, trade_history, ticker_list, df):
+- create_daily_share_quantity_df(date_range, trade_history, ticker_list, df):
     Returns the number of shares per ticker for each day in date range.
 """
 
@@ -20,19 +18,19 @@ import pandas as pd
 
 def create_empty_share_quantity_df(tickers: list) -> 'pd':
     """
-    Create an empty DataFrame with Date as index and each ticker as a column.
+    Create an empty DataFrame with 'Date' as index and each ticker as a column.
 
     Creates the DataFrame so total shares per day can be added by appending it.
 
         Parameters:
             tickers:
-                - A list with the tickers to be added as columns.
+                A list with the tickers to be added as columns.
 
         Returns:
             quantity_df:
-                - Empty DataFrame.
-                - 'Date' as index with datetime format.
-                - Each ticker as column
+                Empty DataFrame.
+                'Date' as index with datetime format.
+                Each ticker as column name.
     """
     # Create DataFrame columns
     column_list = tickers.copy()
@@ -52,32 +50,32 @@ def create_empty_share_quantity_df(tickers: list) -> 'pd':
     return quantity_df
 
 
-def create_daily_share_quantity(
+def create_daily_share_quantity_df(
         date_range: datetime,
         trade_history: 'pd',
         ticker_list: list,
         df: 'pd'
         ) -> 'pd':
     """
-    Reads the trade history & returns a df with daily shares for every ticker.
+    Returns the number of shares per ticker for each day in date range.
 
     Takes a trade history df from a csv file and a date range.
     Outputs a df with daily share quantities per ticker for a date range.
 
         Parameters:
             date_range:
-                - Dates to be analyzed.
+                Dates to be analyzed.
 
             trade_history:
-                - Data frame with trade history.
+                Data frame with trade history.
 
             ticker_list:
-                - List of tickers in trade history DataFrame.
+                List of tickers in trade history DataFrame.
 
         Returns:
             df:
-                - Empty df created using create_share_quantity_df().
-                - Appended with one row per day with share totals per ticker.
+                Empty df created using create_share_quantity_df().
+                Appended with one row per day with share totals per ticker.
     """
     # For loop: Go through every date:
     for date in date_range:

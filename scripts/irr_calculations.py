@@ -1,36 +1,33 @@
 # irr_calculations.py
 """
-Functions used to calculate the IRR of the portfolio.
+This module contains functions used to calculate the IRR of the portfolio.
 
-Uses consolidated contributions file and the last value in
-the consolidated account balance file as inputs.
+To calculate, it uses the consolidated contributions file and
+the last value in the consolidated account balance file as inputs.
 
 The module contains the following functions:
 
 Irr contributions functions:
-    - concat_df(*args)
-        Concatenate unlimited DataFrames
+    - change_column_to_datetime(df, date_column)
+        Change DataFrame date column to datetime format and make it the index.
 
-    - to_datetime_df(df, date_column)
-        Turn date to datetime format
+    - filter_df_by_column(df: pd, columns: list
+        Filter DataFrame. Only keep columns in provided list.
 
-    - filter_df(df: pd, columns: list
-        Filter df to keep columns in list
+    - invert_df_column_values(df, column_name)
+        Invert DataFrame column values by multiplying its values by (-1).
 
-    - invert_cf_df(df, column_name)
-        Invert values as cash flows
-
-    - integers_df(df, column_name)
+    - change_column_to_integers(df, column_name)
         Save values as integers
 
 IRR Calculations:
-    - get_last_value(df)
+    - get_last_row_of_df(df)
         Get las value from a pandas DataFrame
 
-    - rename_column(df, balance_column, contributions_column)
+    - rename_df_column(df, balance_column, contributions_column)
         Rename the balance column like the contributions column
 
-    - split_df(df, contributions_column)
+    - split_df_into_two_lists(df, contributions_column)
         Separate the DataFrame into two lists for the xirr function
 """
 
@@ -41,8 +38,16 @@ import pandas as pd
 #############################
 
 # Like daily_balance but does not require csv
-def change_column_to_datetime(df: pd, date_column: pd) -> pd:
-    """Turn date to datetime format"""
+def change_column_to_datetime(df: pd, date_column: str) -> pd:
+    """
+    Change DataFrame date column to datetime format and make it the index.
+        Parameters:
+            df: Input DataFrame
+            date_column: Name of the column with dates.
+
+        Returns:
+            df: DataFrame with date_column as index and datetime format.
+    """
     datetime_date = pd.to_datetime(df[date_column], dayfirst=True)
     datetime_index_trades = pd.DatetimeIndex(datetime_date.values)
     df = df.set_index(datetime_index_trades)
@@ -51,16 +56,31 @@ def change_column_to_datetime(df: pd, date_column: pd) -> pd:
     return df
 
 
-# Check if column variable can be changed to a string
-# df = df.filter([columns])
 def filter_df_by_column(df: pd, columns: list) -> pd:
-    "Filter df to keep columns in list"
+    """
+    Filter DataFrame. Only keep columns in provided list.
+
+        Parameters:
+            df: Input DataFrame
+            columns: String or list of strings with columns to keep.
+
+        Returns:
+            df: DataFrame with index and selected columns in list.
+    """
     df = df.filter(columns)
     return df
 
 
 def invert_df_column_values(df: pd, column_name: str) -> pd:
-    """Invert values as cash flows"""
+    """
+    Invert DataFrame column values by multiplying its values by (-1).
+
+        Parameters:
+            df: Input DataFrame
+            column_name: Name of column to multiply values.
+        Returns:
+            df: DataFrame with values of column_name multiplied by (-1).
+    """
     df[column_name] = df[column_name]*-1
     return df
 
