@@ -10,10 +10,10 @@ The module contains the following functions:
 - create_df(file_name):
     Returns an pandas df with values and dates in datetime format.
 
-- daily_balance(df, column_name, sum):
+- create_daily_balance_df(df, column_name, sum):
     Returns a df with daily values from a monthly balance.
 
-- add_df(*args):
+- concat_df(*args):
     Returns a DataFrame appending all the columns in the input DataFrames.
 
 - add_total_column(df, col_name):
@@ -55,7 +55,8 @@ def create_df(file_name: str) -> 'pd':
     return df
 
 
-def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
+def create_daily_balance_df(
+        df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     """
     Takes as input a monthly account balance and produces a daily balance.
 
@@ -114,10 +115,10 @@ def daily_balance(df: 'pd', column_name: str, sum: bool, range) -> 'pd':
     return daily_df
 
 
-# Rename to concat_df() and change all dependencies at the end. 
-def add_df(*args: pd, type: int) -> 'pd':
+# Rename to concat_df() and change all dependencies at the end.
+def concat_df(*args: pd, type: int) -> 'pd':
     """
-    Returns a DataFrame appending all the rows or columns in the input DataFrames.
+    Returns a DataFrame appending  rows or columns in the input DataFrames.
 
         Parameters:
             *args:
@@ -140,7 +141,7 @@ def add_df(*args: pd, type: int) -> 'pd':
     return result
 
 
-def add_total_column(df: pd, col_name: str) -> pd:
+def add_total_column_to_df(df: pd, col_name: str) -> pd:
     """
     Returns a DataFrame with a total column, adding all column values.
 

@@ -16,7 +16,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'Values': [99, 100, 101],
             })
         # Call function
-        actual = irr.to_datetime_df(df1, 'Date')
+        actual = irr.change_column_to_datetime(df1, 'Date')
         # Expectation
         data = {'Values': [99, 100, 101]}
         index = pd.date_range('29/01/21', periods=3)
@@ -34,7 +34,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_d': [10, 11, 12],
             })
         # Call function
-        actual = irr.filter_df(df1, ['col_a', 'col_c'])
+        actual = irr.filter_df_by_column(df1, ['col_a', 'col_c'])
         # Expectation
         expected = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -50,7 +50,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [4, 5, 6],
             })
         # Call function
-        actual = irr.invert_cf_df(df1, 'col_b')
+        actual = irr.invert_df_column_values(df1, 'col_b')
         # Expectation
         expected = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -66,7 +66,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [4.7, 5.8, 6.9],
             })
         # Call function
-        actual = irr.integers_df(df1, 'col_b')
+        actual = irr.change_column_to_integers(df1, 'col_b')
 
         # Expectation
         expected = pd.DataFrame({
@@ -83,7 +83,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [4, 5, 6],
             })
         # Call function
-        actual = irr.get_last_value(df1)
+        actual = irr.get_last_row_of_df(df1)
         actual = actual.reset_index(drop=True)
         # Expectation
         expected = pd.DataFrame({
@@ -100,7 +100,7 @@ class TestReturnCalculations(unittest.TestCase):
             'col_b': [4, 5, 6],
             })
         # Call function
-        actual = irr.rename_column(df1, 'col_b', 'col_new')
+        actual = irr.rename_df_column(df1, 'col_b', 'col_new')
         # Expectation
         expected = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -116,7 +116,7 @@ class TestReturnCalculations(unittest.TestCase):
         df1 = pd.DataFrame(data, index=index)
         df1 = df1.rename_axis('Date', axis=1)
         # Call function
-        dates_actual, values_actual = irr.split_df(df1, 'Values')
+        dates_actual, values_actual = irr.split_df_into_two_lists(df1, 'Values')
         # Expectation
         dates_expected = [
             Timestamp('2021-01-29 00:00:00'),

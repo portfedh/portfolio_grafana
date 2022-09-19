@@ -41,7 +41,7 @@ import pandas as pd
 #############################
 
 # Like daily_balance but does not require csv
-def to_datetime_df(df: pd, date_column: pd) -> pd:
+def change_column_to_datetime(df: pd, date_column: pd) -> pd:
     """Turn date to datetime format"""
     datetime_date = pd.to_datetime(df[date_column], dayfirst=True)
     datetime_index_trades = pd.DatetimeIndex(datetime_date.values)
@@ -53,13 +53,13 @@ def to_datetime_df(df: pd, date_column: pd) -> pd:
 
 # Check if column variable can be changed to a string
 # df = df.filter([columns])
-def filter_df(df: pd, columns: list) -> pd:
+def filter_df_by_column(df: pd, columns: list) -> pd:
     "Filter df to keep columns in list"
     df = df.filter(columns)
     return df
 
 
-def invert_cf_df(df: pd, column_name: str) -> pd:
+def invert_df_column_values(df: pd, column_name: str) -> pd:
     """Invert values as cash flows"""
     df[column_name] = df[column_name]*-1
     return df
@@ -68,7 +68,7 @@ def invert_cf_df(df: pd, column_name: str) -> pd:
 # Can be eliminated if DataFrame has date as index
 # Simply run:
 # df = df.astype('int')
-def integers_df(df: pd, column_name: str) -> pd:
+def change_column_to_integers(df: pd, column_name: str) -> pd:
     """Save values as integers"""
     df[column_name] = df[column_name].astype('int')
     return df
@@ -77,19 +77,19 @@ def integers_df(df: pd, column_name: str) -> pd:
 # IRR Calculations
 ##################
 
-def get_last_value(df: pd) -> pd:
+def get_last_row_of_df(df: pd) -> pd:
     """Get las value from a pandas DataFrame"""
     df = df.iloc[-1:]
     return df
 
 
-def rename_column(df: pd, balance_col: str, contributions_col: str) -> pd:
+def rename_df_column(df: pd, balance_col: str, contributions_col: str) -> pd:
     """Rename the balance column like the contributions column"""
     df = df.rename(columns={balance_col: contributions_col})
     return df
 
 
-def split_df(df: pd, contributions_column: str) -> pd:
+def split_df_into_two_lists(df: pd, contributions_column: str) -> pd:
     """Separate the DataFrame into two lists for the xirr function"""
     date_list = df.index.tolist()
     values_list = list(df[contributions_column])

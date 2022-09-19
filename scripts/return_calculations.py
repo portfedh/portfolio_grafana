@@ -18,7 +18,7 @@ The module contains the following functions:
 import pandas as pd
 
 
-def subtract_column(
+def subtract_columns_in_df(
         df: pd,
         column1: str,
         column2: str,
@@ -29,7 +29,7 @@ def subtract_column(
     return df
 
 
-def add_ratio_column(
+def add_ratio_column_in_df(
         df: pd,
         column_name: str,
         column2: pd,

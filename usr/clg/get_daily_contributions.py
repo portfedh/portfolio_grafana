@@ -15,7 +15,7 @@ contribution_balance_df1 = db.create_df(
     'inputs/clg/contributions_CLG_GBM.csv')
 
 # Create daily balance
-daily_contribution_balance_df1 = db.daily_balance(
+daily_contribution_balance_df1 = db.create_daily_balance_df(
     df=contribution_balance_df1,
     column_name='Contribuciones_GBM_MXN',
     sum=True,
@@ -40,7 +40,7 @@ contribution_balance_df2 = db.create_df(
     'inputs/clg/contributions_CLG_CETES.csv')
 
 # Create daily balance.
-daily_contribution_balance_df2 = db.daily_balance(
+daily_contribution_balance_df2 = db.create_daily_balance_df(
     df=contribution_balance_df2,
     column_name='Contribuciones_Cetes_MXN',
     sum=True,
@@ -63,8 +63,8 @@ daily_contribution_balance_df2.to_sql(
 acct_1 = db.create_df('outputs/daily_contributions_CLG_GBM.csv')
 acct_2 = db.create_df('outputs/daily_contributions_CLG_CETES.csv')
 
-added_df = db.add_df(acct_1, acct_2, type=1)
-total_contributions = db.add_total_column(added_df, 'Tot_Contribuciones_MXN')
+added_df = db.concat_df(acct_1, acct_2, type=1)
+total_contributions = db.add_total_column_to_df(added_df, 'Tot_Contribuciones_MXN')
 
 # Output to CSV
 file3 = 'outputs/daily_contributions_CLG_AllAccounts.csv'

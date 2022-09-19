@@ -16,7 +16,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_b': [30, 30, 30],
             })
         # Call function
-        actual = rt.subtract_column(df1, 'col_a', 'col_b', 'col_c')
+        actual = rt.subtract_columns_in_df(df1, 'col_a', 'col_b', 'col_c')
         # Expectation
         expected = pd.DataFrame({
                 'col_a': [50, 50, 50],
@@ -33,7 +33,7 @@ class TestReturnCalculations(unittest.TestCase):
                 'col_b': [200, 400, 800],
             })
         # Call function
-        actual = rt.add_ratio_column(
+        actual = rt.add_ratio_column_in_df(
             df=df1, column_name='col_c', column2='col_a', column1='col_b'
             )
         # Expectation

@@ -42,9 +42,11 @@ class TestDailyBalance(unittest.TestCase):
         d_range = pd.date_range('2022-12-01', periods=6)
 
         # Call function 1
-        actual1 = db.daily_balance(df1, 'Tot_Acct', sum=True, range=d_range)
+        actual1 = db.create_daily_balance_df(
+            df1, 'Tot_Acct', sum=True, range=d_range)
         # Call function 2
-        actual2 = db.daily_balance(df1, 'Tot_Acct', sum=False, range=d_range)
+        actual2 = db.create_daily_balance_df(
+            df1, 'Tot_Acct', sum=False, range=d_range)
 
         # Expected 1
         data = {'Tot_Acct': [111000, 111000, 333000, 333000, 666000, 666000]}
@@ -76,7 +78,7 @@ class TestDailyBalance(unittest.TestCase):
             'col_d': [10, 11, 12],
             })
         # Call function
-        actual = db.add_df(df1, df2, type=1)
+        actual = db.concat_df(df1, df2, type=1)
         # Expectation
         expected = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -95,7 +97,7 @@ class TestDailyBalance(unittest.TestCase):
             'col_b': [4, 5, 6],
             })
         # Call function
-        actual = db.add_total_column(df1, 'col_tot')
+        actual = db.add_total_column_to_df(df1, 'col_tot')
         # Expectation
         expected = pd.DataFrame({
             'col_a': [1, 2, 3],
