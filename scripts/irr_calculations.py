@@ -18,17 +18,17 @@ Irr contributions functions:
         Invert DataFrame column values by multiplying its values by (-1).
 
     - change_column_to_integers(df, column_name)
-        Save values as integers
+        Change a DataFrame column to to integers.
 
 IRR Calculations:
     - get_last_row_of_df(df)
-        Get las value from a pandas DataFrame
+         Get the last row from a pandas DataFrame.
 
     - rename_df_column(df, balance_column, contributions_column)
-        Rename the balance column like the contributions column
+        Rename the balance column like the contributions column.
 
     - split_df_into_two_lists(df, contributions_column)
-        Separate the DataFrame into two lists for the xirr function
+        Separate the DataFrame into two lists: date_list and values_list.
 """
 
 import pandas as pd
@@ -89,7 +89,15 @@ def invert_df_column_values(df: pd, column_name: str) -> pd:
 # Simply run:
 # df = df.astype('int')
 def change_column_to_integers(df: pd, column_name: str) -> pd:
-    """Save values as integers"""
+    """
+    Change a DataFrame column to to integers.
+
+        Parameters:
+            df: Input DataFrame.
+            column_name: Name of the column to be changed.
+        Returns:
+            df: Output DataFrame with changed column.
+    """
     df[column_name] = df[column_name].astype('int')
     return df
 
@@ -98,19 +106,44 @@ def change_column_to_integers(df: pd, column_name: str) -> pd:
 ##################
 
 def get_last_row_of_df(df: pd) -> pd:
-    """Get las value from a pandas DataFrame"""
+    """
+    Get the last row from a pandas DataFrame.
+
+        Parameters:
+            df: Input dataframe.
+        Returns:
+            df: Output DataFrame with only last row.
+    """
     df = df.iloc[-1:]
     return df
 
 
 def rename_df_column(df: pd, balance_col: str, contributions_col: str) -> pd:
-    """Rename the balance column like the contributions column"""
+    """
+    Rename the balance column like the contributions column.
+
+        Parameters:
+            df: Input DataFrame.
+            balance_col: Column name with account balances.
+            contributions_col: Column name with account contributions.
+        Returns:
+            df: Output DataFrame with changed column names.
+    """
     df = df.rename(columns={balance_col: contributions_col})
     return df
 
 
 def split_df_into_two_lists(df: pd, contributions_column: str) -> pd:
-    """Separate the DataFrame into two lists for the xirr function"""
+    """
+    Separate the DataFrame into two lists: date_list and values_list.
+
+        Parameters:
+            df: Input DataFrame.
+            contributions_column: Name of the contributions column..
+        Returns:
+            date_list: List with all the dates in the DataFrame.
+            values_list: List with all the values in the contributions_column.
+    """
     date_list = df.index.tolist()
     values_list = list(df[contributions_column])
     return date_list, values_list
