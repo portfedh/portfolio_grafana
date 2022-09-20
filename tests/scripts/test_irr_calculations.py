@@ -1,3 +1,8 @@
+# test_irr_calculations.py
+"""
+This test module will unit test all the functions in irr_calculations.py
+"""
+
 import unittest
 import pandas as pd
 from pandas import Timestamp
@@ -10,6 +15,18 @@ class TestReturnCalculations(unittest.TestCase):
     # Gives access to testing capabilities.
 
     def test_to_datetime_df(self):
+        """
+        Test if function makes 'Date' column the index with datetime format.
+
+        Procedure:
+            Setup:
+                Create df with two columns: 'Date' and 'Values'.
+            Call:
+                Call the function with df.
+            Expected:
+                df with 'Date' as index.
+                df with one column: 'Values'.
+        """
         # Setup
         df1 = pd.DataFrame({
                 'Date': ['29/01/21', '30/01/21', '31/01/21'],
@@ -25,7 +42,19 @@ class TestReturnCalculations(unittest.TestCase):
         # Test
         pd.testing.assert_frame_equal(actual, expected, check_freq=False)
 
-    def test_filter_df(self):
+    def test_filter_df_by_column(self):
+        """
+        Test if function filters a df, keeping only the columns passed as args.
+
+        Procedure:
+            Setup:
+                Create df1 with 4 columns: 'col_a', 'col_b', 'col_c', 'col_d'.
+            Call:
+                Call the function with df1.
+                Select only two columns: 'col_a', 'col_c'.
+            Expected:
+                df1 showing two columns and their values: 'col_a', 'col_c'.
+        """
         # Setup
         df1 = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -44,6 +73,19 @@ class TestReturnCalculations(unittest.TestCase):
         pd.testing.assert_frame_equal(actual, expected)
 
     def test_invert_cf_df(self):
+        """
+        Test if function changes the values in a column by multiplying by (-1).
+
+        Procedure:
+            Setup:
+                Create df1 with 2 columns: 'col_a', 'col_b'.
+            Call:
+                Call the function with df1.
+                Select 'col_b' to invert that column. 
+            Expected:
+                df1 with 'col_a' with original values.
+                df1 with 'col_b' with inverted values.
+        """
         # Setup
         df1 = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -60,6 +102,20 @@ class TestReturnCalculations(unittest.TestCase):
         pd.testing.assert_frame_equal(actual, expected)
 
     def test_integers_df(self):
+        """
+        Test if function changes the values in df to integers.
+
+        Procedure:
+            Setup:
+                Create df1 with 2 columns: 'col_a', 'col_b'.
+                Set values for both columns as floats.
+            Call:
+                Call the function with df1.
+                Select 'col_b' to change that column to integers.
+            Expected:
+                df1 with 'col_a' with values as floats.
+                df1 with 'col_b' with values as integers.
+        """
         # Setup
         df1 = pd.DataFrame({
             'col_a': [1.4, 2.5, 3.6],
@@ -77,6 +133,20 @@ class TestReturnCalculations(unittest.TestCase):
         pd.testing.assert_frame_equal(actual, expected)
 
     def test_get_last_value(self):
+        """
+        Test if function filters the last row of a df.
+
+        Procedure:
+            Setup:
+                Create df1 with 2 columns: 'col_a', 'col_b'.
+                Set three values for both columns.
+            Call:
+                Call the function with df1.
+                Reset index so it will match testing DataFrame.
+            Expected:
+                df1 with 'col_a' with only the last value.
+                df1 with 'col_b' with only the last value.
+        """
         # Setup
         df1 = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -94,6 +164,19 @@ class TestReturnCalculations(unittest.TestCase):
         pd.testing.assert_frame_equal(actual, expected)
 
     def test_rename_column(self):
+        """
+        Test if function renames a column in a DataFrame.
+
+        Procedure:
+            Setup:
+                Create df1 with 2 columns: 'col_a', 'col_b'.
+            Call:
+                Call the function with df1.
+                Rename 'col_b' to 'col_new'.
+            Expected:
+                df1 with with 2 columns: 'col_a', 'col_new'.
+                The values in 'col_b' == 'col_new'.
+        """
         # Setup
         df1 = pd.DataFrame({
             'col_a': [1, 2, 3],
@@ -110,6 +193,19 @@ class TestReturnCalculations(unittest.TestCase):
         pd.testing.assert_frame_equal(actual, expected)
 
     def test_split_df(self):
+        """
+        Test if function saves dates and values in df as two  lists.
+
+        Procedure:
+            Setup:
+                Create df1 with 2 columns: 'Date', 'Values'.
+                Make 'Date'the index in datetime format.
+            Call:
+                Call the function with df1 and 'Values' column.
+            Expected:
+                'dates_actual': A  list with the dates from df1.
+                'values_actual': A list with the values from df1.
+        """
         # Setup
         data = {'Values': [99, 100, 101]}
         index = pd.date_range('29/01/21', periods=3)

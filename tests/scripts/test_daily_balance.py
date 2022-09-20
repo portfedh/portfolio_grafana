@@ -53,10 +53,10 @@ class TestDailyBalance(unittest.TestCase):
 
     def test_create_daily_balance_df(self):
         """
-        Test if function:
-            Creates a df for every date in a date range.
+        Test that function:
+            Creates a df with a row for every date in a date range.
             Displays the last data value for a date in a date range.
-            Displays the cumulative sum value for a date in a date range.
+            Displays the cumulative sum value for every date in a date range.
 
         Procedure:
             Setup:
@@ -72,12 +72,12 @@ class TestDailyBalance(unittest.TestCase):
                 Call function with setup df.
                 Select sum=false to get last value.
             Expected1:
+                DataFrame with 'Date' column as the index.
                 Dates are datetime, values are int.
-                'Date' column is the index.
                 Values are the cumulative total of 'Tot_Acct'.
             Expected2:
+                DataFrame with 'Date' column as the index.
                 Dates are datetime, values are int.
-                Date column is the index.
                 Values are the last value of 'Tot_Acct'.
         """
         # Setup df1
