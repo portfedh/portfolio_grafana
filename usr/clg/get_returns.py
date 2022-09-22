@@ -1,9 +1,11 @@
-# Script to calculate the portfolio return in $ and % ammounts.
+# Script to calculate the portfolio return in $ and % amounts.
 
 from set_engine import engine
 import move_two_levels_up
 from scripts import daily_balance as db
+from scripts import irr_calculations as irr
 from scripts import return_calculations as rc
+
 
 # Create Portfolio Returns
 ##########################
@@ -18,28 +20,25 @@ col_balance = 'Tot_Acct_Portafolio_MXN'
 col_return = 'Tot_Portfolio_Return_MXN'
 col_ratio = 'Tot_Portfolio_Return_Percent'
 
-# Merge daily contributions and daily balance dataframes
-return_df = rc.merge_df(contributions, balance)
+# Merge daily contributions and daily balance DataFrames
+return_df = db.concat_df(contributions, balance, type=1)
 
 # Create column with the portfolio return $
-return_df = rc.subtract_column(
+return_df = rc.subtract_columns_in_df(
     df=return_df,
     column1=col_balance,
     column2=col_contrb,
     subtraction_col=col_return)
 
 # Save column data as Integer
-return_df = rc.df_column_to_int(return_df, col_return)
+return_df = irr.change_column_to_integers(return_df, col_return)
 
 # Create column with the portfolio return %
-return_df = rc.add_ratio_column(
+return_df = rc.add_ratio_column_in_df(
     df=return_df,
     column_name=col_ratio,
     column2=col_balance,
     column1=col_contrb)
-
-# Drop calculation columns
-return_df = rc.drop_column(return_df, col_contrb, col_balance)
 
 # Outputs
 #########

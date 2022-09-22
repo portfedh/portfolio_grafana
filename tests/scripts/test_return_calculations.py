@@ -3,49 +3,33 @@ import pandas as pd
 import move_two_levels_up
 from scripts import return_calculations as rt
 
-# Tests
-#################
-#  1. merge_df()
-#  2. subtract_column()
-#  3. test_df_column_to_int():
-#  4. test_add_ratio_column():
-#  5. test_drop_column():
-
 
 class TestReturnCalculations(unittest.TestCase):
-    # Test class that inherits from  unittest.testacse
+    # Test class that inherits from  unittest.testcase
     # Gives access to testing capabilities.
 
-    def test_merge_df(self):
-        # Setup
-        df1 = pd.DataFrame({
-                'col_a': ['a1', 'a2', 'a3'],
-                'col_b': ['b1', 'b2', 'b3'],
-            })
-        df2 = pd.DataFrame({
-                'col_c': ['c1', 'c2', 'c3'],
-                'col_d': ['d1', 'd2', 'd3'],
-            })
-        # Call function
-        actual = rt.merge_df(df1, df2)
-        # Expectation
-        expected = pd.DataFrame({
-                'col_a': ['a1', 'a2', 'a3'],
-                'col_b': ['b1', 'b2', 'b3'],
-                'col_c': ['c1', 'c2', 'c3'],
-                'col_d': ['d1', 'd2', 'd3'],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
-
     def test_subtract_column(self):
+        """
+        Test if function appends a column with subtraction of 2 columns in df.
+
+        Procedure:
+            Setup:
+                Create df1 with two columns: 'col_a' and 'col_b'.
+            Call:
+                Call the function with df1.
+                Choose the columns to be subtracted: 'col_a' and 'col_b'.
+                Choose the name of the column with the result: 'col_c'.
+            Expected:
+                DataFrame with three columns: 'col_a', 'col_b', 'col_c'.
+                Values in 'col_c' are the subtraction of (col_a)-(col_b).
+        """
         # Setup
         df1 = pd.DataFrame({
                 'col_a': [50, 50, 50],
                 'col_b': [30, 30, 30],
             })
         # Call function
-        actual = rt.subtract_column(df1, 'col_a', 'col_b', 'col_c')
+        actual = rt.subtract_columns_in_df(df1, 'col_a', 'col_b', 'col_c')
         # Expectation
         expected = pd.DataFrame({
                 'col_a': [50, 50, 50],
@@ -55,30 +39,28 @@ class TestReturnCalculations(unittest.TestCase):
         # Test
         pd.testing.assert_frame_equal(actual, expected)
 
-    def test_df_column_to_int(self):
-        # Setup
-        df1 = pd.DataFrame({
-            'col_a': [50.7, 50.8, 50.9],
-            'col_b': [30.3, 30.4, 30.5],
-            })
-        # Call function
-        actual = rt.df_column_to_int(df1, 'col_a')
-        # Expectation
-        expected = pd.DataFrame({
-            'col_a': [50, 50, 50],
-            'col_b': [30.3, 30.4, 30.5],
-            })
-        # Test
-        pd.testing.assert_frame_equal(actual, expected)
-
     def test_add_ratio_column(self):
+        """
+        Test if function appends a column with ratio of 2 columns in df.
+
+        Procedure:
+            Setup:
+                Create df1 with two columns: 'col_a' and 'col_b'.
+            Call:
+                Call the function with df1.
+                Choose the columns to be divided: 'col_a' and 'col_b'.
+                Choose the name of the column with the result: 'col_c'.
+            Expected:
+                DataFrame with three columns: 'col_a', 'col_b', 'col_c'.
+                Values in 'col_c' are the ratio of ((col_a)/(col_b))*(-1).
+        """
         # Setup
         df1 = pd.DataFrame({
                 'col_a': [100, 200, 400],
                 'col_b': [200, 400, 800],
             })
         # Call function
-        actual = rt.add_ratio_column(
+        actual = rt.add_ratio_column_in_df(
             df=df1, column_name='col_c', column2='col_a', column1='col_b'
             )
         # Expectation
@@ -91,6 +73,19 @@ class TestReturnCalculations(unittest.TestCase):
         pd.testing.assert_frame_equal(actual, expected)
 
     def test_drop_column(self):
+        """
+        Test if function drops a column in a DataFrame.
+
+        Procedure:
+            Setup:
+                Create df1 with three columns: 'col_a','col_b','col_c'.
+            Call:
+                Call the function with df1.
+                Choose the columns to be dropped: 'col_c'.
+            Expected:
+                DataFrame with three columns: 'col_a', 'col_b'.
+                'col_c' has been dropped.
+        """
         # Setup
         df1 = pd.DataFrame({
                 'col_a': [100, 200, 300],

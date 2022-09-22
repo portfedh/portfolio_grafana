@@ -6,14 +6,14 @@ import move_two_levels_up
 from scripts import daily_balance as db
 
 # Imports
-##############################################################################
+#########
 # Import CSV files and create data frames
 gbm_df = db.create_df('outputs/daily_subtotals_CLG_GBM.csv')
 cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 
 # Portfolio Calculations
-##############################################################################
-# Create Subtotals Dataframe ($)
+########################
+# Create Subtotals DataFrame ($)
 subtotals = pd.DataFrame()
 subtotals.index.name = 'Date'
 
@@ -56,7 +56,7 @@ subtotals['Tot_Portfolio'] = (
     subtotals['Tot_Alternatives'])
 
 # Outputs
-##############################################################################
+#########
 # Output to CSV
 filename = 'outputs/daily_subtotals_CLG_AllAccounts.csv'
 subtotals.to_csv(filename, index=True, index_label='Date')

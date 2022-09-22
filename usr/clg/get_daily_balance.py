@@ -9,12 +9,12 @@ from set_analysis_dates import date_range
 
 
 # GBM Account
-##############################################################################
+#############
 # Get monthly balance
 balance_df1 = db.create_df('inputs/clg/monthly_account_balance_CLG_GBM.csv')
 
 # Create daily balance
-daily_balance_df1 = db.daily_balance(
+daily_balance_df1 = db.create_daily_balance_df(
     df=balance_df1,
     column_name='Tot_Acct_GBM_MXN',
     sum=False,
@@ -32,12 +32,12 @@ daily_balance_df1.to_sql(
     index=True, index_label='Date')
 
 # CETES Account
-##############################################################################
+###############
 # Get monthly balance
 balance_df2 = db.create_df('inputs/clg/monthly_account_balance_CLG_CETES.csv')
 
 # Create daily balance
-daily_balance_df2 = db.daily_balance(
+daily_balance_df2 = db.create_daily_balance_df(
     df=balance_df2,
     column_name='Tot_Acct_Cetes_MXN',
     sum=False,
@@ -55,12 +55,13 @@ daily_balance_df2.to_sql(
     index=True, index_label='Date')
 
 # Sum All Accounts
-##############################################################################
+##################
 acct_1 = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 acct_2 = db.create_df('outputs/daily_acct_balance_CLG_GBM.csv')
 
-added_df = db.add_df(acct_1, acct_2)
-total_balance_df = db.add_total_column(added_df, 'Tot_Acct_Portafolio_MXN')
+added_df = db.concat_df(acct_1, acct_2, type=1)
+total_balance_df = db.add_total_column_to_df(
+    added_df, 'Tot_Acct_Portafolio_MXN')
 
 # Output to CSV
 filename3 = 'outputs/daily_acct_balance_CLG_AllAccounts.csv'

@@ -24,7 +24,7 @@ You must install the python modules in the **requirements.txt** file.
 
 You will also need to install docker in your computer.
 
-Using a vrtual enviroment is recommended.
+Using a virtual environment is recommended.
 
 ## How to Use
 
@@ -39,7 +39,7 @@ To use the scripts, you will need to have a basic understanding of the following
 - Docker
 - MySQL
 - Grafana
-- Python (Padas)
+- Python (Pandas)
 
 To run the scripts, simply execute the script from your terminal:
 
@@ -51,7 +51,7 @@ To run the scripts, simply execute the script from your terminal:
 ./02_portfolio_close.sh
 ```
 
-Currently, both of the files above use a virtual enviroment. You will need to change that bit of code to reflect where python is installed.
+Currently, both of the files above use a virtual environment. You will need to change that bit of code to reflect where python is installed.
 For example:
 
 ```bash
@@ -65,7 +65,7 @@ For example:
 
 When run, the scripts will read your input files, process the data, download the stock prices, save them to MySQL and create the Docker Containers with all the graphs.
 
-To access graphana go to:
+To access Grafana go to:
 
 localhost:3000/
 

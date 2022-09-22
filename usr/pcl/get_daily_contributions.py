@@ -7,13 +7,13 @@ from scripts import daily_balance as db
 from set_analysis_dates import date_range
 
 # GBM Account
-##############################################################################
+#############
 # Get monthly balance
 contribution_balance_df1 = db.create_df(
     'inputs/pcl/contributions_PCL_GBM.csv')
 
 # Create daily balance
-daily_contribution_balance_df1 = db.daily_balance(
+daily_contribution_balance_df1 = db.create_daily_balance_df(
     df=contribution_balance_df1,
     column_name='Contribuciones_GBM_MXN',
     sum=True,
@@ -31,13 +31,13 @@ daily_contribution_balance_df1.to_sql(
     index=True, index_label='Date')
 
 # CETES Account
-##############################################################################
+###############
 # Get contribution balance
 contribution_balance_df2 = db.create_df(
     'inputs/pcl/contributions_PCL_CETES.csv')
 
 # Create daily balance.
-daily_contribution_balance_df2 = db.daily_balance(
+daily_contribution_balance_df2 = db.create_daily_balance_df(
     df=contribution_balance_df2,
     column_name='Contribuciones_Cetes_MXN',
     sum=True,
@@ -55,13 +55,13 @@ daily_contribution_balance_df2.to_sql(
     index=True, index_label='Date')
 
 # IBKR Account
-##############################################################################
+##############
 # Get contribution balance
 contribution_balance_df3 = db.create_df(
     'inputs/pcl/contributions_PCL_IBKR.csv')
 
 # Create daily balance.
-daily_contribution_balance_df3 = db.daily_balance(
+daily_contribution_balance_df3 = db.create_daily_balance_df(
     df=contribution_balance_df3,
     column_name='Contribuciones_IBKR_MXN',
     sum=True,
@@ -79,13 +79,13 @@ daily_contribution_balance_df3.to_sql(
     index=True, index_label='Date')
 
 # Sum all accounts
-##############################################################################
+##################
 acct_1 = db.create_df('outputs/daily_contributions_PCL_GBM.csv')
 acct_2 = db.create_df('outputs/daily_contributions_PCL_CETES.csv')
 acct_3 = db.create_df('outputs/daily_contributions_PCL_IBKR.csv')
 
-added_df = db.add_df(acct_1, acct_2, acct_3)
-total_contributions = db.add_total_column(added_df, 'Tot_Contribuciones_MXN')
+added_df = db.concat_df(acct_1, acct_2, acct_3, type=1)
+total_contributions = db.add_total_column_to_df(added_df, 'Tot_Contribuciones_MXN')
 
 # Output to CSV
 file4 = 'outputs/daily_contributions_PCL_AllAccounts.csv'

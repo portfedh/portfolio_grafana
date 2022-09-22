@@ -19,17 +19,17 @@ total_column = 'Contribuciones_Totales_MXN'
 cont_out_file = 'outputs/irr_contributions_CLG_AllAccounts.csv'
 
 # Concatenate all files
-contributions = irr.concat_df(file_1, file_2)
-# Turn dataframe dates to datetime
-contributions = irr.to_datetime_df(contributions, 'Date')
+contributions = db.concat_df(file_1, file_2, type=0)
+# Turn DataFrame dates to datetime
+contributions = irr.change_column_to_datetime(contributions, 'Date')
 # Create total column
-contributions = irr.add_total_df(contributions, total_column)
+contributions = db.add_total_column_to_df(contributions, total_column)
 # Keep only Date and Total Column
-contributions = irr.filter_df(contributions, [total_column])
+contributions = irr.filter_df_by_column(contributions, [total_column])
 # Invert contributions as cashflow inflows and outflows
-contributions = irr.invert_cf_df(contributions, total_column)
+contributions = irr.invert_df_column_values(contributions, total_column)
 # Turn values to integers
-contributions = irr.integers_df(contributions, total_column)
+contributions = irr.change_column_to_integers(contributions, total_column)
 # Sort values by date in ascending order
 contributions.sort_index()
 # Save output as CSV
@@ -43,18 +43,18 @@ sum_col_name = 'Tot_Acct_Portafolio_MXN'
 balance_out_file = 'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'
 
 # Merge all files
-balance = irr.merge_df(file3, file4)
+balance = db.concat_df(file3, file4, type=1)
 # Create total column
-balance = irr.add_total_df(balance, sum_col_name)
+balance = db.add_total_column_to_df(balance, sum_col_name)
 # Keep only Date and Total Column
-balance = irr.filter_df(balance, [sum_col_name])
+balance = irr.filter_df_by_column(balance, [sum_col_name])
 # Turn values to integers
 balance = balance.astype('int')
 # Save output as CSV
 balance.to_csv(balance_out_file, index=True, index_label='Date')
 
-# Caculate IRR
-##############
+# Calculate IRR
+###############
 contrib_csv = 'outputs/irr_contributions_CLG_AllAccounts.csv'
 balance_csv = 'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'
 balance_df = db.create_df(balance_csv)
@@ -62,24 +62,16 @@ contributions_df = db.create_df(contrib_csv)
 bal_column = 'Tot_Acct_Portafolio_MXN'
 cont_column = 'Contribuciones_Totales_MXN'
 
-# Get las value from dataframe
-a = irr.get_last_value(balance_df)
-# Rename column as contriburions column
-b = irr.rename_column(a, bal_column, cont_column)
+# Get las value from DataFrame
+a = irr.get_last_row_of_df(balance_df)
+# Rename column as contributions column
+b = irr.rename_df_column(a, bal_column, cont_column)
 # Concatenate into one df
 irr_df = pd.concat([contributions_df, b])
 # Separate df into two lists
-dates, values = irr.split_df(irr_df, cont_column)
+dates, values = irr.split_df_into_two_lists(irr_df, cont_column)
 # Pass lists into xirr function
 xirr_result = xirr(dates, values)
-
-# irr_value = irr.calculate_xirr(
-#     acct_balance_df=db.create_df(
-#         'outputs/irr_monthly_account_balance_CLG_AllAccounts.csv'),
-#     contributions_df=db.create_df(
-#         'outputs/irr_contributions_CLG_AllAccounts.csv'),
-#     bal_column='Tot_Acct_Portafolio_MXN',
-#     cont_column='Tot_Contribuciones_MXN')
 
 # Outputs
 #########

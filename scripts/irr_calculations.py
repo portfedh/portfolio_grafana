@@ -1,66 +1,53 @@
 # irr_calculations.py
 """
-Functions used to calculate the IRR of the portfolio.
+This module contains functions used to calculate the IRR of the portfolio.
 
-Uses consolidated contributions file and the last value in
-the consolidated account balance file as inputs.
+To calculate, it uses the consolidated contributions file and
+the last value in the consolidated account balance file as inputs.
 
 The module contains the following functions:
 
 Irr contributions functions:
-    - concat_df(*args)
-        Concatenate unlimited dataframes
+    - change_column_to_datetime(df, date_column)
+        Change DataFrame date column to datetime format and make it the index.
 
-    - to_datetime_df(df, date_column)
-        Turn date to datetime format
+    - filter_df_by_column(df: pd, columns: list
+        Filter DataFrame. Only keep columns in provided list.
 
-    - add_total_df(df, col_name)
-        Add total column to df
+    - invert_df_column_values(df, column_name)
+        Invert DataFrame column values by multiplying its values by (-1).
 
-    - filter_df(df: pd, columns: list
-        Filter df to keep columns in list
-
-    - invert_cf_df(df, column_name)
-        Invert values as cashflows
-
-    - integers_df(df, column_name)
-        Save values as integers
-
-Monthly balance functions:
-    - merge_df(*args: pd)
-        Merge unlimited dataframes
+    - change_column_to_integers(df, column_name)
+        Change a DataFrame column to to integers.
 
 IRR Calculations:
-    - get_last_value(df)
-        Get las value from a pandas dataframe
+    - get_last_row_of_df(df)
+         Get the last row from a pandas DataFrame.
 
-    - rename_column(df, balance_column, contributions_column)
-        Rename the balance column like the contributions column
+    - rename_df_column(df, balance_column, contributions_column)
+        Rename the balance column like the contributions column.
 
-    - split_df(df, contributions_column)
-        Separate the dataframe into two lists for the xirr function
+    - split_df_into_two_lists(df, contributions_column)
+        Separate the DataFrame into two lists: date_list and values_list.
 """
 
 import pandas as pd
 
 
 # irr_contributions functions
-##############################################################################
-def concat_df(*args: pd) -> pd:
-    """Concatenate unlimited dataframes"""
-    list = []
-    for x in args:
-        list.append(x)
-    # Concatenate
-    result = pd.concat(list, axis=0)
-    # Substitute NA values with zeros
-    result = result.fillna(0)
-    return result
-
+#############################
 
 # Like daily_balance but does not require csv
-def to_datetime_df(df: pd, date_column: pd) -> pd:
-    """Turn date to datetime format"""
+def change_column_to_datetime(df: pd, date_column: str) -> pd:
+    """
+    Change DataFrame date column to datetime format and make it the index.
+        Parameters:
+            df: Input DataFrame
+            date_column: Name of the column with dates.
+
+        Returns:
+            df: DataFrame with date_column as index and datetime format.
+    """
     datetime_date = pd.to_datetime(df[date_column], dayfirst=True)
     datetime_index_trades = pd.DatetimeIndex(datetime_date.values)
     df = df.set_index(datetime_index_trades)
@@ -69,67 +56,94 @@ def to_datetime_df(df: pd, date_column: pd) -> pd:
     return df
 
 
-def add_total_df(df: pd, col_name: pd) -> pd:
-    """Add total column to df"""
-    df[col_name] = df.sum(axis=1)
-    return df
+def filter_df_by_column(df: pd, columns: list) -> pd:
+    """
+    Filter DataFrame. Only keep columns in provided list.
 
+        Parameters:
+            df: Input DataFrame
+            columns: String or list of strings with columns to keep.
 
-# Check if column variable can be changed to a string
-# df = df.filter([columns])
-def filter_df(df: pd, columns: list) -> pd:
-    "Filter df to keep columns in list"
+        Returns:
+            df: DataFrame with index and selected columns in list.
+    """
     df = df.filter(columns)
     return df
 
 
-def invert_cf_df(df: pd, column_name: str) -> pd:
-    """Invert values as cashflows"""
+def invert_df_column_values(df: pd, column_name: str) -> pd:
+    """
+    Invert DataFrame column values by multiplying its values by (-1).
+
+        Parameters:
+            df: Input DataFrame
+            column_name: Name of column to multiply values.
+        Returns:
+            df: DataFrame with values of column_name multiplied by (-1).
+    """
     df[column_name] = df[column_name]*-1
     return df
 
 
-# Can be eliminated if dataframe has date as index
+# Can be eliminated if DataFrame has date as index
 # Simply run:
 # df = df.astype('int')
-def integers_df(df: pd, column_name: str) -> pd:
-    """Save values as integers"""
+def change_column_to_integers(df: pd, column_name: str) -> pd:
+    """
+    Change a DataFrame column to to integers.
+
+        Parameters:
+            df: Input DataFrame.
+            column_name: Name of the column to be changed.
+        Returns:
+            df: Output DataFrame with changed column.
+    """
     df[column_name] = df[column_name].astype('int')
     return df
 
 
-# Monthly Balance Functions
-##############################################################################
-
-# Similar to concat_df but with axis=1
-# Identical to add_df() from daily_balance. Substitute
-def merge_df(*args: pd) -> pd:
-    """Merge unlimited dataframes"""
-    list = []
-    for x in args:
-        list.append(x)
-    # Concatenate
-    result = pd.concat(list, axis=1)
-    return result
-
-
 # IRR Calculations
-##############################################################################
+##################
 
-def get_last_value(df: pd) -> pd:
-    """Get las value from a pandas dataframe"""
+def get_last_row_of_df(df: pd) -> pd:
+    """
+    Get the last row from a pandas DataFrame.
+
+        Parameters:
+            df: Input dataframe.
+        Returns:
+            df: Output DataFrame with only last row.
+    """
     df = df.iloc[-1:]
     return df
 
 
-def rename_column(df: pd, balance_col: str, contributions_col: str) -> pd:
-    """Rename the balance column like the contributions column"""
+def rename_df_column(df: pd, balance_col: str, contributions_col: str) -> pd:
+    """
+    Rename the balance column like the contributions column.
+
+        Parameters:
+            df: Input DataFrame.
+            balance_col: Column name with account balances.
+            contributions_col: Column name with account contributions.
+        Returns:
+            df: Output DataFrame with changed column names.
+    """
     df = df.rename(columns={balance_col: contributions_col})
     return df
 
 
-def split_df(df: pd, contributions_column: str) -> pd:
-    """Separate the dataframe into two lists for the xirr function"""
+def split_df_into_two_lists(df: pd, contributions_column: str) -> pd:
+    """
+    Separate the DataFrame into two lists: date_list and values_list.
+
+        Parameters:
+            df: Input DataFrame.
+            contributions_column: Name of the contributions column..
+        Returns:
+            date_list: List with all the dates in the DataFrame.
+            values_list: List with all the values in the contributions_column.
+    """
     date_list = df.index.tolist()
     values_list = list(df[contributions_column])
     return date_list, values_list
