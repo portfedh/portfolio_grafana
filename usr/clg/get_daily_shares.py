@@ -7,7 +7,7 @@ from scripts import daily_balance as db
 from scripts import daily_shares as ds
 
 # Importing Trade History GBM
-##############################################################################
+#############################
 # Get trade history
 trade_hist_df = db.create_df('inputs/clg/trade_history_CLG_GBM.csv')
 

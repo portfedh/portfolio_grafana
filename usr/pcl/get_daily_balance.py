@@ -8,7 +8,7 @@ from set_analysis_dates import date_range
 
 
 # GBM Account
-##############################################################################
+#############
 # Get monthly balance
 balance_df1 = db.create_df('inputs/pcl/monthly_account_balance_PCL_GBM.csv')
 
@@ -31,7 +31,7 @@ daily_balance_df1.to_sql(
     index=True, index_label='Date')
 
 # CETES Account
-##############################################################################
+###############
 # Get monthly balance
 balance_df2 = db.create_df('inputs/pcl/monthly_account_balance_PCL_CETES.csv')
 
@@ -54,7 +54,7 @@ daily_balance_df2.to_sql(
     index=True, index_label='Date')
 
 # IBKR Account
-##############################################################################
+##############
 # Get monthly balance
 balance_df3 = db.create_df('inputs/pcl/monthly_account_balance_PCL_IBKR.csv')
 
@@ -77,7 +77,7 @@ daily_balance_df3.to_sql(
     index=True, index_label='Date')
 
 # Sum All Accounts
-##############################################################################
+##################
 acct_1 = db.create_df('outputs/daily_acct_balance_PCL_CETES.csv')
 acct_2 = db.create_df('outputs/daily_acct_balance_PCL_GBM.csv')
 acct_3 = db.create_df('outputs/daily_acct_balance_PCL_IBKR.csv')

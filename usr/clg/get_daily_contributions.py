@@ -9,7 +9,7 @@ from set_analysis_dates import date_range
 
 
 # GBM Account
-##############################################################################
+#############
 # Get monthly balance
 contribution_balance_df1 = db.create_df(
     'inputs/clg/contributions_CLG_GBM.csv')
@@ -34,7 +34,7 @@ daily_contribution_balance_df1.to_sql(
 
 
 # CETES Account
-##############################################################################
+###############
 # Get contribution balance
 contribution_balance_df2 = db.create_df(
     'inputs/clg/contributions_CLG_CETES.csv')
@@ -59,12 +59,13 @@ daily_contribution_balance_df2.to_sql(
 
 
 # Sum all accounts
-##############################################################################
+##################
 acct_1 = db.create_df('outputs/daily_contributions_CLG_GBM.csv')
 acct_2 = db.create_df('outputs/daily_contributions_CLG_CETES.csv')
 
 added_df = db.concat_df(acct_1, acct_2, type=1)
-total_contributions = db.add_total_column_to_df(added_df, 'Tot_Contribuciones_MXN')
+total_contributions = db.add_total_column_to_df(
+    added_df, 'Tot_Contribuciones_MXN')
 
 # Output to CSV
 file3 = 'outputs/daily_contributions_CLG_AllAccounts.csv'

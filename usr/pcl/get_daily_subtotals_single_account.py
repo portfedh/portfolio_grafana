@@ -6,7 +6,7 @@ import move_two_levels_up
 from scripts import daily_balance as db
 
 # GBM Account
-##############################################################################
+#############
 
 # Imports
 #########
@@ -55,7 +55,7 @@ interpol_gbm_df.to_sql(name=table_name1, con=engine, if_exists='replace',
                        index=True, index_label='Date')
 
 # IBKR Account
-##############################################################################
+##############
 
 # Imports
 #########

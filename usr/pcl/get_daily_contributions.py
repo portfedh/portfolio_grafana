@@ -7,7 +7,7 @@ from scripts import daily_balance as db
 from set_analysis_dates import date_range
 
 # GBM Account
-##############################################################################
+#############
 # Get monthly balance
 contribution_balance_df1 = db.create_df(
     'inputs/pcl/contributions_PCL_GBM.csv')
@@ -31,7 +31,7 @@ daily_contribution_balance_df1.to_sql(
     index=True, index_label='Date')
 
 # CETES Account
-##############################################################################
+###############
 # Get contribution balance
 contribution_balance_df2 = db.create_df(
     'inputs/pcl/contributions_PCL_CETES.csv')
@@ -55,7 +55,7 @@ daily_contribution_balance_df2.to_sql(
     index=True, index_label='Date')
 
 # IBKR Account
-##############################################################################
+##############
 # Get contribution balance
 contribution_balance_df3 = db.create_df(
     'inputs/pcl/contributions_PCL_IBKR.csv')
@@ -79,7 +79,7 @@ daily_contribution_balance_df3.to_sql(
     index=True, index_label='Date')
 
 # Sum all accounts
-##############################################################################
+##################
 acct_1 = db.create_df('outputs/daily_contributions_PCL_GBM.csv')
 acct_2 = db.create_df('outputs/daily_contributions_PCL_CETES.csv')
 acct_3 = db.create_df('outputs/daily_contributions_PCL_IBKR.csv')

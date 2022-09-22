@@ -7,7 +7,7 @@ from scripts import daily_balance as db
 from scripts import daily_shares as ds
 
 # Importing Trade History GBM
-##############################################################################
+#############################
 # Get trade history
 trade_hist_df = db.create_df('inputs/pcl/trade_history_PCL_GBM.csv')
 
@@ -40,7 +40,7 @@ daily_share_quantity_df.to_sql(
     index_label='Date')
 
 # Importing Trade History IBKR
-##############################################################################
+##############################
 # Get trade history
 trade_hist_df2 = db.create_df('inputs/pcl/trade_history_PCL_IBKR.csv')
 
