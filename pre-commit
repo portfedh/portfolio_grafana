@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Bash script to run all unit tests before every commit
 # Saved in .git/hooks
 

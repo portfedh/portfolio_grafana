@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Script to delete MySQL database, 
 # all csv files and close down docker.
 

@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# Bash script to run Docker file for slected user
+# Bash script to run Docker file for a user.
 
 # Cleanup of previous files
 ###########################
@@ -10,8 +9,8 @@ rm -v outputs/*
 echo
 
 
-# Select computer
-#################
+# Determine computer
+####################
 UNAME_STR=$(uname)
 if [[ ${UNAME_STR} == 'Linux' ]]; then
    PLATFORM='linux'
@@ -51,10 +50,12 @@ echo
 echo "Current available users are:"
 echo "- clg"
 echo "- pcl"
+echo "- user1"
 echo
-
 read -p 'Enter user: ' USER_NAME
 
+# Check user selected
+#####################
 if [[ "${USER_NAME}" == "clg" ]]
 then
   echo "You are CLG."
@@ -64,6 +65,7 @@ then
   FILE_PATH="usr/clg/"
   #echo "${DOCKER_IMAGE}"
   echo
+
 elif [[ "${USER_NAME}" == "pcl" ]]
 then
   echo "You are PCL."
@@ -73,6 +75,17 @@ then
   FILE_PATH="usr/pcl/"
   #echo "${DOCKER_IMAGE}"
   echo
+
+elif [[ "${USER_NAME}" == "user1" ]]
+then
+  echo "You are user1."
+  echo
+  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"
+  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
+  FILE_PATH="usr/user1/"
+  #echo "${DOCKER_IMAGE}"
+  echo
+
 else
   echo "Error in username"
   exit 1
