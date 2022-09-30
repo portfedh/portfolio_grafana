@@ -1,5 +1,7 @@
 # Script to create subtotal amounts from price & quantity data per account
 
+# *** Check if I should column drop Q and P ***
+
 import pandas as pd
 from set_engine import engine
 import move_two_levels_up
@@ -15,7 +17,6 @@ shares_acc1_df = db.create_df(
     'outputs/daily_share_quantity_user1_account1.csv')
 prices_acc1_df = db.create_df(
     'outputs/daily_prices_interpolated_user1_account1.csv')
-# cetes_df = db.create_df('outputs/daily_acct_balance_CLG_CETES.csv')
 
 # Transformations
 #################
@@ -25,35 +26,69 @@ prices_df = prices_acc1_df.add_prefix('P_')
 # Merge DataFrames
 new_df = pd.concat(([shares_df, prices_df]), axis=1)
 # Interpolate missing values (prices are NaN on weekend dates)
-interpol_gbm_df = new_df.interpolate(
+interpol_acc2_df = new_df.interpolate(
     method='linear', limit_direction='both')
-####################################################### ME QUEDE AQUI
+
 # Subtotal Calculations
 ########################
-# Tickers and column drop are hardcoded
+# Tickers are hardcoded
 # Subtotals ($)
-tickers_gbm = ['VOO', 'VGK', 'VPL', 'IEMG', 'MCHI', 'GOLDN', 'FIBRAPL14',
-               'CETETRCISHRS', 'IB1MXXN', 'SHV', 'BABAN', 'PG', 'META', 'INTC',
-               'BAC', 'MU']
-for x in tickers_gbm:
-    interpol_gbm_df[f'Sub_{x}'] = (
-        interpol_gbm_df[f'Q_{x}'] *
-        interpol_gbm_df[f'P_{x}'])
-# Reorder Column Position
-# Check every time new tickers are added.
-my_column = interpol_gbm_df.pop('Tot_Acct_Cetes_MXN')
-interpol_gbm_df.insert(31, my_column.name, my_column)
-# Remove Quantity and Price Columns
-# Check every time new tickers are added.
-interpol_gbm_df.drop(interpol_gbm_df.iloc[:, 0:20], inplace=True, axis=1)
+tickers_account1 = ['BND', 'BNDX', 'VTI', 'VXUS']
+for x in tickers_account1:
+    interpol_acc2_df[f'Sub_{x}'] = (
+        interpol_acc2_df[f'Q_{x}'] *
+        interpol_acc2_df[f'P_{x}'])
 
 # Outputs
 #########
 # Output to CSV
-filename = 'outputs/daily_subtotals_CLG_GBM.csv'
-interpol_gbm_df.to_csv(filename, index=True, index_label='Date')
+filename = 'outputs/daily_subtotals_user1_account1.csv'
+interpol_acc2_df.to_csv(filename, index=True, index_label='Date')
 
 # Output to MySQL
-table_name = 'daily_subtotals_CLG_GBM'
-interpol_gbm_df.to_sql(name=table_name, con=engine, if_exists='replace',
-                       index=True, index_label='Date')
+table_name = 'daily_subtotals_user1_account1'
+interpol_acc2_df.to_sql(name=table_name, con=engine, if_exists='replace',
+                         index=True, index_label='Date')
+
+# Account 2
+###########
+
+# Imports
+#########
+# Import CSV files and create data frames
+shares_acc2_df = db.create_df(
+    'outputs/daily_share_quantity_user1_account2.csv')
+prices_acc2_df = db.create_df(
+    'outputs/daily_prices_interpolated_user1_account2.csv')
+
+# Transformations
+#################
+# Rename columns: Add quantity or price symbol
+shares_df2 = shares_acc2_df.add_prefix('Q_')
+prices_df2 = prices_acc2_df.add_prefix('P_')
+# Merge DataFrames
+new_df2 = pd.concat(([shares_df2, prices_df2]), axis=1)
+# Interpolate missing values (prices are NaN on weekend dates)
+interpol_acc2_df = new_df2.interpolate(
+    method='linear', limit_direction='both')
+
+# Subtotal Calculations
+########################
+# Tickers are hardcoded
+# Subtotals ($)
+tickers_account2 = ['BND', 'BNDX', 'VEA', 'VOO', 'VWO']
+for x in tickers_account2:
+    interpol_acc2_df[f'Sub_{x}'] = (
+        interpol_acc2_df[f'Q_{x}'] *
+        interpol_acc2_df[f'P_{x}'])
+
+# Outputs
+#########
+# Output to CSV
+filename = 'outputs/daily_subtotals_user1_account2.csv'
+interpol_acc2_df.to_csv(filename, index=True, index_label='Date')
+
+# Output to MySQL
+table_name = 'daily_subtotals_user1_account2'
+interpol_acc2_df.to_sql(name=table_name, con=engine, if_exists='replace',
+                        index=True, index_label='Date')
