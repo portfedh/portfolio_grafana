@@ -65,7 +65,6 @@ then
   FILE_PATH="usr/clg/"
   #echo "${DOCKER_IMAGE}"
   echo
-
 elif [[ "${USER_NAME}" == "pcl" ]]
 then
   echo "You are PCL."
@@ -85,7 +84,6 @@ then
   FILE_PATH="usr/user1/"
   #echo "${DOCKER_IMAGE}"
   echo
-
 else
   echo "Error in username"
   exit 1

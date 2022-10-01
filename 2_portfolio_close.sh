@@ -43,6 +43,7 @@ echo
 echo "Current available users are:"
 echo "- clg"
 echo "- pcl"
+echo "- user1"
 echo
 
 read -p 'Enter user: ' USER_NAME
@@ -61,6 +62,14 @@ then
   echo
   DOCKER_COMPOSE="./usr/pcl/docker-compose.yml"
   FILE_PATH="usr/pcl/"
+  #echo "${DOCKER_IMAGE}"
+  echo
+elif [[ "${USER_NAME}" == "user1" ]]
+then
+  echo "You are user1."
+  echo
+  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
+  FILE_PATH="usr/user1/"
   #echo "${DOCKER_IMAGE}"
   echo
 else
