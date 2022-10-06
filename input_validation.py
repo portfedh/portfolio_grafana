@@ -1,69 +1,64 @@
 # Script checks user input files to check they are correct.
 import os
 import sys
+import pandas as pd
 
-
-# Name of user files
+# Username
 user = sys.argv[1]
 print('Username: ', sys.argv[1])
 
-
 # User filepath
 user_dir = ('./inputs/' + user + '/')
-print('user_dir: ', user_dir)
+print('Selected user directory: ', user_dir)
 
+# Files in filepath
+user_filepath = os.listdir(user_dir)
 
-# Check if directory is empty
-if len(os.listdir(user_dir)) == 0:
+# Check if directory is empty:
+if len(user_filepath) == 0:
     raise Exception("User input directory is empty")
-else:
-    print("Directory is not empty")
 
 # Check that all files are csv:
-# .DS_Store are MacOs system files
-for file in os.listdir(user_dir):
+for file in user_filepath:
     if file.endswith('.csv'):
-        print('Found CSV File: ', file)
+        print('CSV File: ', file)
     elif file.endswith('.DS_Store'):
-        print('Found DS_Store File:', file)
+        print('DS_Store File:', file)
+        # .DS_Store are Mac OS system files.
     else:
         raise Exception(file, "is not a CSV file.")
 
-
-# Make a list of the files in directory
-dir_list = []
-for file in os.listdir(user_dir):
-    dir_list.append(file)
-
-
-# Check that there is a Contribution file.
-if not any(item.startswith('contributions') for item in dir_list):
+# Check that there is a Contribution file:
+if not any(item.startswith('contributions') for item in user_filepath):
     raise Exception("No contributions file found.")
 
-
-# Check that there is a Monthly Balance file.
-if not any(item.startswith('monthly_account_balance') for item in dir_list):
+# Check that there is a Monthly Balance file:
+if not any(item.startswith('monthly_account_balance') for item in user_filepath):
     raise Exception("No monthly_account_balance file found.")
 
-
-# Check that there is a Trade History file.
-if not any(item.startswith('trade_history') for item in dir_list):
+# Check that there is a Trade History file:
+if not any(item.startswith('trade_history') for item in user_filepath):
     raise Exception("No Trade_history file file found.")
 
-
-# Tests that there are no NaN values in input DF.
-for file in os.listdir(user_dir):
+# Check that there are no NaN values in CSV files:
+for file in user_filepath:
+    # Check CSV files only:
     if file.endswith('.csv'):
+        # Create a DataFrame from CSV
         df = pd.read_csv(user_dir+file)
+        # Check each value in df to see if it's NaN.
+        # NaN values are represented as True.
         a = pd.isnull(df)
+        # Return True if any values in df are True.
         b = a.values.any()
         print('Nan values in DF: ', b)
-        if b == True:
-            raise Exception("Nan values in DF: ", file)
+        # Raise exception if NaN values are present.
+        if b is True:
+            raise Exception("NaN values in DF: ", file)
 
 # # Check that Monthly balance files have the same ending date
 list = []
-for file in os.listdir(user_dir):
+for file in user_filepath:
     if file.startswith('monthly_account_balance'):
         print(user_dir + '/' + file)
         df = pd.read_csv(user_dir + '/' + file)
