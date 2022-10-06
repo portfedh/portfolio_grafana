@@ -1,8 +1,8 @@
 #!/bin/bash
 # Bash script to run Docker file for a user.
 
-# Cleanup of previous files
-###########################
+# Cleanup any previous files
+############################
 echo
 echo -e "Cleaning outputs directory:"
 rm -v outputs/*
@@ -54,7 +54,8 @@ echo "- user1"
 echo
 read -p 'Enter user: ' USER_NAME
 
-# Check user selected
+
+# Check selected user
 #####################
 if [[ "${USER_NAME}" == "clg" ]]
 then
@@ -103,8 +104,14 @@ echo
 echo "Docker setup."
 
 
-# Running python files
+# Run Input Validation
 ######################
+echo "Running Input Validation:"
+${VENV} input_validation.py ${USER_NAME}
+
+
+# Run python files
+##################
 echo "Executing Portfolio Scripts:"
 
 echo "    - Executing set_mysql_setup."
