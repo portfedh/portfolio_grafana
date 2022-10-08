@@ -101,3 +101,4 @@ echo "Removing all CSV files:"
 rm -v outputs/*
 
 echo "All files removed succesfully."
+echo

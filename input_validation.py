@@ -82,5 +82,5 @@ for df in monthly_account_balance_list:
 if not len(set(date_list)) <= 1:
     raise Exception("Dates do not match").args
 
-print('A-Ok. All files have the same ending date')
-print('Input validation tests Passed')
+print('A-Ok. All files have the same ending date.')
+print('Input validation tests Passed.\n')

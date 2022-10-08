@@ -99,9 +99,12 @@ echo "Setting Up Docker files:"
 docker pull "${DOCKER_IMAGE}"
 # Run docker compose
 docker-compose -f "${DOCKER_COMPOSE}" up -d
-sleep 5
+
+echo "MySQL Volume in docker needs extra time to setup the first time it runs."
+read -p 'Select wait time (last successfull test was 40s): ' SLEEP_TIME
+sleep ${SLEEP_TIME}
 echo
-echo "Docker setup."
+echo "Finished Docker setup."
 
 
 # Run Input Validation
@@ -126,7 +129,7 @@ ${VENV} ${FILE_PATH}get_daily_contributions.py
 echo "    - Executing get_irr."
 ${VENV} ${FILE_PATH}get_irr.py
 
-echo "    - Executing get_returns."
+eycho "    - Executing get_returns."
 ${VENV} ${FILE_PATH}get_returns.py
 
 echo "    - Executing get_daily_shares."
