@@ -79,4 +79,15 @@ To Do
 
 ## To Do's
 
-- Update scripts for second user CLG
+- User 1 script.
+1. create docker compose
+2. create set mysql_setup
+3. create set mysql_close
+4. create set engine
+5. create move_up_two_levels_up
+6. create set_analysis dates. // define if it starts on 1st contribution or monthly balance.
+6. create get_daily_balance
+7. create daily contributions
+8. create daily prices
+
+# set_mysql_setup has code pending

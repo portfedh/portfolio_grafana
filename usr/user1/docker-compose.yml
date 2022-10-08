@@ -1,0 +1,29 @@
+# Create MySQL container and Grafana container
+services:
+  my_sql:
+  # container_name
+    image: mysql
+    ports:
+      - "3306:3306"
+      # host:container
+    volumes:
+      - my_sql_DB:/var/lib/mysql/
+      # host_directory_name:container_directory
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password1
+  grafana:
+    image: portfedh/portfolio_dashboard:user1_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+      GF_LOG_FILTERS: rendering:debug
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    ports:
+      - 8081
+    restart: always
+volumes:
+  my_sql_DB:

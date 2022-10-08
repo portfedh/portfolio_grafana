@@ -1,17 +1,16 @@
 #!/bin/bash
+# Bash script to run Docker file for a user.
 
-# Bash script to run Docker file for slected user
-
-# Cleanup of previous files
-###########################
+# Cleanup any previous files
+############################
 echo
 echo -e "Cleaning outputs directory:"
 rm -v outputs/*
 echo
 
 
-# Select computer
-#################
+# Determine computer
+####################
 UNAME_STR=$(uname)
 if [[ ${UNAME_STR} == 'Linux' ]]; then
    PLATFORM='linux'
@@ -51,10 +50,13 @@ echo
 echo "Current available users are:"
 echo "- clg"
 echo "- pcl"
+echo "- user1"
 echo
-
 read -p 'Enter user: ' USER_NAME
 
+
+# Check selected user
+#####################
 if [[ "${USER_NAME}" == "clg" ]]
 then
   echo "You are CLG."
@@ -73,6 +75,16 @@ then
   FILE_PATH="usr/pcl/"
   #echo "${DOCKER_IMAGE}"
   echo
+
+elif [[ "${USER_NAME}" == "user1" ]]
+then
+  echo "You are user1."
+  echo
+  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"
+  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
+  FILE_PATH="usr/user1/"
+  #echo "${DOCKER_IMAGE}"
+  echo
 else
   echo "Error in username"
   exit 1
@@ -87,13 +99,22 @@ echo "Setting Up Docker files:"
 docker pull "${DOCKER_IMAGE}"
 # Run docker compose
 docker-compose -f "${DOCKER_COMPOSE}" up -d
-sleep 5
+
+echo "MySQL Volume in docker needs extra time to setup the first time it runs."
+read -p 'Select wait time (last successfull test was 40s): ' SLEEP_TIME
+sleep ${SLEEP_TIME}
 echo
-echo "Docker setup."
+echo "Finished Docker setup."
 
 
-# Running python files
+# Run Input Validation
 ######################
+echo "Running Input Validation:"
+${VENV} input_validation.py ${USER_NAME}
+
+
+# Run python files
+##################
 echo "Executing Portfolio Scripts:"
 
 echo "    - Executing set_mysql_setup."
@@ -108,7 +129,7 @@ ${VENV} ${FILE_PATH}get_daily_contributions.py
 echo "    - Executing get_irr."
 ${VENV} ${FILE_PATH}get_irr.py
 
-echo "    - Executing get_returns."
+eycho "    - Executing get_returns."
 ${VENV} ${FILE_PATH}get_returns.py
 
 echo "    - Executing get_daily_shares."
