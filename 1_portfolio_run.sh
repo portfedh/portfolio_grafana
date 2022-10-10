@@ -33,7 +33,7 @@ then
 elif [[ "${PLATFORM}" == "darwin" ]]
 then
   echo "You are running the script from a Mac."
-  VENV="./venv/bin/python3"
+  VENV="./venv_mac/bin/python3"
   echo "${VENV}"
   echo
 else
