@@ -1,5 +1,11 @@
 #!/bin/bash
-# Bash script to run Docker file for a user.
+# Bash script to:
+#   - Delete output files from a previous user.
+#   - Select a user to run the program.
+#   - Create the docker containers for the user.
+#   - Decrypt user input files.
+#   - Validate user input file.
+#   - Run program scripts to create dashboard. 
 
 # Cleanup any previous files
 ############################
@@ -9,8 +15,8 @@ rm -v outputs/*
 echo
 
 
-# Determine computer
-####################
+# Check computer
+################
 UNAME_STR=$(uname)
 if [[ ${UNAME_STR} == 'Linux' ]]; then
    PLATFORM='linux'
@@ -53,6 +59,7 @@ echo "- pcl"
 echo "- user1"
 echo
 read -p 'Enter user: ' USER_NAME
+echo
 
 
 # Check selected user
@@ -99,19 +106,25 @@ echo "Setting Up Docker files:"
 docker pull "${DOCKER_IMAGE}"
 # Run docker compose
 docker-compose -f "${DOCKER_COMPOSE}" up -d
-
 echo "MySQL Volume in docker needs extra time to setup the first time it runs."
 read -p 'Select wait time (last successfull test was 40s): ' SLEEP_TIME
 sleep ${SLEEP_TIME}
 echo
 echo "Finished Docker setup."
+echo
 
+
+# Decrypt files
+################
+echo "Decrypting user files:"
+${VENV} file_encryption.py ${USER_NAME} decrypt
+sleep 2
 
 # Run Input Validation
 ######################
 echo "Running Input Validation:"
 ${VENV} input_validation.py ${USER_NAME}
-
+echo
 
 # Run python files
 ##################
@@ -129,7 +142,7 @@ ${VENV} ${FILE_PATH}get_daily_contributions.py
 echo "    - Executing get_irr."
 ${VENV} ${FILE_PATH}get_irr.py
 
-eycho "    - Executing get_returns."
+echo "    - Executing get_returns."
 ${VENV} ${FILE_PATH}get_returns.py
 
 echo "    - Executing get_daily_shares."

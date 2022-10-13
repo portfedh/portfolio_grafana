@@ -1,4 +1,8 @@
-# Script checks user input files to check they are correct.
+# Script encrypts or decrypts user input files.
+# Requires username to be passed as argument and encryption or description.
+# Example: $ python3 file_encryption.py user1 encrypt
+
+
 import os
 import sys
 from scripts import encryption as en
