@@ -43,7 +43,7 @@ def create_df(file_name: str) -> 'pd':
     df = pd.read_csv(file_name)
     # Create list from 'Date' column
     datetime_list = pd.to_datetime(
-        df['Date'], dayfirst=True)
+        df['Date'], dayfirst=True, utc=True)
     # Make 'Date' column an index object
     datetime_list = pd.DatetimeIndex(datetime_list.values)
     # Append new 'Date' column to DataFrame, as index

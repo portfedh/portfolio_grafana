@@ -1,9 +1,12 @@
 #!/bin/bash
-# Script to delete MySQL database, 
-# all csv files and close down docker.
+# Bash script to:
+#   - Delete MySQL database, 
+#   - Delete all csv files
+#   - Encrypt user files
+#   - Close down docker.
 
-# Select computer
-#################
+# Check computer
+################
 UNAME_STR=$(uname)
 if [[ ${UNAME_STR} == 'Linux' ]]; then
    PLATFORM='linux'
@@ -26,7 +29,7 @@ then
 elif [[ "${PLATFORM}" == "darwin" ]]
 then
   echo "You are running the script from a Mac."
-  VENV="./venv/bin/python3"
+  VENV="./venv_mac/bin/python3"
   echo "${VENV}"
   echo
 else
@@ -85,20 +88,21 @@ echo "Removing MySQL Database:"
 ${VENV} ${FILE_PATH}set_mysql_close.py
 echo
 
-
 # Close Docker
 ##############
 echo "Removing Docker files:"
 docker-compose -f "${DOCKER_COMPOSE}" down
 sleep 5
 echo
-echo "Docker closed."
 
+# Encrypt input files
+######################
+echo "Encrypting user input files:"
+${VENV} file_encryption.py ${USER_NAME} encrypt
+echo
 
 # Remove Output Files
 #####################
 echo "Removing all CSV files:"
 rm -v outputs/*
-
-echo "All files removed succesfully."
 echo
