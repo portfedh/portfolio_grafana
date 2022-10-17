@@ -12,6 +12,8 @@ Its main features are:
 
 - You can consolidate several bank account and track the consolidated portfolio.
 
+- You can have several portfolios for different users.
+
 - You can customize all of the dashboards.
 
 - You can aggregate the data in a way that makes sense to you.
@@ -49,30 +51,70 @@ The customized portfolio image that will be downloaded will be:
 - [Custom Grafana Image](https://hub.docker.com/r/portfedh/portfolio_dashboard/tags)
 
 This is the image that has the demo user portfolio data visualized.
+
 Its meant as an example and as a starting point for you to create your own customized dashboards.
 
 ![ToDo: Image of dashboard here](https://google.com)
 
 ## How to Use
 
-To give the script a try, run the first time setup and look at the output visualization.
+To give the script a try, run the setup, select 'user1' and look at the output visualization.
 
-If you decide you would like to use it with your portfolio, follow the instructions of the rest of the sections.
+If you decide you would like to use it for your portfolio, follow the instructions to customize the scripts for your.
 
 ### First time setup
 
 - Make sure you have installed python & docker with all their dependencies.
 
-- Execute the bash script from your terminal:
+- Make sure docker is up and running.
+
+- Delete the file named:
+
+```bash
+rm 0_check_computer.sh
+```
+
+- Open the following file in your code editor:
+
+```bash
+# File to edit:
+01_portfolio_run.sh
+```
+
+- Uncomment the following lines in the 'check computer' section:
+
+```bash
+# VENV="<Path_to_your_python_file_here>"
+# echo "${VENV}"
+```
+
+- Modify the 'VENV' variable and add the path to your python virtual environment or python executable.
+
+- Now delete the line with the following text:
+
+```bash
+source 0_check_computer.sh
+```
+
+Thats it. You are ready to run the script for the first time.
+
+### First time run
+
+To run the program, execute the following bash script from your terminal:
 
 ```bash
 # Starting the application
 ./01_portfolio_run.sh
 ```
 
+- The script will ask how long you want to wait for MySQL Volume to set up.
+Since this is the first time, select 40 seconds. On future runs you can select 1 second.
+
 - When asked to chose a username select:
 
 > user1
+
+All scripts will start to execute.
 
 - After all files have finished running, open you browser and go to [localhost:3000/](localhost:3000/)
 
@@ -93,8 +135,27 @@ When you are ready to close everything up, head back to the terminal and execute
 ./02_portfolio_close.sh
 ```
 
+### Adding your own files
+
+To Do
+#### Adding your input data
+
+To Do
+
+#### Encrypting your data
+
+To Do
+
+#### Configuring your portfolio scripts
+
+To Do
+### Customizing your grafana dashboard
+
+To Do
 ## Use cases
 
 To Do
 
 ## Contributing
+
+To Do
