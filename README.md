@@ -4,13 +4,13 @@
 
 ## What it does
 
-The project creates a custom portfolio visualizer to help you analyze an investment portfolio.
+The scripts create a custom portfolio visualizer to help you analyze an investment portfolio.
 
 Its main features are:
 
 - Its open source.
 
-- You can consolidate several bank account and track the consolidated portfolio.
+- You can consolidate several bank accounts into one portfolio.
 
 - You can have several portfolios for different users.
 
@@ -27,7 +27,7 @@ To use the portfolio visualizer you will need to previously install:
 - [Python 3](https://www.python.org/downloads/)
 - [Docker](https://www.docker.com/)
 
-Using a virtual environment is recommended.
+I would recommend using  a virtual environment.
 You can find documentation on setting one up [here.](https://docs.python.org/3/library/venv.html)
 
 Once python 3 is installed, you will need to add the following libraries from [pip.](https://pypi.org/):
@@ -50,19 +50,19 @@ The customized portfolio image that will be downloaded will be:
 
 - [Custom Grafana Image](https://hub.docker.com/r/portfedh/portfolio_dashboard/tags)
 
-This is the image that has the demo user portfolio data visualized.
+This is the docker image that has the demo user portfolio.
 
-Its meant as an example and as a starting point for you to create your own customized dashboards.
+Its meant as a starting point for you to create your own customized dashboards.
 
 ![ToDo: Image of dashboard here](https://google.com)
 
 ## How to Use
 
-To give the script a try, run the setup, select 'user1' and look at the output visualization.
+To give the script a try, follow the instructions below, select 'user1' and look at the output dashboard.
 
-If you decide you would like to use it for your portfolio, follow the instructions to customize the scripts for your.
+If you decide to use it for your portfolio, then follow the instructions to customize the scripts and add your data.
 
-### First time setup
+## First time setup
 
 - Make sure you have installed python & docker with all their dependencies.
 
@@ -71,13 +71,12 @@ If you decide you would like to use it for your portfolio, follow the instructio
 - Delete the file named:
 
 ```bash
-rm 0_check_computer.sh
+0_check_computer.sh
 ```
 
 - Open the following file in your code editor:
 
 ```bash
-# File to edit:
 01_portfolio_run.sh
 ```
 
@@ -96,27 +95,37 @@ rm 0_check_computer.sh
 source 0_check_computer.sh
 ```
 
-Thats it. You are ready to run the script for the first time.
+Thats it!
 
-### First time run
+You are ready to run the script for the first time.
 
-To run the program, execute the following bash script from your terminal:
+## First time run
+
+Navigate to your project folder.
+
+Make sure your virtual environment is activated.
+
+To run all the python scripts, execute the following bash script from your terminal:
 
 ```bash
-# Starting the application
 ./01_portfolio_run.sh
 ```
 
-- The script will ask how long you want to wait for MySQL Volume to set up.
-Since this is the first time, select 40 seconds. On future runs you can select 1 second.
+The script will ask how long to wait for MySQL Volume to set up.
 
-- When asked to chose a username select:
+Since this is the first time, select 40 seconds. On future runs select 1 second.
+
+When asked to chose a username select:
 
 > user1
 
-All scripts will start to execute.
+You will then be asked for a password to decrypt the files. Select:
 
-- After all files have finished running, open you browser and go to [localhost:3000/](localhost:3000/)
+> 1234abc
+
+Wait for all scripts to execute.
+
+Open you browser and go to [localhost:3000/](localhost:3000/)
 
 - The default credentials for the demo user are:
 
@@ -135,23 +144,89 @@ When you are ready to close everything up, head back to the terminal and execute
 ./02_portfolio_close.sh
 ```
 
-### Adding your own files
+## Adding your input data
 
-To Do
-#### Adding your input data
+Navigate to the 'inputs' directory.
 
-To Do
+Create a new directory.
 
-#### Encrypting your data
+Name your directory with the username for that portfolio.
 
-To Do
+You will need to add 3 files for every investment account you add.
 
-#### Configuring your portfolio scripts
+- contributions_username_account.csv
+- monthly_account_balance_username_account.csv
+- trade_history_username_account.csv.
 
-To Do
-### Customizing your grafana dashboard
+The contributions file will have the date and amount of every deposit or withdrawal you've made to that account.
 
-To Do
+The account balance, will have the date and balance for the account for every month.
+
+The trade history file will have all the trading transactions you have made in that account (buy or sell, not dividends).
+
+You can take a look at the input files for the demo user 'user1' as examples to fill in your own.
+
+If you add more than one account, the dates in the monthly account balance file must match, even if the balance is $0.
+
+## Adding your scripts
+
+Once your input files are set up.
+
+You must now modify the scripts to make the calculations and save the outputs to MySQL.
+
+Navigate to the usr directory.
+
+Create a new directory with your username
+
+Copy all the files in usr/user1 into the new folder you just created.
+
+Modify each file so it uses your input files and creates your desired output data.
+
+All scripts have comments explaining what they do.
+
+If you need more help, go to the /system_design_charts directory.
+
+You will find a more detailed explanation of how everything works there.
+
+## Encrypting your data
+
+Right now all your input data is unencrypted at rest.
+
+To encrypt you files:
+
+- Go to the project root directory
+
+- Execute the following command:
+
+```bash
+python3 file_encryption.py <username> encrypt
+```
+
+- Set a password to encrypt your files. 
+
+After this, all the files under /input/<username>/' will be encrypted.
+
+Make sure to save your encryption password, as there is no recovery option if you forget it.
+
+## Customizing your grafana dashboard
+
+Once you
+
+
+## Adding your files to portfolio run
+
+```bash
+elif [[ "${USER_NAME}" == "user1" ]]
+then
+  echo "You are user1."
+  echo
+  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"
+  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
+  FILE_PATH="usr/user1/"
+  #echo "${DOCKER_IMAGE}"
+  echo
+```
+
 ## Use cases
 
 To Do
