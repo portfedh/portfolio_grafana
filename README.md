@@ -221,6 +221,8 @@ python3 file_encryption.py <username> decrypt
 
 You will be prompted for your password and then all files will be decrypted.
 
+Remember to always leave your data encrypted at rest.
+
 ## Adding your files to portfolio run
 
 To run all your scripts with a single command you will use the following command in the terminal:
@@ -244,13 +246,76 @@ then
   echo
 ```
 
-
+Once you have added your user files. Execute the code and it should run all your files and set up Grafana.
 ## Customizing your grafana dashboard
 
-Once you## Use cases
+Open grafana
 
-To Do
+view the dashboards
+
+Go to edit dashboard
+
+Select database
+
+Select the right column
+
+Do this for every variable.
+
+Save the dashboard.
+
+Go to terminal
+
+Find your container id using $ Docker ps
+
+Save your changes using $ docker commit <hash> <name>:<version>
+
+Go to docker hub, create an account.
+
+Create a repository
+
+Rename image to match dockerhub repo
+	$ docker tag local-image:tagname new-repo:tagname
+		Image must have same name as dockerhub repo
+
+Push to Dockerhub
+	$ docker push <repo:tagname>
+	$ docker push portfedh/portfolio_dashboard:grafana
+
+Every time you make a change to your dashboard, use docker commit to save changes. 
+Push to your dockerhub image to make sure it persists. 
+
+Now go back to  your portfolio script
+
+```bash
+./1_portfolio_run.sh
+```
+
+Update the variable name to your repo name and tag name from dockerhub.
+
+```bash
+  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"  # Update this line.
+```
+
+You are done!
+
+Your portfolio is fully setup.
+
+You can run it whenever you like, and close it down just as easily.
+
+## Updating you dashboard
+
+Setup was a bit long! But executing and updating is a breeze.
+
+Every month you should update your contributions, balance and trading input files.
+
+Just unencrypt, update and re-encrypt the files.
+
+You should be able to do it in a few minutes and your portfolio will reflect the changes immediately.
 
 ## Contributing
 
-To Do
+This project was made out of a practical need to automate a recurring work & personal task.
+
+If you have any ideas as to how to make this project better, please feel free to reach out.
+
+Good luck!
