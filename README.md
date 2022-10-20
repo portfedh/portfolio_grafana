@@ -58,9 +58,9 @@ Its meant as a starting point for you to create your own customized dashboards.
 
 ## How to Use
 
-To give the script a try, follow the instructions below, select 'user1' and look at the output dashboard.
+To give the script a try, follow the instructions in the 'First time setup' section.
 
-If you decide to use it for your portfolio, then follow the instructions to customize the scripts and add your data.
+If you decide want to use it for your portfolio, then follow the instructions in the other sections to customize the scripts and add your data.
 
 ## First time setup
 
@@ -87,7 +87,7 @@ If you decide to use it for your portfolio, then follow the instructions to cust
 # echo "${VENV}"
 ```
 
-- Modify the 'VENV' variable and add the path to your python virtual environment or python executable.
+- Modify the 'VENV' variable and add the path to your python virtual environment or your python executable.
 
 - Now delete the line with the following text:
 
@@ -101,11 +101,11 @@ You are ready to run the script for the first time.
 
 ## First time run
 
-Navigate to your project folder.
+- Navigate to your project folder.
 
-Make sure your virtual environment is activated.
+- Make sure your virtual environment is activated.
 
-To run all the python scripts, execute the following bash script from your terminal:
+ - execute the following bash script from your terminal:
 
 ```bash
 ./01_portfolio_run.sh
@@ -113,7 +113,9 @@ To run all the python scripts, execute the following bash script from your termi
 
 The script will ask how long to wait for MySQL Volume to set up.
 
-Since this is the first time, select 40 seconds. On future runs select 1 second.
+- Since this is the first time, select 40 seconds.
+
+- On future runs select 1 second.
 
 When asked to chose a username select:
 
@@ -125,7 +127,7 @@ You will then be asked for a password to decrypt the files. Select:
 
 Wait for all scripts to execute.
 
-Open you browser and go to [localhost:3000/](localhost:3000/)
+Open you browser and go to the grafana dashboard at [localhost:3000/](localhost:3000/)
 
 - The default credentials for the demo user are:
 
@@ -133,7 +135,7 @@ Open you browser and go to [localhost:3000/](localhost:3000/)
 >
 > password: admin1
 
-Browse through the Portfolio dashboard. You should see something like this:
+Browse through the Portfolio Dashboard. You should see something like this:
 
 ![Image of the portfolio](localhost:3000/)
 
@@ -144,49 +146,54 @@ When you are ready to close everything up, head back to the terminal and execute
 ./02_portfolio_close.sh
 ```
 
-## Adding your input data
+Thats it!
 
-Navigate to the 'inputs' directory.
+## Adding your own data Inputs
 
-Create a new directory.
+To create your own dashboards, we must first create the input files that the scripts will use.
 
-Name your directory with the username for that portfolio.
+- Navigate to the 'inputs' directory.
 
-You will need to add 3 files for every investment account you add.
+- Create a new directory.
 
-- contributions_username_account.csv
-- monthly_account_balance_username_account.csv
-- trade_history_username_account.csv.
+- Name your directory with the username you want for that portfolio.
+
+- You will need to add 3 files for every investment account you add.
+
+  - contributions_username_account.csv
+  - monthly_account_balance_username_account.csv
+  - trade_history_username_account.csv.
+
+Take a look at the input files for the demo user 'user1' as examples to fill in your own.
+
+Here is a brief description of the information you should add in every file:
 
 The contributions file will have the date and amount of every deposit or withdrawal you've made to that account.
+Deposits to the account should be positive numbers (+) and withdrawals from the account should be negative (-) numbers.
 
-The account balance, will have the date and balance for the account for every month.
+The account balance, will have a date value with the last day of each month and the total balance in the bank statement for that month.
+If you add more than one account, the dates in the monthly account balance file must match, even if the balance is $0 for one account.
 
-The trade history file will have all the trading transactions you have made in that account (buy or sell, not dividends).
-
-You can take a look at the input files for the demo user 'user1' as examples to fill in your own.
-
-If you add more than one account, the dates in the monthly account balance file must match, even if the balance is $0.
+The trade history file will have the date, the company ticker, and each trade you´ve made in that account (buy or sell, not dividends).
 
 ## Adding your scripts
 
-Once your input files are set up.
+Once the input files are set up, you must now modify the scripts to make the calculations that will create the dashboard.
 
-You must now modify the scripts to make the calculations and save the outputs to MySQL.
+- Navigate to the usr/ directory.
 
-Navigate to the usr directory.
+- Create a new directory with the same username you chose for the input files.
 
-Create a new directory with your username
+- Copy all the files  from the demo user, located in usr/user1 into the new folder you just created.
 
-Copy all the files in usr/user1 into the new folder you just created.
+- Modify each file so it uses your contributions, account balance and trade history files.
 
-Modify each file so it uses your input files and creates your desired output data.
-
-All scripts have comments explaining what they do.
+All scripts have comments documenting how they work.
 
 If you need more help, go to the /system_design_charts directory.
-
 You will find a more detailed explanation of how everything works there.
+
+If you still get stuck, post an issue and I'll be happy to help. 
 
 ## Encrypting your data
 
@@ -194,40 +201,53 @@ Right now all your input data is unencrypted at rest.
 
 To encrypt you files:
 
-- Go to the project root directory
-
-- Execute the following command:
+- Go to the project root directory and execute the following command:
 
 ```bash
 python3 file_encryption.py <username> encrypt
 ```
 
-- Set a password to encrypt your files. 
+You will be asked to set a password to encrypt your files.
 
-After this, all the files under /input/<username>/' will be encrypted.
+After this, all the files under '/input/<username>/' will be encrypted.
 
 Make sure to save your encryption password, as there is no recovery option if you forget it.
 
-## Customizing your grafana dashboard
+If you need to manually decrypt your files, you can do so using the following command:
 
-Once you
+```bash
+python3 file_encryption.py <username> decrypt
+```
 
+You will be prompted for your password and then all files will be decrypted.
 
 ## Adding your files to portfolio run
 
+To run all your scripts with a single command you will use the following command in the terminal:
+
 ```bash
-elif [[ "${USER_NAME}" == "user1" ]]
+./1_portfolio_run.sh
+```
+
+To be able to use it, you must first make a few changes so it will find the files for the user your just created.
+
+In the 'Check selected user' section, add a new elif statement with your new username:
+
+```bash
+elif [[ "${USER_NAME}" == "user1" ]]  # Change "user1" for the username you selected.
 then
-  echo "You are user1."
+  echo "You are user1."  # Update the name here as well. 
   echo
-  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"
-  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
-  FILE_PATH="usr/user1/"
-  #echo "${DOCKER_IMAGE}"
+  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"  # Leave this por now, you will update this later.
+  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"  # Update <user1>  to the username you selected.
+  FILE_PATH="usr/user1/" # Update <user1>  to the username you selected.
   echo
 ```
 
-## Use cases
+
+## Customizing your grafana dashboard
+
+Once you## Use cases
 
 To Do
 
