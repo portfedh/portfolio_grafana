@@ -30,8 +30,6 @@ Using a virtual environment is recommended.
 
 Setup will take a little time.
 
-**ToDo: Create setup instructions file and link here.**
-
 Updating after setup is a breeze. It should not take more than 5 minutes per month.
 
 To use the scripts, you will need to have a basic understanding of the following:
