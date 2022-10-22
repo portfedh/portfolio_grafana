@@ -30,7 +30,7 @@ To use the portfolio visualizer you will need to previously install:
 I would recommend using  a virtual environment.
 You can find documentation on setting one up [here.](https://docs.python.org/3/library/venv.html)
 
-Once python 3 is installed, you will need to add the following libraries from [pip.](https://pypi.org/):
+Once python 3 is installed, you will need to add the following libraries from pip:
 
 - [Pandas](https://pypi.org/project/pandas/)
 - [Cryptography](https://pypi.org/project/cryptography/)
@@ -48,7 +48,7 @@ The images that docker uses are:
 
 The customized portfolio image that will be downloaded will be:
 
-- [Custom Grafana Image](https://hub.docker.com/r/portfedh/portfolio_dashboard/tags)
+- [https://hub.docker.com/r/portfedh/portfolio_dashboard/](https://hub.docker.com/r/portfedh/portfolio_dashboard/tags)
 
 This is the docker image that has the demo user portfolio.
 
@@ -105,7 +105,7 @@ You are ready to run the script for the first time.
 
 - Make sure your virtual environment is activated.
 
-- execute the following bash script from your terminal:
+- Execute the following bash script from your terminal:
 
 ```bash
 ./01_portfolio_run.sh
@@ -137,7 +137,7 @@ Open you browser and go to the grafana dashboard at [localhost:3000/](localhost:
 
 Browse through the Portfolio Dashboard. You should see something like this:
 
-![Image of the portfolio](localhost:3000/)
+![ToDo: Image of the portfolio](localhost:3000/)
 
 When you are ready to close everything up, head back to the terminal and execute the closing bash script:
 
@@ -150,7 +150,7 @@ Thats it!
 
 ## Adding your own data Inputs
 
-To create your own dashboards, we must first create the input files that the scripts will use.
+To create your own dashboards, you must first create the input files that the scripts will use.
 
 - Navigate to the 'inputs' directory.
 
@@ -168,17 +168,15 @@ Take a look at the input files for the demo user 'user1' as examples to fill in 
 
 Here is a brief description of the information you should add in every file:
 
-The contributions file will have the date and amount of every deposit or withdrawal you've made to that account.
-Deposits to the account should be positive numbers (+) and withdrawals from the account should be negative (-) numbers.
+Contributions file:  The CSV file should have the date and amount of every deposit or withdrawal you've made to that account. Deposits to the account should be positive numbers (+) and withdrawals from the account should be negative (-) numbers.
 
-The account balance, will have a date value with the last day of each month and the total balance in the bank statement for that month.
-If you add more than one account, the dates in the monthly account balance file must match, even if the balance is $0 for one account.
+Account balance file: The CSV file should have a date value with the last day of each month and the total balance of the bank statement for that month. If you add more than one bank account, the date range in bothfile must match, even if the balance is $0 for one of the accounts.
 
-The trade history file will have the date, the company ticker, and each trade you´ve made in that account (buy or sell, not dividends).
+Trade history file: The CSV file should have the date, the company ticker, and each trade you´ve made in that account (buy or sell, not dividends). Buying shares should be written as positive numbers (+) and selling shares as negative (-) numbers.
 
 ## Adding your scripts
 
-Once the input files are set up, you must now modify the scripts to make the calculations that will create the dashboard.
+Once the input files are set up, you must now modify the scripts that make the calculations that to create the dashboard.
 
 - Navigate to the usr/ directory.
 
@@ -188,20 +186,18 @@ Once the input files are set up, you must now modify the scripts to make the cal
 
 - Modify each file so it uses your contributions, account balance and trade history files.
 
-All scripts have comments documenting how they work.
+All scripts have comments explaining how they work.
 
 If you need more help, go to the /system_design_charts directory.
-You will find a more detailed explanation of how everything works there.
+You will find a more detailed explanation of how the scripts work there.
 
-If you still get stuck, post an issue and I'll be happy to help. 
+If you still get stuck, post an issue and I'll be happy to help.
 
 ## Encrypting your data
 
 Right now all your input data is unencrypted at rest.
 
-To encrypt you files:
-
-- Go to the project root directory and execute the following command:
+To encrypt you files go to the project root directory and execute the following command:
 
 ```bash
 python3 file_encryption.py <username> encrypt
@@ -213,7 +209,7 @@ After this, all the files under '/input/<username>/' will be encrypted.
 
 Make sure to save your encryption password, as there is no recovery option if you forget it.
 
-If you need to manually decrypt your files, you can do so using the following command:
+If you want to manually decrypt your files, you can do so using the following command:
 
 ```bash
 python3 file_encryption.py <username> decrypt
@@ -223,15 +219,15 @@ You will be prompted for your password and then all files will be decrypted.
 
 Remember to always leave your data encrypted at rest.
 
-## Adding your files to portfolio run
+## Making all your scripts run automatically
 
-To run all your scripts with a single command you will use the following command in the terminal:
+To run all your scripts with a single command you will use the following:
 
 ```bash
 ./1_portfolio_run.sh
 ```
 
-To be able to use it, you must first make a few changes so it will find the files for the user your just created.
+To be able to use the bash script, you must first make a few changes so it will find the files for the user your just created.
 
 In the 'Check selected user' section, add a new elif statement with the username you just added:
 
@@ -256,7 +252,7 @@ The dashboard was configured to display data of the demo user, so you must chang
 
 To do it:
 
-- Open grafana
+- Open Grafana
 
 - Select a dashboard
 
@@ -272,14 +268,14 @@ To do it:
 
 - Save the dashboard.
 
-To make sure that your changes persist the next time run Docker do the following:
+To make sure that your changes persist the next time you run Docker do the following:
 
 - Open your terminal
 
 - Find your container id using:
 
 ```bash
-Docker ps
+docker ps
 ```
 
 - Save your changes using:
@@ -288,17 +284,17 @@ Docker ps
 docker commit <hash> <name>:<version>
 ```
 
-- Go to Docker Hub and create an account.
+- Go to Docker hub and create an account.
 
 - Create a repository
 
-- Rename your image to match your Docker Hub repo:
+- Rename your image to match your Docker hub repo:
 
 ```bash
 docker tag local-image:tagname new-repo:tagname
 ```
 
-- Now you can push your changes to Docker Hub:
+- Now you can push your changes to Docker hub:
 
 ```bash
 docker push <repo:tagname>
@@ -308,9 +304,9 @@ docker push portfedh/portfolio_dashboard:grafana
 
 - Every time you make a change to your dashboard, use docker commit to save changes.
 
-- Then push to Docker Hub image to make sure it persists when you close the container. 
+- Push to Docker hub image to make sure it persists when you close the container.
 
-Finally, open the file 1_portfolio_run.sh in your editor. 
+Finally, open the file 1_portfolio_run.sh in your editor.
 
 - Update the variable name to your repo name and tag name from Docker Hub.
 
@@ -335,15 +331,13 @@ You can run it whenever you like, and close it down just as easily.
 
 Setting up each user takes a bit of time, but updating the dashboard is very simple and fast.
 
-Every month update your contributions, balance and trading input files.
-
-Then run your scripts as usual. 
+Every month update your contributions, balance and trading input files, then run your scripts as usual.
 
 You should be able to do it in a few minutes and your portfolio will reflect the changes immediately.
 
-## End notes
+## Conclusion
 
-This project was made out of a practical need to automate a recurring task.
+I made this project to automate a recurring task.
 
 If you have any ideas as to how to make this project better, please feel free to reach out.
 
