@@ -233,7 +233,7 @@ To run all your scripts with a single command you will use the following command
 
 To be able to use it, you must first make a few changes so it will find the files for the user your just created.
 
-In the 'Check selected user' section, add a new elif statement with your new username:
+In the 'Check selected user' section, add a new elif statement with the username you just added:
 
 ```bash
 elif [[ "${USER_NAME}" == "user1" ]]  # Change "user1" for the username you selected.
@@ -247,50 +247,72 @@ then
 ```
 
 Once you have added your user files. Execute the code and it should run all your files and set up Grafana.
+
 ## Customizing your grafana dashboard
 
-Open grafana
+Grafana is an open source data visualizer that will connect to MySQL and read the data.
 
-view the dashboards
+The dashboard was configured to display data of the demo user, so you must change it to read your new users data.
 
-Go to edit dashboard
+To do it:
 
-Select database
+- Open grafana
 
-Select the right column
+- Select a dashboard
 
-Do this for every variable.
+- Select any panel
 
-Save the dashboard.
+- Click 'Edit'
 
-Go to terminal
+- Click on 'Data Source' and select MySQL
 
-Find your container id using $ Docker ps
+- Use the Query editor to select the right table and column for every variable.
 
-Save your changes using $ docker commit <hash> <name>:<version>
+- Do this for all your variables.
 
-Go to docker hub, create an account.
+- Save the dashboard.
 
-Create a repository
+To make sure that your changes persist the next time run Docker do the following:
 
-Rename image to match dockerhub repo
-	$ docker tag local-image:tagname new-repo:tagname
-		Image must have same name as dockerhub repo
+- Open your terminal
 
-Push to Dockerhub
-	$ docker push <repo:tagname>
-	$ docker push portfedh/portfolio_dashboard:grafana
-
-Every time you make a change to your dashboard, use docker commit to save changes. 
-Push to your dockerhub image to make sure it persists. 
-
-Now go back to  your portfolio script
+- Find your container id using:
 
 ```bash
-./1_portfolio_run.sh
+Docker ps
 ```
 
-Update the variable name to your repo name and tag name from dockerhub.
+- Save your changes using:
+
+```bash
+docker commit <hash> <name>:<version>
+```
+
+- Go to Docker Hub and create an account.
+
+- Create a repository
+
+- Rename your image to match your Docker Hub repo:
+
+```bash
+docker tag local-image:tagname new-repo:tagname
+```
+
+- Now you can push your changes to Docker Hub:
+
+```bash
+docker push <repo:tagname>
+# Example
+docker push portfedh/portfolio_dashboard:grafana
+```
+
+- Every time you make a change to your dashboard, use docker commit to save changes.
+
+- Then push to Docker Hub image to make sure it persists when you close the container. 
+
+Finally, open the file 1_portfolio_run.sh in your editor. 
+
+- Update the variable name to your repo name and tag name from Docker Hub.
 
 ```bash
   DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"  # Update this line.
@@ -302,19 +324,26 @@ Your portfolio is fully setup.
 
 You can run it whenever you like, and close it down just as easily.
 
+```bash
+# Run
+./1_portfolio_run.sh
+# Close
+./02_portfolio_close.sh
+```
+
 ## Updating you dashboard
 
-Setup was a bit long! But executing and updating is a breeze.
+Setting up each user takes a bit of time, but updating the dashboard is very simple and fast.
 
-Every month you should update your contributions, balance and trading input files.
+Every month update your contributions, balance and trading input files.
 
-Just unencrypt, update and re-encrypt the files.
+Then run your scripts as usual. 
 
 You should be able to do it in a few minutes and your portfolio will reflect the changes immediately.
 
-## Contributing
+## End notes
 
-This project was made out of a practical need to automate a recurring work & personal task.
+This project was made out of a practical need to automate a recurring task.
 
 If you have any ideas as to how to make this project better, please feel free to reach out.
 
