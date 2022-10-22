@@ -105,7 +105,7 @@ You are ready to run the script for the first time.
 
 - Make sure your virtual environment is activated.
 
- - execute the following bash script from your terminal:
+- execute the following bash script from your terminal:
 
 ```bash
 ./01_portfolio_run.sh
