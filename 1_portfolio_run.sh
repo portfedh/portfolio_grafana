@@ -17,36 +17,9 @@ echo
 
 # Check computer
 ################
-UNAME_STR=$(uname)
-if [[ ${UNAME_STR} == 'Linux' ]]; then
-   PLATFORM='linux'
-   echo 'Linux'
-elif [[ ${UNAME_STR} == 'Darwin' ]]; then
-   PLATFORM='darwin'
-   echo 'Mac'
-else
-  echo "Error in computer name."
-  echo
-  exit 1
-fi
-
-if [[ "${PLATFORM}" == "linux" ]]
-then
-  echo "You are running the script from Linux."
-  VENV="./venv_linux/bin/python3"
-  echo "${VENV}"
-  echo
-elif [[ "${PLATFORM}" == "darwin" ]]
-then
-  echo "You are running the script from a Mac."
-  VENV="./venv_mac/bin/python3"
-  echo "${VENV}"
-  echo
-else
-  echo "Error in computer name."
-  echo
-  exit 1
-fi
+# VENV="<Path_to_your_python_file_here>"
+# echo "${VENV}"
+source 0_check_computer.sh
 
 
 # Select user
