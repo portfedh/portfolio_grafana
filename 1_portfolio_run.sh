@@ -7,6 +7,7 @@
 #   - Validate user input file.
 #   - Run program scripts to create dashboard. 
 
+
 # Cleanup any previous files
 ############################
 echo
@@ -17,59 +18,47 @@ echo
 
 # Check computer
 ################
+# Edit lines below:
 # VENV="<Path_to_your_python_file_here>"
 # echo "${VENV}"
+# Then comment out line below:
 source 0_check_computer.sh
 
 
-# Select user
-#############
-echo "Run Docker for which user?"
+# Set up the example user
+#########################
+USER_NAME="user1"
+DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"
+DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
+FILE_PATH="usr/user1/"
+
+
+# Add client users
+##################
+# Add your portfolio users in this file.
+# Edit 3_portfolio_users_example.sh and rename to 3_portfolio_users.sh
+# Then uncomment line below:
+source 3_portfolio_users.sh
+
+
+# Prompt client to select user
+##############################
+echo "Run files for which user?"
 echo
 echo "Current available users are:"
-echo "- clg"
-echo "- pcl"
 echo "- user1"
+for user in ${AVAILABLE_USERS[@]}; do
+  echo "- "$user
+done
 echo
 read -p 'Enter user: ' USER_NAME
 echo
 
 
-# Check selected user
-#####################
-if [[ "${USER_NAME}" == "clg" ]]
-then
-  echo "You are CLG."
-  echo
-  DOCKER_IMAGE="portfedh/portfolio_dashboard:clg_grafana"
-  DOCKER_COMPOSE="./usr/clg/docker-compose.yml"
-  FILE_PATH="usr/clg/"
-  #echo "${DOCKER_IMAGE}"
-  echo
-elif [[ "${USER_NAME}" == "pcl" ]]
-then
-  echo "You are PCL."
-  echo
-  DOCKER_IMAGE="portfedh/portfolio_dashboard:pcl_grafana"
-  DOCKER_COMPOSE="./usr/pcl/docker-compose.yml"
-  FILE_PATH="usr/pcl/"
-  #echo "${DOCKER_IMAGE}"
-  echo
-
-elif [[ "${USER_NAME}" == "user1" ]]
-then
-  echo "You are user1."
-  echo
-  DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"
-  DOCKER_COMPOSE="./usr/user1/docker-compose.yml"
-  FILE_PATH="usr/user1/"
-  #echo "${DOCKER_IMAGE}"
-  echo
-else
-  echo "Error in username"
-  exit 1
-  echo
-fi
+# Check user input
+##################
+# Uncomment below if you have set up your own users:
+check_users
 
 
 # Run Docker
@@ -93,11 +82,13 @@ echo "Decrypting user files:"
 ${VENV} file_encryption.py ${USER_NAME} decrypt
 sleep 2
 
+
 # Run Input Validation
 ######################
 echo "Running Input Validation:"
 ${VENV} input_validation.py ${USER_NAME}
 echo
+
 
 # Run python files
 ##################
