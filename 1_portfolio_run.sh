@@ -79,6 +79,7 @@ echo
 # Decrypt files
 ################
 echo "Decrypting user files:"
+# Password for user1: 1234abc
 ${VENV} file_encryption.py ${USER_NAME} decrypt
 sleep 2
 
