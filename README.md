@@ -4,11 +4,9 @@
 
 ## What it does
 
-The scripts create a custom portfolio visualizer to help you analyze an investment portfolio.
+The program creates a custom portfolio visualizer to help you analyze an investment portfolio.
 
 Its main features are:
-
-- Its open source.
 
 - You can consolidate several bank accounts into one portfolio.
 
@@ -27,7 +25,7 @@ To use the portfolio visualizer you will need to previously install:
 - [Python 3](https://www.python.org/downloads/)
 - [Docker](https://www.docker.com/)
 
-I would recommend using  a virtual environment.
+I would recommend using a virtual environment.
 You can find documentation on setting one up [here.](https://docs.python.org/3/library/venv.html)
 
 Once python 3 is installed, you will need to add the following libraries from pip:
@@ -68,7 +66,7 @@ If you decide want to use it for your portfolio, then follow the instructions in
 
 - Make sure docker is up and running.
 
-- Delete the file named:
+- Delete thes file named:
 
 ```bash
 0_check_computer.sh
@@ -79,7 +77,6 @@ If you decide want to use it for your portfolio, then follow the instructions in
 ```bash
 01_portfolio_run.sh
 ```
-
 
 - Uncomment the following lines in the 'check computer' section:
 
@@ -109,7 +106,7 @@ You are ready to run the script for the first time.
 - Execute the following bash script from your terminal:
 
 ```bash
-./01_portfolio_run.sh
+./1_portfolio_run.sh
 ```
 
 The script will ask how long to wait for MySQL Volume to set up.
@@ -134,7 +131,7 @@ Open you browser and go to the grafana dashboard at [localhost:3000/](localhost:
 
 > username: admin
 >
-> password: admin1
+> password: admin2
 
 Browse through the Portfolio Dashboard. You should see something like this:
 
@@ -169,7 +166,7 @@ Take a look at the input files for the demo user 'user1' as examples to fill in 
 
 Here is a brief description of the information you should add in every file:
 
-Contributions file:  The CSV file should have the date and amount of every deposit or withdrawal you've made to that account. Deposits to the account should be positive numbers (+) and withdrawals from the account should be negative (-) numbers.
+Contributions file: The CSV file should have the date and amount of every deposit or withdrawal you've made to that account. Deposits to the account should be positive numbers (+) and withdrawals from the account should be negative (-) numbers.
 
 Account balance file: The CSV file should have a date value with the last day of each month and the total balance of the bank statement for that month. If you add more than one bank account, the date range in bothfile must match, even if the balance is $0 for one of the accounts.
 
@@ -183,7 +180,7 @@ Once the input files are set up, you must now modify the scripts that make the c
 
 - Create a new directory with the same username you chose for the input files.
 
-- Copy all the files  from the demo user, located in usr/user1 into the new folder you just created.
+- Copy all the files from the demo user, located in usr/user1 into the new folder you just created.
 
 - Modify each file so it uses your contributions, account balance and trade history files.
 
@@ -235,7 +232,7 @@ In the 'Check selected user' section, add a new elif statement with the username
 ```bash
 elif [[ "${USER_NAME}" == "user1" ]]  # Change "user1" for the username you selected.
 then
-  echo "You are user1."  # Update the name here as well. 
+  echo "You are user1."  # Update the name here as well.
   echo
   DOCKER_IMAGE="portfedh/portfolio_dashboard:user1_grafana"  # Leave this por now, you will update this later.
   DOCKER_COMPOSE="./usr/user1/docker-compose.yml"  # Update <user1>  to the username you selected.
@@ -325,7 +322,7 @@ You can run it whenever you like, and close it down just as easily.
 # Run
 ./1_portfolio_run.sh
 # Close
-./02_portfolio_close.sh
+./2_portfolio_close.sh
 ```
 
 ## Updating you dashboard
